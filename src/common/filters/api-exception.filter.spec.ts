@@ -1,0 +1,104 @@
+import { HttpStatus, Logger } from '@nestjs/common';
+import { QueryFailedError } from 'typeorm';
+import { callContextStorage } from '../correlation/call-context.js';
+import { InvalidUserIdException } from '../errors/invalid-user-id.exception.js';
+import { UserNotFoundException } from '../errors/user-not-found.exception.js';
+import { ApiExceptionFilter } from './api-exception.filter.js';
+
+describe('ApiExceptionFilter', () => {
+  const filter = new ApiExceptionFilter();
+
+  function createHost(
+    path: string,
+    method: string,
+  ): {
+    host: Parameters<ApiExceptionFilter['catch']>[1];
+    response: {
+      statusCode: number;
+      body: unknown;
+      status: (code: number) => { json: (payload: unknown) => void };
+    };
+  } {
+    const response = {
+      statusCode: 200,
+      body: undefined as unknown,
+      status(code: number) {
+        this.statusCode = code;
+        return {
+          json: (payload: unknown) => {
+            this.body = payload;
+          },
+        };
+      },
+    };
+    const host = {
+      switchToHttp: () => ({
+        getResponse: () => response,
+        getRequest: () => ({ method, path }),
+      }),
+    } as Parameters<ApiExceptionFilter['catch']>[1];
+    return { host, response };
+  }
+
+  it('maps client errors to the RFC body with correlation id', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    callContextStorage.run({ correlationId: 'corr-1' }, () => {
+      filter.catch(new InvalidUserIdException(), host);
+    });
+
+    expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INVALID_USER_ID',
+        message:
+          'El header x-user-id es obligatorio y tiene que ser un entero.',
+        correlation_id: 'corr-1',
+      },
+    });
+  });
+
+  it('maps user not found to 404', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    callContextStorage.run({ correlationId: 'corr-2' }, () => {
+      filter.catch(new UserNotFoundException(), host);
+    });
+
+    expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
+    expect(response.body).toEqual({
+      error: {
+        code: 'USER_NOT_FOUND',
+        message: 'La cuenta no existe.',
+        correlation_id: 'corr-2',
+      },
+    });
+  });
+
+  it('hides postgres failures behind INTERNAL_ERROR', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const driverError = new Error('connection refused');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-3' }, () => {
+      filter.catch(new QueryFailedError('SELECT 1', [], driverError), host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-3',
+      },
+    });
+  });
+
+  it('does not expose the RFC error envelope on health', () => {
+    const { host, response } = createHost('/health', 'GET');
+    filter.catch(new InvalidUserIdException(), host);
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({ status: 'error' });
+  });
+});

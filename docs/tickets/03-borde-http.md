@@ -11,7 +11,7 @@
 - **Stack / Tecnologías:** NestJS: middleware, filtro de excepciones e interceptor. Logger de NestJS. Sin librería de logging adicional hasta verificar si hace falta.
 - **Restricciones estrictas:**
   - Sin asunciones: no se agrega un logger de terceros salvo que el de NestJS no pueda emitir el log canónico en una línea. Esa carencia se verifica al implementar.
-  - Si la llamada trae `x-correlation-id`, se reutiliza. Si no, se genera un UUID. La respuesta lo devuelve.
+  - Si la llamada trae `x-correlation-id`, se reutiliza. Si no, se genera un UUID. La respuesta lo devuelve. `GET /health` queda fuera de correlación y del log canónico.
   - El log no incluye `email` ni `accountNumber`.
   - `GET /portfolio` y `POST /orders` exigen `x-user-id` entero y una cuenta existente. `GET /instruments` no lo exige.
   - Una falla de PostgreSQL responde 500 sin el detalle interno. El detalle queda en el log del mismo `correlationId`.
@@ -51,9 +51,9 @@ Fuente técnica: secciones 6 y 8 de [docs/rfc.md](../rfc.md).
 
 ## 5. Resultados esperados y verificación
 
-- [ ] **Comprobaciones manuales:** Una llamada sin `x-correlation-id` recibe uno, y el log usa el mismo valor. Portfolio y órdenes sin header, o con un valor que no es entero, responden 400 `INVALID_USER_ID`. Un usuario inexistente responde 404 `USER_NOT_FOUND`.
-- [ ] **Escenarios de test (Unitarios / E2E):** Prueba unitaria del filtro para 400, 404 y 500. Prueba unitaria del middleware con header ausente, no entero, usuario inexistente y usuario existente.
-- [ ] **Documentación:** La sección 8 del RFC sigue describiendo los mismos cuerpos.
+- [x] **Comprobaciones manuales:** `GET /health` no devuelve `x-correlation-id` ni log canónico. `GET /portfolio` sin header responde 400 `INVALID_USER_ID` con correlación en cuerpo y header. Con `x-user-id: 999` responde 404 `USER_NOT_FOUND`.
+- [x] **Escenarios de test (Unitarios / E2E):** 17 unitarias y 4 e2e, incluido filtro 400/404/500 y middleware de cuenta.
+- [x] **Documentación:** La sección 8 del RFC no cambió. El ajuste de `/health` queda documentado en este ticket.
 
 ## Dependencias
 

@@ -8,9 +8,9 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 
 ## Estado de progreso
 
-- **Progreso general:** `[▓▓░░░░░░░░] 22%`
+- **Progreso general:** `[▓▓▓░░░░░░░] 33%`
 - **Total de tareas:** 9
-- **Completadas:** 2
+- **Completadas:** 3
 - **En progreso:** 0
 
 ---
@@ -21,7 +21,7 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 | --- | --- | --- | --- | --- |
 | `TASK-01` | `chore` | Preparar NestJS, Docker, lint, commits y reglas de Cursor | Ninguna | `[x] Completado` |
 | `TASK-02` | `chore` | Conectar PostgreSQL, cargar el seed y correr la migración | `TASK-01` | `[x] Completado` |
-| `TASK-03` | `feat` | Correlación, logs, errores y middleware de cuenta | `TASK-01` | `[ ] Pendiente` |
+| `TASK-03` | `feat` | Correlación, logs, errores y middleware de cuenta | `TASK-01` | `[x] Completado` |
 | `TASK-04` | `feat` | Consultar el portfolio | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
 | `TASK-05` | `feat` | Buscar instrumentos con paginado | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
 | `TASK-06` | `feat` | Crear órdenes con lock, estados e idempotencia | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
@@ -46,9 +46,9 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 - **Resultados:** TypeORM 1.1.2 conecta a `neondb` con `synchronize` apagado. La migración aditiva quedó aplicada en la base local.
 
 ### [TASK-03] feat: exponer correlación, logs canónicos, errores y el middleware de cuenta
-- **Estado:** `[ ] Pendiente`
+- **Estado:** `[x] Completado`
 - **Archivo de tarea:** [03-borde-http.md](03-borde-http.md)
-- **Siguiente paso:** Revisar el plan de cambios antes de escribir el filtro y el middleware.
+- **Resultados:** Correlación, log canónico y errores RFC en el borde. `/health` queda excluido. `GET /portfolio` valida `x-user-id` contra `users`.
 
 ### [TASK-04] feat: consultar el portfolio calculado desde órdenes y el último cierre
 - **Estado:** `[ ] Pendiente`
