@@ -1,6 +1,14 @@
-import { HttpStatus, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpStatus,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { QueryFailedError } from 'typeorm';
 import { callContextStorage } from '../correlation/call-context.js';
+import { DependencyException } from '../errors/dependency.exception.js';
+import { InternalException } from '../errors/internal.exception.js';
 import { InvalidUserIdException } from '../errors/invalid-user-id.exception.js';
 import { UserNotFoundException } from '../errors/user-not-found.exception.js';
 import { ApiExceptionFilter } from './api-exception.filter.js';
@@ -100,5 +108,107 @@ describe('ApiExceptionFilter', () => {
 
     expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
     expect(response.body).toEqual({ status: 'error' });
+  });
+
+  it('maps dependency failures behind INTERNAL_ERROR', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-4' }, () => {
+      filter.catch(new DependencyException(new Error('db down')), host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-4',
+      },
+    });
+  });
+
+  it('maps internal failures behind INTERNAL_ERROR', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-5' }, () => {
+      filter.catch(new InternalException(new Error('unexpected')), host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-5',
+      },
+    });
+  });
+
+  it('forwards client HttpException bodies without the RFC envelope', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    filter.catch(new NotFoundException('missing route'), host);
+
+    expect(response.statusCode).toBe(HttpStatus.NOT_FOUND);
+    expect(response.body).toMatchObject({
+      message: 'missing route',
+      statusCode: HttpStatus.NOT_FOUND,
+    });
+  });
+
+  it('maps unhandled exceptions behind INTERNAL_ERROR', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-6' }, () => {
+      filter.catch(new Error('boom'), host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-6',
+      },
+    });
+  });
+
+  it('maps server HttpException failures behind INTERNAL_ERROR', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-7' }, () => {
+      filter.catch(new InternalServerErrorException('internal boom'), host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-7',
+      },
+    });
+  });
+
+  it('forwards HttpException on health without the RFC envelope', () => {
+    const { host, response } = createHost('/health', 'GET');
+    filter.catch(new BadRequestException('bad health probe'), host);
+
+    expect(response.statusCode).toBe(HttpStatus.BAD_REQUEST);
+    expect(response.body).toMatchObject({
+      message: 'bad health probe',
+      statusCode: HttpStatus.BAD_REQUEST,
+    });
   });
 });

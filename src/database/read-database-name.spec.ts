@@ -17,6 +17,12 @@ describe('readDatabaseName', () => {
     ).toThrow(InvalidDatabaseUrlError);
   });
 
+  it('rejects a malformed database url', () => {
+    expect(() => readDatabaseName('not-a-url')).toThrow(
+      InvalidDatabaseUrlError,
+    );
+  });
+
   it('points maintenance connections at the postgres database', () => {
     expect(
       maintenanceDatabaseUrl(

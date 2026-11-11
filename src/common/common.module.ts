@@ -3,6 +3,7 @@ import { TypeOrmUserAccountLookup } from './accounts/typeorm-user-account-lookup
 import { USER_ACCOUNT_LOOKUP } from './accounts/user-account-lookup.js';
 import { CorrelationMiddleware } from './correlation/correlation.middleware.js';
 import { ApiExceptionFilter } from './filters/api-exception.filter.js';
+import { CanonicalLogContext } from './logging/canonical-log-context.js';
 import { CanonicalLogInterceptor } from './logging/canonical-log.interceptor.js';
 import { UserIdMiddleware } from './middleware/user-id.middleware.js';
 
@@ -11,6 +12,7 @@ import { UserIdMiddleware } from './middleware/user-id.middleware.js';
     CorrelationMiddleware,
     UserIdMiddleware,
     ApiExceptionFilter,
+    CanonicalLogContext,
     CanonicalLogInterceptor,
     TypeOrmUserAccountLookup,
     {
@@ -22,6 +24,7 @@ import { UserIdMiddleware } from './middleware/user-id.middleware.js';
     CorrelationMiddleware,
     UserIdMiddleware,
     ApiExceptionFilter,
+    CanonicalLogContext,
     CanonicalLogInterceptor,
     USER_ACCOUNT_LOOKUP,
     TypeOrmUserAccountLookup,

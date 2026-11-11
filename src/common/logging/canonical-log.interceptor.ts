@@ -9,6 +9,9 @@ import type { Request, Response } from 'express';
 import { Observable, catchError, finalize, throwError } from 'rxjs';
 import { getCallContext } from '../correlation/call-context.js';
 import { isHealthRequest } from '../http/is-health-request.js';
+import { buildCanonicalLogPayload } from './build-canonical-log-payload.js';
+import { emitCanonicalLog } from './emit-canonical-log.js';
+import { resolveCanonicalLogLevel } from './resolve-canonical-log-level.js';
 
 @Injectable()
 export class CanonicalLogInterceptor implements NestInterceptor {
@@ -28,17 +31,17 @@ export class CanonicalLogInterceptor implements NestInterceptor {
         if (callContext === undefined) {
           return;
         }
-        const event: Record<string, string | number> = {
-          correlationId: callContext.correlationId,
+        const path = request.route?.path ?? request.path;
+        const durationMs = Date.now() - startedAt;
+        const payload = buildCanonicalLogPayload({
+          callContext,
           method: request.method,
-          route: request.route?.path ?? request.path,
+          path,
           statusCode: response.statusCode,
-          durationMs: Date.now() - startedAt,
-        };
-        if (callContext.userId !== undefined) {
-          event.userId = callContext.userId;
-        }
-        this.logger.debug(JSON.stringify(event));
+          durationMs,
+        });
+        const level = resolveCanonicalLogLevel(response.statusCode);
+        emitCanonicalLog(this.logger, level, JSON.stringify(payload));
       }),
     );
   }

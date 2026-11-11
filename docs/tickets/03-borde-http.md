@@ -12,6 +12,7 @@
 - **Restricciones estrictas:**
   - Sin asunciones: no se agrega un logger de terceros salvo que el de NestJS no pueda emitir el log canónico en una línea. Esa carencia se verifica al implementar.
   - Si la llamada trae `x-correlation-id`, se reutiliza. Si no, se genera un UUID. La respuesta lo devuelve. `GET /health` queda fuera de correlación y del log canónico.
+  - El log canónico admite `title`, estado de negocio opcional y `context` vía `CanonicalLogContext`. Nivel `info` por defecto, `warn` en 401/429, `error` desde 500.
   - El log no incluye `email` ni `accountNumber`.
   - `GET /portfolio` y `POST /orders` exigen `x-user-id` entero y una cuenta existente. `GET /instruments` no lo exige.
   - Una falla de PostgreSQL responde 500 sin el detalle interno. El detalle queda en el log del mismo `correlationId`.

@@ -12,6 +12,7 @@
 - **Restricciones estrictas:**
   - Sin asunciones: la integración usa la misma máquina de estados, las mismas strategies y el mismo repositorio que `POST /orders`.
   - La suite unitaria no abre una base ni un servidor.
+  - `npm run test:cov` exige 80% sobre el código unitario (`common`, `config` y utilidades de `database`). Quedan fuera migraciones, bootstrap y cableado Nest (`main`, `*.module.ts`, `health`).
   - La integración cubre mercado ejecutada, límite abierta, rechazada por falta de acciones, reintento con la misma clave y el mismo hash, y la misma clave con otro hash.
   - Un reintento con el mismo hash no inserta una segunda orden. Un hash distinto no inserta y termina en `IDEMPOTENCY_KEY_MISMATCH`.
 

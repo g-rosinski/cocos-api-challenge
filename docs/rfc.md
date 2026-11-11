@@ -189,6 +189,10 @@ Tres momentos en el envío de una orden:
 
 En el resto de las llamadas hay un solo log canónico, al finalizar, con `correlationId`, método, ruta, estado HTTP y duración. Ver la cuenta agrega `userId`. La búsqueda agrega el texto y la página, no una cuenta.
 
+Cada handler puede fijar un título (por ejemplo `SearchInstruments`), un estado de negocio opcional para el mensaje (por ejemplo `FILLED`) y un objeto `context` con atributos acotados (`result_count`, `order_type`, `has_positions`). El mensaje legible sigue el formato `{title} [{status}] - {method} {path} -> {statusCode} {durationMs}ms`, omitiendo el corchete si no hay estado de negocio. El registro completo es una línea JSON con `message`, los campos operativos y `context`. `GET /health` no deja log canónico.
+
+El nivel del log canónico depende del estado HTTP: por defecto `info`, `401` y `429` van con `warn`, y `500` o superior con `error`.
+
 | Dato | Clasificación | En logs y atributos |
 | --- | --- | --- |
 | `email`, `accountNumber` | PII | No se escriben. |
