@@ -8,7 +8,8 @@ describe('AppModule', () => {
   let app: INestApplication<App>;
 
   beforeEach(async () => {
-    process.env.DATABASE_URL = 'postgres://localhost:5432/cocos';
+    process.env.DATABASE_URL =
+      'postgres://postgres:123456@localhost:5432/neondb';
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
     }).compile();

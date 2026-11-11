@@ -10,7 +10,7 @@
 
 - **Stack / Tecnologías:** `@nestjs/typeorm` y TypeORM. PostgreSQL. Extensión `pg_trgm`.
 - **Restricciones estrictas:**
-  - Sin asunciones: el archivo de seed del challenge se copia o se referencia de forma explícita al implementar. Su ruta en este repositorio queda pendiente de verificación porque hoy vive fuera de `docs/`.
+  - Sin asunciones: el seed del challenge se copia a `database/seed.sql` desde `cocos-challenge/database.sql`. La base local ya lo tiene cargado: usuario `postgres`, contraseña `123456`, base `neondb`, puerto `5432`.
   - El `CREATE TABLE` original no cita identificadores. PostgreSQL guarda `instrumentid` y `userid`. Los índices usan esos nombres.
   - `up` crea `pg_trgm`, los índices `instruments_ticker_trgm`, `instruments_name_trgm`, `orders_instrument_type_idx`, `orders_user_status_idx`, `marketdata_instrument_date_idx` y la tabla `order_idempotency_keys` tal como está escrita en el RFC.
   - `down` borra la tabla y los índices. No desinstala `pg_trgm`.
@@ -39,9 +39,9 @@ Fuente técnica: sección 5 de [docs/rfc.md](../rfc.md).
 
 ## 5. Resultados esperados y verificación
 
-- [ ] **Comprobaciones manuales:** Sobre el seed, `migration:run` crea la extensión, los cinco índices y `order_idempotency_keys`. `migration:revert` borra la tabla y los índices, y deja `pg_trgm`.
-- [ ] **Escenarios de test (Unitarios / E2E):** No hay prueba de negocio. La verificación es correr la migración y su reverso contra PostgreSQL local.
-- [ ] **Documentación:** La sección 5 del RFC sigue siendo la única copia del DDL.
+- [x] **Comprobaciones manuales:** Sobre el `neondb` local ya cargado, `migration:run` creó `pg_trgm`, los cinco índices y `order_idempotency_keys`. `migration:revert` borró la tabla y los índices, y dejó `pg_trgm`. La migración quedó aplicada de nuevo. `db:bootstrap` vio `public.users` y no recargó el seed: siguen 4 usuarios.
+- [x] **Escenarios de test (Unitarios / E2E):** No hay prueba de negocio. Pasaron 7 pruebas unitarias y 2 e2e. El esquema se verificó contra PostgreSQL local.
+- [x] **Documentación:** Las columnas reales son `instrumentid` y `userid`. La sección 5 del RFC no cambió y sigue siendo la única copia del DDL.
 
 ## Dependencias
 

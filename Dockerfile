@@ -13,4 +13,4 @@ ENV HUSKY=0
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts
 COPY --from=build /app/dist ./dist
-CMD ["node", "dist/main.js"]
+CMD ["sh", "-c", "node dist/database/run-migrations.js && node dist/main.js"]

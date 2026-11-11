@@ -8,9 +8,9 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 
 ## Estado de progreso
 
-- **Progreso general:** `[▓░░░░░░░░░] 11%`
+- **Progreso general:** `[▓▓░░░░░░░░] 22%`
 - **Total de tareas:** 9
-- **Completadas:** 1
+- **Completadas:** 2
 - **En progreso:** 0
 
 ---
@@ -20,7 +20,7 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 | ID tarea | Tipo | Tarea | Dependencias | Estado |
 | --- | --- | --- | --- | --- |
 | `TASK-01` | `chore` | Preparar NestJS, Docker, lint, commits y reglas de Cursor | Ninguna | `[x] Completado` |
-| `TASK-02` | `chore` | Conectar PostgreSQL, cargar el seed y correr la migración | `TASK-01` | `[ ] Pendiente` |
+| `TASK-02` | `chore` | Conectar PostgreSQL, cargar el seed y correr la migración | `TASK-01` | `[x] Completado` |
 | `TASK-03` | `feat` | Correlación, logs, errores y middleware de cuenta | `TASK-01` | `[ ] Pendiente` |
 | `TASK-04` | `feat` | Consultar el portfolio | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
 | `TASK-05` | `feat` | Buscar instrumentos con paginado | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
@@ -41,9 +41,9 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 - **Resultados:** NestJS 12 arranca en Node 26 si existe `DATABASE_URL`. Husky rechaza formato y mensajes de commit inválidos.
 
 ### [TASK-02] chore: conectar PostgreSQL con TypeORM y aplicar la migración aditiva
-- **Estado:** `[ ] Pendiente`
+- **Estado:** `[x] Completado`
 - **Archivo de tarea:** [02-base-de-datos.md](02-base-de-datos.md)
-- **Siguiente paso:** Confirmar la versión LTS de Node y las versiones de NestJS y TypeORM antes de fijarlas.
+- **Resultados:** TypeORM 1.1.2 conecta a `neondb` con `synchronize` apagado. La migración aditiva quedó aplicada en la base local.
 
 ### [TASK-03] feat: exponer correlación, logs canónicos, errores y el middleware de cuenta
 - **Estado:** `[ ] Pendiente`
