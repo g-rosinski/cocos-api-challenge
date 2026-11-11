@@ -1,0 +1,37 @@
+---
+description: Convenciones del monolito modular NestJS de la API Cocos
+alwaysApply: true
+---
+
+# API Cocos
+
+La fuente de producto es `docs/prd.md`. La fuente técnica es `docs/rfc.md`. Si este archivo contradice al RFC, manda el RFC.
+
+## Stack
+
+- Node.js 26, la LTS activa.
+- NestJS, un solo proceso, tres módulos: cuenta, instrumentos y órdenes.
+- TypeScript estricto. Identificadores de código en inglés. Documentación en español.
+- TypeORM con `synchronize` apagado. PostgreSQL por `DATABASE_URL`.
+- No usar `any`.
+
+## Módulos
+
+- `src/portfolio`: consulta de la cuenta.
+- `src/instruments`: búsqueda de activos. El caso de uso depende de un puerto, no de TypeORM directo.
+- `src/orders`: alta de órdenes. La máquina de estados, las strategies y la factory viven aquí.
+- El controlador traduce HTTP. El servicio orquesta. El adaptador persiste.
+
+## Errores y nombres
+
+- Los errores de dominio son clases propias. No usar `throw new Error()` para una regla de negocio.
+- JSON público en snake_case. Headers HTTP como `x-user-id` e `Idempotency-Key`.
+- Archivos en kebab-case. Clases en PascalCase. Una clase por archivo.
+- DTOs de entrada y salida junto al módulo, con el sufijo que corresponda: `CreateOrderBody`, `PortfolioResponse`.
+- Entidades de TypeORM mapean las columnas reales en minúsculas (`instrumentid`, `userid`). No renombrar columnas del esquema del challenge.
+
+## Fuera de este repositorio
+
+- No agregar New Relic ni NestJS Observe.
+- No agregar Redis hasta el ticket que lo habilite.
+- No crear un endpoint para cancelar órdenes.
