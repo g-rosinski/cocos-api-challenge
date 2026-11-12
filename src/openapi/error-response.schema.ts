@@ -1,6 +1,8 @@
 import type { SchemaObject } from '@nestjs/swagger';
 import { IdempotencyKeyMismatchException } from '../common/errors/idempotency-key-mismatch.exception.js';
 import { InvalidIdempotencyKeyException } from '../common/errors/invalid-idempotency-key.exception.js';
+import { InvalidOrderSideException } from '../common/errors/invalid-order-side.exception.js';
+import { InvalidOrderTypeException } from '../common/errors/invalid-order-type.exception.js';
 import { InvalidUserIdException } from '../common/errors/invalid-user-id.exception.js';
 import { UserNotFoundException } from '../common/errors/user-not-found.exception.js';
 import { ValidationException } from '../common/errors/validation.exception.js';
@@ -10,6 +12,8 @@ export const SAMPLE_CORRELATION_ID = '8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21';
 
 const errorCodes = [
   'INVALID_USER_ID',
+  'INVALID_ORDER_SIDE',
+  'INVALID_ORDER_TYPE',
   'VALIDATION_ERROR',
   'USER_NOT_FOUND',
   'INSTRUMENT_NOT_FOUND',
@@ -87,6 +91,18 @@ export const invalidOrderBodyExample = errorExample(
   'Orden con cuerpo inválido',
   'VALIDATION_ERROR',
   new ValidationException().message,
+);
+
+export const invalidOrderSideExample = errorExample(
+  'Orden con side inválido',
+  'INVALID_ORDER_SIDE',
+  new InvalidOrderSideException().message,
+);
+
+export const invalidOrderTypeExample = errorExample(
+  'Orden con type inválido',
+  'INVALID_ORDER_TYPE',
+  new InvalidOrderTypeException().message,
 );
 
 export const databaseDownExample = errorExample(

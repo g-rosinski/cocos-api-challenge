@@ -3,6 +3,8 @@ import { IdempotencyKeyMismatchException } from './idempotency-key-mismatch.exce
 import { InstrumentNotFoundException } from './instrument-not-found.exception.js';
 import { InstrumentNotTradableException } from './instrument-not-tradable.exception.js';
 import { InvalidIdempotencyKeyException } from './invalid-idempotency-key.exception.js';
+import { InvalidOrderSideException } from './invalid-order-side.exception.js';
+import { InvalidOrderTypeException } from './invalid-order-type.exception.js';
 import { PriceUnavailableException } from './price-unavailable.exception.js';
 import { ValidationException } from './validation.exception.js';
 
@@ -22,6 +24,20 @@ describe('domain client exceptions', () => {
       status: HttpStatus.BAD_REQUEST,
       message:
         'El header Idempotency-Key es obligatorio y tiene que ser un UUID.',
+    },
+    {
+      name: 'InvalidOrderSideException',
+      exception: new InvalidOrderSideException(),
+      code: 'INVALID_ORDER_SIDE',
+      status: HttpStatus.BAD_REQUEST,
+      message: 'El campo side solo admite BUY o SELL.',
+    },
+    {
+      name: 'InvalidOrderTypeException',
+      exception: new InvalidOrderTypeException(),
+      code: 'INVALID_ORDER_TYPE',
+      status: HttpStatus.BAD_REQUEST,
+      message: 'El campo type solo admite MARKET o LIMIT.',
     },
     {
       name: 'IdempotencyKeyMismatchException',

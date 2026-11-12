@@ -192,6 +192,30 @@ curl --request POST "http://localhost:3000/orders" \
 
 Respuesta `400` `IDEMPOTENCY_KEY_MISMATCH`.
 
+`side` distinto de `BUY` o `SELL`:
+
+```bash
+curl --request POST "http://localhost:3000/orders" \
+  --header "content-type: application/json" \
+  --header "x-user-id: 1" \
+  --header "Idempotency-Key: 1b2c3d4e-5f60-4789-a012-b3c4d5e6f701" \
+  --data "{\"instrument_id\":47,\"side\":\"HOLD\",\"type\":\"MARKET\",\"size\":1}"
+```
+
+Respuesta `400` `INVALID_ORDER_SIDE`.
+
+`type` distinto de `MARKET` o `LIMIT`:
+
+```bash
+curl --request POST "http://localhost:3000/orders" \
+  --header "content-type: application/json" \
+  --header "x-user-id: 1" \
+  --header "Idempotency-Key: 2c3d4e5f-6071-4890-b123-c4d5e6f70812" \
+  --data "{\"instrument_id\":47,\"side\":\"BUY\",\"type\":\"STOP\",\"size\":1}"
+```
+
+Respuesta `400` `INVALID_ORDER_TYPE`.
+
 Cuerpo vacío, con un UUID nuevo:
 
 ```bash

@@ -217,6 +217,8 @@ Todo lo demás entra por excepciones.
 | --- | --- | --- | --- |
 | Inbound | Falta `x-user-id` o no es un entero | `InvalidUserIdException` | 400 |
 | Inbound | Cuerpo o query inválidos | `ValidationException` | 400 |
+| Inbound | `side` distinto de `BUY` o `SELL` | `InvalidOrderSideException` | 400 |
+| Inbound | `type` distinto de `MARKET` o `LIMIT` | `InvalidOrderTypeException` | 400 |
 | Dominio | La cuenta no existe | `UserNotFoundException` | 404 |
 | Dominio | El instrumento no existe | `InstrumentNotFoundException` | 404 |
 | Dominio | El instrumento es la moneda | `InstrumentNotTradableException` | 400 |

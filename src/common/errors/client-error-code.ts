@@ -1,5 +1,7 @@
 export type ClientErrorCode =
   | 'INVALID_USER_ID'
+  | 'INVALID_ORDER_SIDE'
+  | 'INVALID_ORDER_TYPE'
   | 'VALIDATION_ERROR'
   | 'USER_NOT_FOUND'
   | 'INSTRUMENT_NOT_FOUND'

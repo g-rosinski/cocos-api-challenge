@@ -1,7 +1,10 @@
+import { InvalidOrderSideException } from '../common/errors/invalid-order-side.exception.js';
+import { InvalidOrderTypeException } from '../common/errors/invalid-order-type.exception.js';
 import { ValidationException } from '../common/errors/validation.exception.js';
 import {
   createOrderBodySchema,
   createOrderValidationPipe,
+  resolveCreateOrderBodyException,
 } from './create-order-body.js';
 
 describe('createOrderBodySchema', () => {
@@ -60,21 +63,112 @@ describe('createOrderBodySchema', () => {
   });
 });
 
-describe('createOrderValidationPipe', () => {
-  it('throws ValidationException with the order message', async () => {
-    await expect(
-      createOrderValidationPipe.transform(
-        {},
-        {
-          type: 'body',
-          data: undefined,
-          metatype: Object,
-          schema: createOrderBodySchema,
-        },
-      ),
-    ).rejects.toMatchObject({
-      name: ValidationException.name,
-      message: 'El cuerpo de la orden es inválido.',
+describe('resolveCreateOrderBodyException', () => {
+  it('maps an invalid side to InvalidOrderSideException', () => {
+    const { error } = createOrderBodySchema.safeParse({
+      instrument_id: 47,
+      side: 'HOLD',
+      type: 'MARKET',
+      size: 1,
     });
+    expect(error).toBeDefined();
+    const exception = resolveCreateOrderBodyException(error!.issues, {
+      instrument_id: 47,
+      side: 'HOLD',
+      type: 'MARKET',
+      size: 1,
+    });
+    expect(exception).toBeInstanceOf(InvalidOrderSideException);
+    expect(exception.code).toBe('INVALID_ORDER_SIDE');
+  });
+
+  it('maps an invalid type to InvalidOrderTypeException', () => {
+    const { error } = createOrderBodySchema.safeParse({
+      instrument_id: 47,
+      side: 'BUY',
+      type: 'STOP',
+      size: 1,
+    });
+    expect(error).toBeDefined();
+    const exception = resolveCreateOrderBodyException(error!.issues, {
+      instrument_id: 47,
+      side: 'BUY',
+      type: 'STOP',
+      size: 1,
+    });
+    expect(exception).toBeInstanceOf(InvalidOrderTypeException);
+    expect(exception.code).toBe('INVALID_ORDER_TYPE');
+  });
+
+  it('keeps ValidationException for other rule violations', () => {
+    const { error } = createOrderBodySchema.safeParse({});
+    expect(error).toBeDefined();
+    const exception = resolveCreateOrderBodyException(error!.issues, {});
+    expect(exception).toBeInstanceOf(ValidationException);
+  });
+});
+
+describe('createOrderValidationPipe', () => {
+  const metadata = {
+    type: 'body' as const,
+    data: undefined,
+    metatype: Object,
+    schema: createOrderBodySchema,
+  };
+
+  it('throws ValidationException with the order message', () => {
+    expect(() => createOrderValidationPipe.transform({}, metadata)).toThrow(
+      expect.objectContaining({
+        name: ValidationException.name,
+        code: 'VALIDATION_ERROR',
+        message: 'El cuerpo de la orden es inválido.',
+      }),
+    );
+  });
+
+  it('throws InvalidOrderSideException for an unsupported side', () => {
+    expect(() =>
+      createOrderValidationPipe.transform(
+        {
+          instrument_id: 47,
+          side: 'HOLD',
+          type: 'MARKET',
+          size: 1,
+        },
+        metadata,
+      ),
+    ).toThrow(InvalidOrderSideException);
+  });
+
+  it('throws InvalidOrderTypeException for an unsupported type', () => {
+    expect(() =>
+      createOrderValidationPipe.transform(
+        {
+          instrument_id: 47,
+          side: 'BUY',
+          type: 'STOP',
+          size: 1,
+        },
+        metadata,
+      ),
+    ).toThrow(InvalidOrderTypeException);
+  });
+
+  it('throws InvalidOrderSideException for a lowercase side', () => {
+    try {
+      createOrderValidationPipe.transform(
+        {
+          instrument_id: 47,
+          side: 'buy',
+          type: 'MARKET',
+          size: 1,
+        },
+        metadata,
+      );
+    } catch (error) {
+      expect(error).toMatchObject({
+        code: 'INVALID_ORDER_SIDE',
+      });
+    }
   });
 });

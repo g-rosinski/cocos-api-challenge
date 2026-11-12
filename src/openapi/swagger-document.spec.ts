@@ -276,6 +276,12 @@ describe('OpenAPI document', () => {
     expect(exampleValue(operation, '400', 'emptyBody')).toMatchObject({
       error: { code: 'VALIDATION_ERROR' },
     });
+    expect(exampleValue(operation, '400', 'invalidOrderSide')).toMatchObject({
+      error: { code: 'INVALID_ORDER_SIDE' },
+    });
+    expect(exampleValue(operation, '400', 'invalidOrderType')).toMatchObject({
+      error: { code: 'INVALID_ORDER_TYPE' },
+    });
   });
 });
 

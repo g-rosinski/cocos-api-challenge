@@ -1,6 +1,13 @@
-import { StandardSchemaValidationPipe } from '@nestjs/common';
+import {
+  Injectable,
+  type ArgumentMetadata,
+  type PipeTransform,
+} from '@nestjs/common';
 import { z } from 'zod';
+import { InvalidOrderSideException } from '../common/errors/invalid-order-side.exception.js';
+import { InvalidOrderTypeException } from '../common/errors/invalid-order-type.exception.js';
 import { ValidationException } from '../common/errors/validation.exception.js';
+import { ORDER_SIDES, ORDER_TYPES } from './domain/order.types.js';
 
 const MAX_MONEY = 99_999_999.99;
 const MAX_SIZE = 2_147_483_647;
@@ -19,8 +26,8 @@ const moneySchema = z
 export const createOrderBodySchema = z
   .object({
     instrument_id: z.number().int().positive().max(MAX_SIZE),
-    side: z.enum(['BUY', 'SELL']),
-    type: z.enum(['MARKET', 'LIMIT']),
+    side: z.enum(ORDER_SIDES),
+    type: z.enum(ORDER_TYPES),
     size: z.number().int().positive().max(MAX_SIZE).optional(),
     amount: moneySchema.optional(),
     price: moneySchema.optional(),
@@ -42,6 +49,60 @@ export const createOrderBodySchema = z
 
 export type CreateOrderBody = z.infer<typeof createOrderBodySchema>;
 
-export const createOrderValidationPipe = new StandardSchemaValidationPipe({
-  exceptionFactory: () => new ValidationException(),
-});
+function readSubmittedString(
+  raw: unknown,
+  field: 'side' | 'type',
+): string | undefined {
+  if (typeof raw !== 'object' || raw === null || Array.isArray(raw)) {
+    return undefined;
+  }
+  const value = (raw as Record<string, unknown>)[field];
+  return typeof value === 'string' ? value : undefined;
+}
+
+function isSideOrTypeEnumIssue(
+  issue: z.core.$ZodIssue,
+): 'side' | 'type' | undefined {
+  if (issue.code !== 'invalid_value' || issue.path.length !== 1) {
+    return undefined;
+  }
+  const field = issue.path[0];
+  if (field === 'side' || field === 'type') {
+    return field;
+  }
+  return undefined;
+}
+
+export function resolveCreateOrderBodyException(
+  issues: z.core.$ZodIssue[],
+  raw: unknown,
+): ValidationException | InvalidOrderSideException | InvalidOrderTypeException {
+  for (const issue of issues) {
+    const field = isSideOrTypeEnumIssue(issue);
+    if (field === undefined) {
+      continue;
+    }
+    if (readSubmittedString(raw, field) === undefined) {
+      continue;
+    }
+    if (field === 'side') {
+      return new InvalidOrderSideException();
+    }
+    return new InvalidOrderTypeException();
+  }
+  return new ValidationException();
+}
+
+@Injectable()
+export class CreateOrderBodyValidationPipe implements PipeTransform {
+  transform(value: unknown, metadata: ArgumentMetadata): CreateOrderBody {
+    void metadata;
+    const result = createOrderBodySchema.safeParse(value);
+    if (!result.success) {
+      throw resolveCreateOrderBodyException(result.error.issues, value);
+    }
+    return result.data;
+  }
+}
+
+export const createOrderValidationPipe = new CreateOrderBodyValidationPipe();

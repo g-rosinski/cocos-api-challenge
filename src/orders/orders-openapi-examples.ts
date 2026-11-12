@@ -16,10 +16,13 @@ import {
   idempotencyMismatchExample,
   invalidIdempotencyKeyExample,
   invalidOrderBodyExample,
+  invalidOrderSideExample,
+  invalidOrderTypeExample,
   missingUserIdExample,
   unknownAccountExample,
 } from '../openapi/error-response.schema.js';
 import type { CreateOrderBody } from './create-order-body.js';
+import { ORDER_SIDES, ORDER_TYPES } from './domain/order.types.js';
 import type { OrderResponse } from './order-response.types.js';
 
 export const BUY_MARKET_IDEMPOTENCY_KEY =
@@ -47,8 +50,8 @@ export const orderResponseSchema: SchemaObject = {
     order_id: { type: 'integer' },
     user_id: { type: 'integer', example: 1 },
     instrument_id: { type: 'integer', example: 47 },
-    side: { type: 'string', enum: ['BUY', 'SELL'] },
-    type: { type: 'string', enum: ['MARKET', 'LIMIT'] },
+    side: { type: 'string', enum: [...ORDER_SIDES] },
+    type: { type: 'string', enum: [...ORDER_TYPES] },
     size: { type: 'integer' },
     price: { type: 'number' },
     status: { type: 'string', enum: ['FILLED', 'NEW', 'REJECTED'] },
@@ -247,6 +250,8 @@ export function ApiCreateOrder(): MethodDecorator {
         invalidIdempotencyKey: invalidIdempotencyKeyExample,
         idempotencyMismatch: idempotencyMismatchExample,
         emptyBody: invalidOrderBodyExample,
+        invalidOrderSide: invalidOrderSideExample,
+        invalidOrderType: invalidOrderTypeExample,
       },
     }),
     ApiNotFoundResponse({
