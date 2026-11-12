@@ -1,6 +1,10 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { getCallContext } from '@/common/correlation/call-context';
-import { InternalException } from '@/common/errors/internal.exception';
+import { requireCallContextUserId } from '@/common/correlation/require-call-context-user-id';
+import {
+  applyCreateOrderRequestCallContext,
+  applyCreateOrderSuccessCallContext,
+} from '@/modules/orders/application/call-context/create-order-call-context';
 import {
   createOrderBodySchema,
   createOrderValidationPipe,
@@ -34,34 +38,14 @@ export class OrdersController {
     })
     body: CreateOrderBody,
   ): Promise<OrderResponse> {
-    const userId = getCallContext()?.userId;
-    if (userId === undefined) {
-      throw new InternalException();
-    }
-    const callContext = getCallContext();
-    if (callContext !== undefined) {
-      callContext.title = 'CreateOrder';
-      callContext.attributes = {
-        instrument_id: body.instrument_id,
-        side: body.side,
-        type: body.type,
-      };
-    }
+    const userId = requireCallContextUserId(getCallContext());
+    applyCreateOrderRequestCallContext(getCallContext(), body);
     const order = await this.createOrderService.create(
       userId,
       idempotencyKey,
       body,
     );
-    const updated = getCallContext();
-    if (updated !== undefined) {
-      updated.status = order.status;
-      updated.attributes = {
-        ...(updated.attributes ?? {}),
-        order_id: order.order_id,
-        side: order.side,
-        type: order.type,
-      };
-    }
+    applyCreateOrderSuccessCallContext(getCallContext(), order);
     return order;
   }
 }

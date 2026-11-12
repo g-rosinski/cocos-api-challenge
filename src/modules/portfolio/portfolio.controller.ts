@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { getCallContext } from '@/common/correlation/call-context';
-import { InternalException } from '@/common/errors/internal.exception';
+import { requireCallContextUserId } from '@/common/correlation/require-call-context-user-id';
+import { applyGetPortfolioSuccessCallContext } from '@/modules/portfolio/application/call-context/get-portfolio-call-context';
 import { ApiGetPortfolio } from '@/modules/portfolio/application/dto/portfolio-openapi-examples';
 import type { PortfolioResponse } from '@/modules/portfolio/application/dto/portfolio-response.types';
 import { PortfolioService } from '@/modules/portfolio/application/services/portfolio.service';
@@ -12,19 +13,9 @@ export class PortfolioController {
   @ApiGetPortfolio()
   @Get()
   async getPortfolio(): Promise<PortfolioResponse> {
-    const userId = getCallContext()?.userId;
-    if (userId === undefined) {
-      throw new InternalException();
-    }
+    const userId = requireCallContextUserId(getCallContext());
     const portfolio = await this.portfolioService.getPortfolio(userId);
-    const callContext = getCallContext();
-    if (callContext !== undefined) {
-      callContext.title = 'GetPortfolio';
-      callContext.attributes = {
-        has_positions: portfolio.positions.length > 0,
-        position_count: portfolio.positions.length,
-      };
-    }
+    applyGetPortfolioSuccessCallContext(getCallContext(), portfolio);
     return portfolio;
   }
 }

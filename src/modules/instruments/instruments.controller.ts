@@ -1,5 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { getCallContext } from '@/common/correlation/call-context';
+import { applySearchInstrumentsSuccessCallContext } from '@/modules/instruments/application/call-context/search-instruments-call-context';
 import type { InstrumentsResponse } from '@/modules/instruments/application/dto/instruments-response.types';
 import { ApiSearchInstruments } from '@/modules/instruments/application/dto/instruments-openapi-examples';
 import { InstrumentsService } from '@/modules/instruments/application/services/instruments.service';
@@ -23,16 +24,7 @@ export class InstrumentsController {
     query: SearchInstrumentsQuery,
   ): Promise<InstrumentsResponse> {
     const result = await this.instrumentsService.search(query);
-    const callContext = getCallContext();
-    if (callContext !== undefined) {
-      callContext.title = 'SearchInstruments';
-      callContext.attributes = {
-        query: query.q,
-        limit: query.limit,
-        offset: query.offset,
-        result_count: result.data.length,
-      };
-    }
+    applySearchInstrumentsSuccessCallContext(getCallContext(), query, result);
     return result;
   }
 }
