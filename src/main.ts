@@ -4,11 +4,17 @@ import { AppModule } from './app.module.js';
 import { ApiExceptionFilter } from './common/filters/api-exception.filter.js';
 import { CanonicalLogInterceptor } from './common/logging/canonical-log.interceptor.js';
 import { setupSwagger } from './openapi/setup-swagger.js';
+import { RequestSpanInterceptor } from './observability/request-span.interceptor.js';
+import { startTracing } from './observability/start-tracing.js';
 
 async function bootstrap(): Promise<void> {
+  startTracing();
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(app.get(ApiExceptionFilter));
-  app.useGlobalInterceptors(app.get(CanonicalLogInterceptor));
+  app.useGlobalInterceptors(
+    app.get(RequestSpanInterceptor),
+    app.get(CanonicalLogInterceptor),
+  );
   setupSwagger(app);
   const port = Number(process.env.PORT ?? 3000);
   await app.listen(port);

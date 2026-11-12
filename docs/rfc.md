@@ -207,6 +207,8 @@ La API instrumenta las llamadas con atributos propios: `correlationId`, ruta, es
 
 No se envía nada a New Relic. El export queda preparado en OpenTelemetry, sin un backend pago elegido en esta entrega. Los atributos siguen la misma regla de PII que los logs.
 
+Paquetes verificados en el runtime: `@opentelemetry/api` 1.10.0, `@opentelemetry/sdk-node` 0.301.1, `@opentelemetry/exporter-trace-otlp-http` 0.301.1, `@opentelemetry/resources` 3.1.1 y `@opentelemetry/semantic-conventions` 1.45.0. El SDK arranca en `start-tracing.ts` antes de Nest. Cada llamada (salvo `GET /health`) abre un span en `RequestSpanInterceptor` con `correlationId`, `route` y `httpStatus`; `userId` solo en rutas con cuenta; en `POST /orders` también `orderSide`, `orderType` y `orderStatus`. Si existe `OTEL_EXPORTER_OTLP_ENDPOINT`, se registra `OTLPTraceExporter`; si no, el SDK queda sin exportador y los spans no salen del proceso.
+
 ## 8. Errores
 
 Una orden rechazada por falta de pesos, falta de acciones o monto menor a una acción no es un error HTTP. La transacción hace commit y la respuesta es 201 con la orden en `REJECTED`.

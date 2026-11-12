@@ -8,9 +8,9 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 
 ## Estado de progreso
 
-- **Progreso general:** `[▓▓▓▓▓▓▓▓░] 78%`
+- **Progreso general:** `[▓▓▓▓▓▓▓▓▓] 89%`
 - **Total de tareas:** 9
-- **Completadas:** 7
+- **Completadas:** 8
 - **En progreso:** 0
 
 ---
@@ -26,7 +26,7 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 | `TASK-05` | `feat`  | Buscar instrumentos con paginado                          | `TASK-02`, `TASK-03`            | `[x] Completado` |
 | `TASK-06` | `feat`  | Crear órdenes con lock, estados e idempotencia            | `TASK-02`, `TASK-03`            | `[x] Completado` |
 | `TASK-07` | `feat`  | Publicar Swagger y schema.json                            | `TASK-04`, `TASK-05`, `TASK-06` | `[x] Completado` |
-| `TASK-08` | `feat`  | Atributos de OpenTelemetry                                | `TASK-03`, `TASK-06`            | `[ ] Pendiente`  |
+| `TASK-08` | `feat`  | Atributos de OpenTelemetry                                | `TASK-03`, `TASK-06`            | `[x] Completado` |
 | `TASK-09` | `test`  | Pruebas unitarias y de integración del envío              | `TASK-04`, `TASK-05`, `TASK-06` | `[ ] Pendiente`  |
 
 Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin cambiar el contrato.
@@ -79,9 +79,9 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 
 ### [TASK-08] feat: instrumentar llamadas con atributos de OpenTelemetry sin un vendor
 
-- **Estado:** `[ ] Pendiente`
+- **Estado:** `[x] Completado`
 - **Archivo de tarea:** [08-observabilidad.md](08-observabilidad.md)
-- **Siguiente paso:** Revisar el plan de cambios y la tabla de PII del RFC.
+- **Resultados:** SDK Node en `start-tracing.ts`, span por request en `RequestSpanInterceptor`, atributos tipados sin PII. OTLP solo con `OTEL_EXPORTER_OTLP_ENDPOINT`. RFC sección 7 con versiones de paquetes.
 
 ### [TASK-09] test: cubrir con pruebas unitarias y de integración el envío de órdenes
 

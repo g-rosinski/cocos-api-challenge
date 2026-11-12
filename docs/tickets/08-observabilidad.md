@@ -45,9 +45,9 @@ Fuente técnica: sección 7 de [docs/rfc.md](../rfc.md).
 
 ## 5. Resultados esperados y verificación
 
-- [ ] **Comprobaciones manuales:** Una orden emitida deja esos atributos asociados al `correlationId` de la llamada. Una búsqueda no incluye `userId`.
-- [ ] **Escenarios de test (Unitarios / E2E):** Prueba unitaria de que el conjunto de atributos de una orden no contiene email ni número de cuenta.
-- [ ] **Documentación:** La sección 7 del RFC sigue diciendo que New Relic no se usa.
+- [x] **Comprobaciones manuales:** Una orden emitida deja esos atributos asociados al `correlationId` de la llamada. Una búsqueda no incluye `userId`.
+- [x] **Escenarios de test (Unitarios / E2E):** Prueba unitaria de que el conjunto de atributos de una orden no contiene email ni número de cuenta.
+- [x] **Documentación:** La sección 7 del RFC sigue diciendo que New Relic no se usa.
 
 ## Dependencias
 
