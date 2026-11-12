@@ -2,13 +2,12 @@ import type { CallContext } from '@/common/correlation/call-context';
 import type { CanonicalLogAttributes } from '@/common/logging/canonical-log-attribute';
 import {
   ORDER_SIDES,
+  ORDER_STATUSES,
   ORDER_TYPES,
   type OrderSide,
   type OrderStatus,
   type OrderType,
-} from '@/orders/domain/order.types';
-
-const ORDER_STATUSES: readonly OrderStatus[] = ['FILLED', 'NEW', 'REJECTED'];
+} from '@/modules/orders/domain/entities/order.types';
 
 export const FORBIDDEN_SPAN_ATTRIBUTE_KEYS = new Set([
   'email',

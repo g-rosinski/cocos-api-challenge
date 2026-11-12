@@ -4,12 +4,12 @@ import {
   SwaggerModule,
   type OpenAPIObject,
 } from '@nestjs/swagger';
-import { instrumentsResponseSchema } from '@/instruments/instruments-openapi-examples';
+import { instrumentsResponseSchema } from '@/modules/instruments/application/dto/instruments-openapi-examples';
 import {
   buyMarketOrderBody,
   orderResponseSchema,
-} from '@/orders/orders-openapi-examples';
-import { portfolioResponseSchema } from '@/portfolio/portfolio-openapi-examples';
+} from '@/modules/orders/application/dto/orders-openapi-examples';
+import { portfolioResponseSchema } from '@/modules/portfolio/application/dto/portfolio-openapi-examples';
 import { errorResponseSchema } from '@/openapi/error-response.schema';
 
 export function createSwaggerDocument(app: INestApplication): OpenAPIObject {

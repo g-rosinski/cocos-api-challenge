@@ -11,10 +11,10 @@ import { CommonModule } from '@/common/common.module';
 import { CorrelationMiddleware } from '@/common/correlation/correlation.middleware';
 import { UserIdMiddleware } from '@/common/middleware/user-id.middleware';
 import { DatabaseModule } from '@/database/database.module';
-import { HealthModule } from '@/health/health.module';
-import { InstrumentsModule } from '@/instruments/instruments.module';
-import { OrdersModule } from '@/orders/orders.module';
-import { PortfolioModule } from '@/portfolio/portfolio.module';
+import { HealthModule } from '@/modules/health/health.module';
+import { InstrumentsModule } from '@/modules/instruments/instruments.module';
+import { OrdersModule } from '@/modules/orders/orders.module';
+import { PortfolioModule } from '@/modules/portfolio/portfolio.module';
 
 @Module({
   imports: [

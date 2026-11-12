@@ -16,7 +16,7 @@ export default defineConfig({
         'src/main.ts',
         'src/app.module.ts',
         'src/**/*.module.ts',
-        'src/health/**',
+        'src/modules/health/**',
         'src/observability/start-tracing.ts',
         'src/database/migrations/**',
         'src/database/bootstrap-*.ts',

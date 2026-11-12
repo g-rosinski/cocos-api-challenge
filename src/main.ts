@@ -1,6 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@/app.module';
+import { readListenPort } from '@/config/read-listen-port';
 import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
 import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
 import { setupSwagger } from '@/openapi/setup-swagger';
@@ -16,7 +17,7 @@ async function bootstrap(): Promise<void> {
     app.get(CanonicalLogInterceptor),
   );
   setupSwagger(app);
-  const port = Number(process.env.PORT ?? 3000);
+  const port = readListenPort(process.env);
   await app.listen(port);
   Logger.log(`API process started on port ${port}`, 'Bootstrap');
 }

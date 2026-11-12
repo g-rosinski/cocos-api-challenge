@@ -6,8 +6,8 @@ import { DataSource } from 'typeorm';
 import { AppModule } from '@/app.module';
 import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
 import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
-import type { OrderResponse } from '@/orders/order-response.types';
-import type { PortfolioResponse } from '@/portfolio/portfolio-response.types';
+import type { OrderResponse } from '@/modules/orders/application/dto/order-response.types';
+import type { PortfolioResponse } from '@/modules/portfolio/application/dto/portfolio-response.types';
 
 const MARKET_BUY_KEY = '6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21';
 const LIMIT_BUY_KEY = '7a2b3c4d-5e6f-4789-a012-b3c4d5e6f789';
