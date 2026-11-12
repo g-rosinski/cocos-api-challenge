@@ -1,10 +1,16 @@
 import { StandardSchemaValidationPipe } from '@nestjs/common';
 import { z } from 'zod';
+import { INSTRUMENTS_DEFAULT_PAGE_SIZE } from '@/common/domain-constants';
 import { ValidationException } from '@/common/errors/validation.exception';
 
 export const searchInstrumentsQuerySchema = z.object({
   q: z.string().trim().optional().default(''),
-  limit: z.coerce.number().int().positive().optional().default(10),
+  limit: z.coerce
+    .number()
+    .int()
+    .positive()
+    .optional()
+    .default(INSTRUMENTS_DEFAULT_PAGE_SIZE),
   offset: z.coerce.number().int().min(0).optional().default(0),
 });
 

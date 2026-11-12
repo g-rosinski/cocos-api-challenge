@@ -8,12 +8,13 @@ import { InvalidOrderSideException } from '@/common/errors/invalid-order-side.ex
 import { InvalidOrderTypeException } from '@/common/errors/invalid-order-type.exception';
 import { ValidationException } from '@/common/errors/validation.exception';
 import {
+  ORDER_MAX_AMOUNT_ARS,
+  ORDER_MAX_SIZE,
+} from '@/common/domain-constants';
+import {
   ORDER_SIDES,
   ORDER_TYPES,
 } from '@/modules/orders/domain/entities/order.types';
-
-const MAX_MONEY = 99_999_999.99;
-const MAX_SIZE = 2_147_483_647;
 
 function hasAtMostTwoDecimalPlaces(value: number): boolean {
   const cents = Math.round(value * 100);
@@ -23,15 +24,15 @@ function hasAtMostTwoDecimalPlaces(value: number): boolean {
 const moneySchema = z
   .number()
   .positive()
-  .max(MAX_MONEY)
+  .max(ORDER_MAX_AMOUNT_ARS)
   .refine(hasAtMostTwoDecimalPlaces);
 
 export const createOrderBodySchema = z
   .object({
-    instrument_id: z.number().int().positive().max(MAX_SIZE),
+    instrument_id: z.number().int().positive().max(ORDER_MAX_SIZE),
     side: z.enum(ORDER_SIDES),
     type: z.enum(ORDER_TYPES),
-    size: z.number().int().positive().max(MAX_SIZE).optional(),
+    size: z.number().int().positive().max(ORDER_MAX_SIZE).optional(),
     amount: moneySchema.optional(),
     price: moneySchema.optional(),
   })
