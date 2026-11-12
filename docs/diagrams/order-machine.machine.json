@@ -1,0 +1,46 @@
+{
+  "$schema": "https://stately.ai/v2/schemas/machine",
+  "id": "OrderAcceptance",
+  "description": "Decisión de status al enviar una orden en la API Cocos. No modela CANCELLED ni ejecución posterior de límites; es equivalente al State pattern en src/modules/orders/domain/states/.",
+  "initial": "idle",
+  "context": {
+    "orderType": null,
+    "accepted": false
+  },
+  "states": {
+    "idle": {
+      "on": {
+        "PLACE_MARKET": [
+          {
+            "target": "filled",
+            "guard": "orderAccepted"
+          },
+          {
+            "target": "rejected"
+          }
+        ],
+        "PLACE_LIMIT": [
+          {
+            "target": "new",
+            "guard": "orderAccepted"
+          },
+          {
+            "target": "rejected"
+          }
+        ]
+      }
+    },
+    "filled": {
+      "type": "final",
+      "description": "MARKET aceptada → persiste FILLED"
+    },
+    "new": {
+      "type": "final",
+      "description": "LIMIT aceptada → persiste NEW"
+    },
+    "rejected": {
+      "type": "final",
+      "description": "Validación de cash/acciones o size falla → persiste REJECTED con HTTP 201"
+    }
+  }
+}
