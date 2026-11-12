@@ -19,10 +19,9 @@ export default defineConfig({
         'src/modules/health/**',
         'src/observability/start-tracing.ts',
         'src/database/migrations/**',
-        'src/database/bootstrap-*.ts',
-        'src/database/run-migrations.ts',
-        'src/database/revert-migrations.ts',
-        'src/database/data-source.ts',
+        'src/database/bootstrap/**',
+        'src/database/cli/**',
+        'src/database/typeorm/data-source.ts',
       ],
       thresholds: {
         statements: 80,

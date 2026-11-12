@@ -21,9 +21,12 @@ La fuente de producto es `docs/prd.md`. La fuente técnica es `docs/rfc.md`. Si 
 | --- | --- |
 | `src/modules/` | Módulos Nest (users, portfolio, instruments, orders, health). Arquitectura en capas por módulo. |
 | `src/common/` | Borde HTTP: `middleware/` (solo middlewares), `logging/call-context/`, `logging/canonical-log/`, `errors/` (excepciones + filtro), `constants/`, `http/`. |
-| `src/config/` | Lectura y validación de variables de entorno. |
-| `src/database/` | TypeORM, migraciones y bootstrap local. |
-| `src/domain/` | Dominio compartido entre módulos (sin Nest): vocabulario de órdenes y reglas de caja en `ledger/`. |
+| `src/config/` | Lectura de entorno (`DATABASE_URL`, `PORT`, errores de config). |
+| `src/database/typeorm/` | Nest `DatabaseModule`, `createDatabaseOptions`, `AppDataSource`. |
+| `src/database/migrations/` | Migraciones versionadas TypeORM. |
+| `src/database/bootstrap/` | Bootstrap local de Postgres (`db:bootstrap`) y parseo de URL. |
+| `src/database/cli/` | Scripts `migration:run` / `migration:revert`. |
+| `src/domain/` | Dominio compartido (sin Nest): `order-types`, `ledger/`, `money/` (precisión monetaria). |
 | `src/observability/` | OpenTelemetry y atributos de span. |
 | `src/openapi/` | Swagger y esquemas compartidos. |
 | `src/app.module.ts`, `src/main.ts` | Composición y arranque. |

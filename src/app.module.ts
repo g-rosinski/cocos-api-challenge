@@ -10,7 +10,7 @@ import { readDatabaseUrl } from '@/config/read-database-url';
 import { CommonModule } from '@/common/common.module';
 import { CorrelationMiddleware } from '@/common/middleware/correlation.middleware';
 import { UserIdMiddleware } from '@/common/middleware/user-id.middleware';
-import { DatabaseModule } from '@/database/database.module';
+import { DatabaseModule } from '@/database/typeorm/database.module';
 import { HealthModule } from '@/modules/health/health.module';
 import { InstrumentsModule } from '@/modules/instruments/instruments.module';
 import { OrdersModule } from '@/modules/orders/orders.module';

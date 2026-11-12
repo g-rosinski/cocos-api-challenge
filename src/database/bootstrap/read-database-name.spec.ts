@@ -1,8 +1,8 @@
-import { InvalidDatabaseUrlError } from '@/database/invalid-database-url.error';
+import { InvalidDatabaseUrlError } from '@/database/bootstrap/invalid-database-url.error';
 import {
   maintenanceDatabaseUrl,
   readDatabaseName,
-} from '@/database/read-database-name';
+} from '@/database/bootstrap/read-database-name';
 
 describe('readDatabaseName', () => {
   it('reads the database name from the url', () => {

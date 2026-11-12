@@ -1,5 +1,5 @@
 import { MissingEnvironmentVariableError } from '@/config/missing-environment-variable.error';
-import { createDatabaseOptions } from '@/database/database-options';
+import { createDatabaseOptions } from '@/database/typeorm/database-options';
 
 describe('createDatabaseOptions', () => {
   it('keeps synchronize disabled and uses the database url', () => {

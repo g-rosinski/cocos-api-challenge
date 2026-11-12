@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { AppDataSource } from '@/database/data-source';
+import { AppDataSource } from '@/database/typeorm/data-source';
 
 const logger = new Logger('MigrationRun');
 

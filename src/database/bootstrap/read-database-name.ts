@@ -1,4 +1,4 @@
-import { InvalidDatabaseUrlError } from '@/database/invalid-database-url.error';
+import { InvalidDatabaseUrlError } from '@/database/bootstrap/invalid-database-url.error';
 
 const DATABASE_NAME_PATTERN = /^[A-Za-z_][A-Za-z0-9_]*$/;
 

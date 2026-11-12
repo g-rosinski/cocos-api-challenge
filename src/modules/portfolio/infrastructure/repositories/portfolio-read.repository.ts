@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { numericMoneyTransformer } from '@/database/numeric-money.transformer';
+import { numericMoneyTransformer } from '@/domain/money/numeric-money';
 import { InstrumentEntity } from '@/modules/instruments/domain/entities/instrument.entity';
 import { mapInstrumentEntityToPortfolioInput } from '@/modules/instruments/infrastructure/mappers/instrument-entity.mapper';
 import { OrderEntity } from '@/modules/orders/domain/entities/order.entity';

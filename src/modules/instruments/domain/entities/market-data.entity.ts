@@ -1,4 +1,4 @@
-import { numericMoneyTransformer } from '@/database/numeric-money.transformer';
+import { numericMoneyTransformer } from '@/domain/money/numeric-money';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'marketdata' })
