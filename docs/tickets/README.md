@@ -8,9 +8,9 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 
 ## Estado de progreso
 
-- **Progreso general:** `[▓▓▓░░░░░░░] 33%`
+- **Progreso general:** `[▓▓▓▓░░░░░] 44%`
 - **Total de tareas:** 9
-- **Completadas:** 3
+- **Completadas:** 4
 - **En progreso:** 0
 
 ---
@@ -23,7 +23,7 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 | `TASK-02` | `chore` | Conectar PostgreSQL, cargar el seed y correr la migración | `TASK-01` | `[x] Completado` |
 | `TASK-03` | `feat` | Correlación, logs, errores y middleware de cuenta | `TASK-01` | `[x] Completado` |
 | `TASK-04` | `feat` | Consultar el portfolio | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
-| `TASK-05` | `feat` | Buscar instrumentos con paginado | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
+| `TASK-05` | `feat` | Buscar instrumentos con paginado | `TASK-02`, `TASK-03` | `[x] Completado` |
 | `TASK-06` | `feat` | Crear órdenes con lock, estados e idempotencia | `TASK-02`, `TASK-03` | `[ ] Pendiente` |
 | `TASK-07` | `feat` | Publicar Swagger y schema.json | `TASK-04`, `TASK-05`, `TASK-06` | `[ ] Pendiente` |
 | `TASK-08` | `feat` | Atributos de OpenTelemetry | `TASK-03`, `TASK-06` | `[ ] Pendiente` |
@@ -56,9 +56,9 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 - **Siguiente paso:** Revisar el plan de cambios y el ejemplo de Emiliano en el PRD.
 
 ### [TASK-05] feat: buscar instrumentos por ticker o nombre con paginado
-- **Estado:** `[ ] Pendiente`
+- **Estado:** `[x] Completado`
 - **Archivo de tarea:** [05-busqueda-de-instrumentos.md](05-busqueda-de-instrumentos.md)
-- **Siguiente paso:** Revisar el plan de cambios antes de crear el puerto de búsqueda.
+- **Resultados:** `GET /instruments` busca por ticker o nombre, excluye `MONEDA`, pagina con `limit` 10 y `offset` 0, y valida la query con Zod.
 
 ### [TASK-06] feat: crear órdenes con bloqueo pesimista, estados e idempotencia
 - **Estado:** `[ ] Pendiente`
@@ -86,3 +86,4 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 
 - **2026-11-11:** Roadmap reescrito con 9 tareas. Fuente de producto: `docs/prd.md`. Fuente técnica: `docs/rfc.md`.
 - **2026-11-11:** `TASK-01` completada. Proceso NestJS, lint, hooks y `.cursor/rules/architecture.mdc`. La imagen Docker no se construyó en esta máquina porque el comando `docker` no está instalado.
+- **2026-11-11:** `TASK-05` completada. `GET /instruments` con puerto, adaptador PostgreSQL, Zod y tests unitarios. El RFC sección 11 no cambió.

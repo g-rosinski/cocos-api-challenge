@@ -12,6 +12,7 @@ import { CorrelationMiddleware } from './common/correlation/correlation.middlewa
 import { UserIdMiddleware } from './common/middleware/user-id.middleware.js';
 import { DatabaseModule } from './database/database.module.js';
 import { HealthModule } from './health/health.module.js';
+import { InstrumentsModule } from './instruments/instruments.module.js';
 import { PortfolioModule } from './portfolio/portfolio.module.js';
 
 @Module({
@@ -23,6 +24,7 @@ import { PortfolioModule } from './portfolio/portfolio.module.js';
     DatabaseModule,
     CommonModule,
     HealthModule,
+    InstrumentsModule,
     PortfolioModule,
   ],
 })

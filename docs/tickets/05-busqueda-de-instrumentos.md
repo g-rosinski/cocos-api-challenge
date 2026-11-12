@@ -57,9 +57,9 @@ Fuente de producto: historia "Buscar un activo" de [docs/prd.md](../prd.md). Fue
 
 ## 5. Resultados esperados y verificación
 
-- [ ] **Comprobaciones manuales:** `q=pamp` devuelve Pampa Holding y `meta.total` 1. Sin `q`, la primera página trae 10 activos, `meta.total` es 65 y ninguno es `ARS`. `q=pesos` y `q=ARS` devuelven `data` vacío y `total` 0. `limit=10&offset=10` devuelve la segunda página y el mismo `total`.
-- [ ] **Escenarios de test (Unitarios / E2E):** Prueba unitaria del servicio con un puerto falso: texto vacío, coincidencia parcial y exclusión de `MONEDA`.
-- [ ] **Documentación:** El contrato de la sección 11 del RFC no cambia.
+- [x] **Comprobaciones manuales:** `q=pamp` devuelve Pampa Holding y `meta.total` 1. Sin `q`, la primera página trae 10 activos, `meta.total` es 65 y ninguno es `ARS`. `q=pesos` y `q=ARS` devuelven `data` vacío y `total` 0. `limit=10&offset=10` devuelve la segunda página y el mismo `total`.
+- [x] **Escenarios de test (Unitarios / E2E):** Prueba unitaria del servicio con un puerto falso: texto vacío, coincidencia parcial y exclusión de `MONEDA`. Schema Zod, adaptador TypeORM y controlador cubiertos en unitarias.
+- [x] **Documentación:** El contrato de la sección 11 del RFC no cambia.
 
 ## Dependencias
 
