@@ -23,7 +23,7 @@ import {
 } from '@/openapi/error-response.schema';
 import type { CreateOrderBody } from '@/modules/orders/application/dto/create-order-body';
 import {
-  ORDER_SIDES,
+  TRADABLE_ORDER_SIDES,
   ORDER_TYPES,
 } from '@/modules/orders/domain/entities/order.types';
 import type { OrderResponse } from '@/modules/orders/application/dto/order-response.types';
@@ -53,7 +53,7 @@ export const orderResponseSchema: SchemaObject = {
     order_id: { type: 'integer' },
     user_id: { type: 'integer', example: 1 },
     instrument_id: { type: 'integer', example: 47 },
-    side: { type: 'string', enum: [...ORDER_SIDES] },
+    side: { type: 'string', enum: [...TRADABLE_ORDER_SIDES] },
     type: { type: 'string', enum: [...ORDER_TYPES] },
     size: { type: 'integer' },
     price: { type: 'number' },

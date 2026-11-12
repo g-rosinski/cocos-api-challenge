@@ -1,9 +1,11 @@
+import type { OrderSide, OrderStatus } from '@/domain/order-types';
+
 export type PortfolioOrderInput = {
   instrumentId: number;
   size: number;
   price: number;
-  side: string;
-  status: string;
+  side: OrderSide;
+  status: OrderStatus;
   type: string;
 };
 

@@ -12,7 +12,7 @@ import {
   ORDER_MAX_SIZE,
 } from '@/common/domain-constants';
 import {
-  ORDER_SIDES,
+  TRADABLE_ORDER_SIDES,
   ORDER_TYPES,
 } from '@/modules/orders/domain/entities/order.types';
 
@@ -30,7 +30,7 @@ const moneySchema = z
 export const createOrderBodySchema = z
   .object({
     instrument_id: z.number().int().positive().max(ORDER_MAX_SIZE),
-    side: z.enum(ORDER_SIDES),
+    side: z.enum(TRADABLE_ORDER_SIDES),
     type: z.enum(ORDER_TYPES),
     size: z.number().int().positive().max(ORDER_MAX_SIZE).optional(),
     amount: moneySchema.optional(),

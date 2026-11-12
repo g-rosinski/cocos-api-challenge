@@ -1,14 +1,14 @@
 import type {
-  OrderSide,
   OrderStatus,
   OrderType,
+  TradableOrderSide,
 } from '@/modules/orders/domain/entities/order.types';
 
 export type OrderResponse = {
   order_id: number;
   user_id: number;
   instrument_id: number;
-  side: OrderSide;
+  side: TradableOrderSide;
   type: OrderType;
   size: number;
   price: number;

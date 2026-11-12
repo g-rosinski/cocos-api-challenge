@@ -2,7 +2,7 @@ import {
   filledCashDeltaCents,
   openBuyReserveCents,
   toCents,
-} from '@/ledger/cash-movement';
+} from '@/domain/ledger/cash-movement';
 
 describe('cash-movement', () => {
   it('matches portfolio and availability cash for decimal prices', () => {

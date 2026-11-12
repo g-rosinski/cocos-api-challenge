@@ -4,10 +4,10 @@ import { DependencyException } from '@/common/errors/dependency.exception';
 import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
 import { IdempotencyConflictError } from '@/modules/orders/domain/idempotency-conflict.error';
 import { formatOrderDatetime } from '@/modules/orders/domain/format-order-datetime';
+import type { OrderSide, OrderStatus } from '@/domain/order-types';
 import type {
-  OrderSide,
-  OrderStatus,
   OrderType,
+  TradableOrderSide,
 } from '@/modules/orders/domain/entities/order.types';
 import type { AvailabilityOrder } from '@/modules/orders/domain/validators/trading-availability';
 import type { OrderResponse } from '@/modules/orders/application/dto/order-response.types';
@@ -60,8 +60,20 @@ function readString(value: unknown): string {
   return value;
 }
 
-function readOrderSide(value: unknown): OrderSide {
+function readTradableOrderSide(value: unknown): TradableOrderSide {
   if (value === 'BUY' || value === 'SELL') {
+    return value;
+  }
+  throw new DependencyException(value);
+}
+
+function readOrderSide(value: unknown): OrderSide {
+  if (
+    value === 'BUY' ||
+    value === 'SELL' ||
+    value === 'CASH_IN' ||
+    value === 'CASH_OUT'
+  ) {
     return value;
   }
   throw new DependencyException(value);
@@ -75,7 +87,12 @@ function readOrderType(value: unknown): OrderType {
 }
 
 function readOrderStatus(value: unknown): OrderStatus {
-  if (value === 'FILLED' || value === 'NEW' || value === 'REJECTED') {
+  if (
+    value === 'FILLED' ||
+    value === 'NEW' ||
+    value === 'REJECTED' ||
+    value === 'CANCELLED'
+  ) {
     return value;
   }
   throw new DependencyException(value);
@@ -97,7 +114,7 @@ function mapOrder(row: Record<string, unknown>): OrderResponse {
     order_id: readNumber(row.id),
     user_id: readNumber(row.userid),
     instrument_id: readNumber(row.instrumentid),
-    side: readOrderSide(row.side),
+    side: readTradableOrderSide(row.side),
     type: readOrderType(row.type),
     size: readNumber(row.size),
     price: readMoney(row.price),
@@ -111,9 +128,9 @@ function mapAvailability(row: Record<string, unknown>): AvailabilityOrder {
     instrumentId: readNumber(row.instrumentid),
     size: readNumber(row.size),
     price: readMoney(row.price),
-    side: readString(row.side),
-    status: readString(row.status),
-    type: readString(row.type),
+    side: readOrderSide(row.side),
+    status: readOrderStatus(row.status),
+    type: readOrderType(row.type),
   };
 }
 

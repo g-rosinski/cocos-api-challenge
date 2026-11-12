@@ -1,5 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { DependencyException } from '@/common/errors/dependency.exception';
+import {
+  ORDER_SIDES,
+  ORDER_STATUSES,
+  type OrderSide,
+  type OrderStatus,
+} from '@/domain/order-types';
 import type {
   PortfolioCalculationInput,
   PortfolioInstrumentInput,
@@ -32,13 +39,27 @@ function toNumber(value: string | number): number {
   return typeof value === 'number' ? value : Number(value);
 }
 
+function readOrderSide(value: string): OrderSide {
+  if ((ORDER_SIDES as readonly string[]).includes(value)) {
+    return value as OrderSide;
+  }
+  throw new DependencyException(value);
+}
+
+function readOrderStatus(value: string): OrderStatus {
+  if ((ORDER_STATUSES as readonly string[]).includes(value)) {
+    return value as OrderStatus;
+  }
+  throw new DependencyException(value);
+}
+
 function mapOrderRow(row: OrderRow): PortfolioOrderInput {
   return {
     instrumentId: row.instrumentid,
     size: toNumber(row.size),
     price: toNumber(row.price),
-    side: row.side,
-    status: row.status,
+    side: readOrderSide(row.side),
+    status: readOrderStatus(row.status),
     type: row.type,
   };
 }

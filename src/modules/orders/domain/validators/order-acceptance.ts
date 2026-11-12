@@ -1,8 +1,8 @@
-import { toCents } from '@/ledger/cash-movement';
-import type { OrderSide } from '@/modules/orders/domain/entities/order.types';
+import { toCents } from '@/domain/ledger/cash-movement';
+import type { TradableOrderSide } from '@/modules/orders/domain/entities/order.types';
 
 export type OrderAcceptanceInput = {
-  side: OrderSide;
+  side: TradableOrderSide;
   size: number;
   price: number;
   availableCash: number;

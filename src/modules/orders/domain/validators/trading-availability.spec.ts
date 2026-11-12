@@ -65,7 +65,12 @@ describe('calculateTradingAvailability', () => {
         }),
         order({ side: 'SELL', status: 'REJECTED', size: 1000, price: 925.85 }),
         order({ side: 'SELL', status: 'CANCELLED', size: 10, price: 900 }),
-        order({ side: 'HOLD', status: 'FILLED', size: 1, price: 10 }),
+        order({
+          side: 'HOLD' as unknown as AvailabilityOrder['side'],
+          status: 'FILLED',
+          size: 1,
+          price: 10,
+        }),
         order({
           side: 'SELL',
           status: 'FILLED',

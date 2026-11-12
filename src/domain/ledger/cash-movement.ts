@@ -1,10 +1,12 @@
+import type { OrderSide, OrderStatus } from '@/domain/order-types';
+
 export function toCents(value: number): number {
   return Math.round(value * 100);
 }
 
 type CashDeltaOrder = {
-  side: string;
-  status: string;
+  side: OrderSide;
+  status: OrderStatus;
   size: number;
   price: number;
 };

@@ -1,14 +1,15 @@
+import type { OrderSide, OrderStatus } from '@/domain/order-types';
 import {
   filledCashDeltaCents,
   openBuyReserveCents,
-} from '@/ledger/cash-movement';
+} from '@/domain/ledger/cash-movement';
 
 export type AvailabilityOrder = {
   instrumentId: number;
   size: number;
   price: number;
-  side: string;
-  status: string;
+  side: OrderSide;
+  status: OrderStatus;
   type: string;
 };
 

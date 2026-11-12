@@ -23,7 +23,7 @@ La fuente de producto es `docs/prd.md`. La fuente técnica es `docs/rfc.md`. Si 
 | `src/common/` | Borde HTTP compartido: correlación, middleware de usuario, filtro de errores, log canónico. |
 | `src/config/` | Lectura y validación de variables de entorno. |
 | `src/database/` | TypeORM, migraciones y bootstrap local. |
-| `src/ledger/` | Reglas puras de caja compartidas entre portfolio y órdenes (sin Nest). |
+| `src/domain/` | Dominio compartido entre módulos (sin Nest): vocabulario de órdenes y reglas de caja en `ledger/`. |
 | `src/observability/` | OpenTelemetry y atributos de span. |
 | `src/openapi/` | Swagger y esquemas compartidos. |
 | `src/app.module.ts`, `src/main.ts` | Composición y arranque. |

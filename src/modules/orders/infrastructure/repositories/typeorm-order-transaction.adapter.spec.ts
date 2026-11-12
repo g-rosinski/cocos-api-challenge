@@ -316,7 +316,7 @@ describe('TypeOrmOrderTransactionAdapter', () => {
     ['an empty text column', [{ ...storedRow, payload_hash: '' }]],
     ['a text column that is not text', [{ ...storedRow, payload_hash: 12 }]],
     ['an unknown order type', [{ ...storedRow, type: 'STOP' }]],
-    ['an unknown order status', [{ ...storedRow, status: 'CANCELLED' }]],
+    ['an unknown order status', [{ ...storedRow, status: 'PENDING' }]],
     ['a datetime that is not a timestamp', [{ ...storedRow, datetime: 1 }]],
     [
       'a datetime string that cannot be read',
