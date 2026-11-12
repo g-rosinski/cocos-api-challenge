@@ -63,8 +63,8 @@ Fuente de producto: historia "Enviar una orden" de [docs/prd.md](../prd.md). Fue
 ## 5. Resultados esperados y verificación
 
 - [ ] **Comprobaciones manuales:** Compra a mercado de 1 PAMP con la cuenta 1 responde 201 `FILLED`; la cuenta queda en 41 PAMP y el disponible baja 925.85. Compra límite de 1 Loma Negra a 710 responde 201 `NEW`, sin posición nueva, y el disponible baja 710.00. Venta de 1000 PAMP responde 201 `REJECTED` y la tenencia sigue en 40.
-- [ ] **Escenarios de test (Unitarios / E2E):** Prueba unitaria de la máquina y de cada strategy. Prueba de la factory con `MARKET` y `LIMIT`. La integración contra PostgreSQL queda en TASK-09.
-- [ ] **Documentación:** Los ejemplos de la sección 11 del RFC siguen siendo ejecutables con estos cuerpos.
+- [x] **Escenarios de test (Unitarios / E2E):** Prueba unitaria de la máquina y de cada strategy. Prueba de la factory con `MARKET` y `LIMIT`. La integración contra PostgreSQL queda en TASK-09.
+- [x] **Documentación:** Los ejemplos de la sección 11 del RFC siguen siendo ejecutables con estos cuerpos. El `CREATE TABLE` no se copió.
 
 ## Dependencias
 

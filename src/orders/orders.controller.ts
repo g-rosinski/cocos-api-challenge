@@ -1,0 +1,65 @@
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import { getCallContext } from '../common/correlation/call-context.js';
+import { InternalException } from '../common/errors/internal.exception.js';
+import {
+  createOrderBodySchema,
+  createOrderValidationPipe,
+  type CreateOrderBody,
+} from './create-order-body.js';
+import { CreateOrderService } from './create-order.service.js';
+import {
+  IdempotencyKey,
+  idempotencyKeySchema,
+  idempotencyKeyValidationPipe,
+} from './idempotency-key.js';
+import type { OrderResponse } from './order-response.types.js';
+
+@Controller('orders')
+export class OrdersController {
+  constructor(private readonly createOrderService: CreateOrderService) {}
+
+  @Post()
+  @HttpCode(HttpStatus.CREATED)
+  async createOrder(
+    @IdempotencyKey({
+      schema: idempotencyKeySchema,
+      pipes: [idempotencyKeyValidationPipe],
+    })
+    idempotencyKey: string,
+    @Body({
+      schema: createOrderBodySchema,
+      pipes: [createOrderValidationPipe],
+    })
+    body: CreateOrderBody,
+  ): Promise<OrderResponse> {
+    const userId = getCallContext()?.userId;
+    if (userId === undefined) {
+      throw new InternalException();
+    }
+    const callContext = getCallContext();
+    if (callContext !== undefined) {
+      callContext.title = 'CreateOrder';
+      callContext.attributes = {
+        instrument_id: body.instrument_id,
+        side: body.side,
+        type: body.type,
+      };
+    }
+    const order = await this.createOrderService.create(
+      userId,
+      idempotencyKey,
+      body,
+    );
+    const updated = getCallContext();
+    if (updated !== undefined) {
+      updated.status = order.status;
+      updated.attributes = {
+        ...(updated.attributes ?? {}),
+        order_id: order.order_id,
+        side: order.side,
+        type: order.type,
+      };
+    }
+    return order;
+  }
+}

@@ -13,6 +13,7 @@ import { UserIdMiddleware } from './common/middleware/user-id.middleware.js';
 import { DatabaseModule } from './database/database.module.js';
 import { HealthModule } from './health/health.module.js';
 import { InstrumentsModule } from './instruments/instruments.module.js';
+import { OrdersModule } from './orders/orders.module.js';
 import { PortfolioModule } from './portfolio/portfolio.module.js';
 
 @Module({
@@ -25,6 +26,7 @@ import { PortfolioModule } from './portfolio/portfolio.module.js';
     CommonModule,
     HealthModule,
     InstrumentsModule,
+    OrdersModule,
     PortfolioModule,
   ],
 })
