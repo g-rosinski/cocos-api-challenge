@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import type { InstrumentsResponse } from './instruments-response.types.js';
+import type { InstrumentsResponse } from '@/instruments/instruments-response.types';
 import {
   INSTRUMENT_SEARCH,
   type InstrumentSearchPort,
-} from './ports/instrument-search.port.js';
-import type { SearchInstrumentsQuery } from './search-instruments-query.js';
+} from '@/instruments/ports/instrument-search.port';
+import type { SearchInstrumentsQuery } from '@/instruments/search-instruments-query';
 
 @Injectable()
 export class InstrumentsService {

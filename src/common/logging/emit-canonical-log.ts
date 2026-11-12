@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import type { CanonicalLogLevel } from './resolve-canonical-log-level.js';
+import type { CanonicalLogLevel } from '@/common/logging/resolve-canonical-log-level';
 
 export function emitCanonicalLog(
   logger: Logger,

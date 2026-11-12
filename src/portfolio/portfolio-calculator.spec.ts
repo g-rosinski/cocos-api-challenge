@@ -1,10 +1,9 @@
-import { describe, expect, it } from 'vitest';
-import { calculatePortfolio } from './domain/portfolio-calculator.js';
+import { calculatePortfolio } from '@/portfolio/domain/portfolio-calculator';
 import type {
   PortfolioCalculationInput,
   PortfolioInstrumentInput,
   PortfolioOrderInput,
-} from './domain/portfolio-input.types.js';
+} from '@/portfolio/domain/portfolio-input.types';
 
 const ars: PortfolioInstrumentInput = {
   id: 66,

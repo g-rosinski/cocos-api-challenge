@@ -1,5 +1,5 @@
-import { PriceUnavailableException } from '../../common/errors/price-unavailable.exception.js';
-import { MarketOrderStrategy } from './market-order.strategy.js';
+import { PriceUnavailableException } from '@/common/errors/price-unavailable.exception';
+import { MarketOrderStrategy } from '@/orders/strategies/market-order.strategy';
 
 describe('MarketOrderStrategy', () => {
   const strategy = new MarketOrderStrategy();

@@ -3,7 +3,7 @@ import {
   type OrderAttributes,
   type RequestAttributes,
   isOrderAttributes,
-} from './request-attributes.js';
+} from '@/observability/request-attributes';
 
 export function applyRequestSpanAttributes(
   span: Span,

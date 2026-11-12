@@ -1,25 +1,25 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { getCallContext } from '../common/correlation/call-context.js';
-import { ApiClientException } from '../common/errors/api-client.exception.js';
-import { IdempotencyKeyMismatchException } from '../common/errors/idempotency-key-mismatch.exception.js';
-import { InstrumentNotFoundException } from '../common/errors/instrument-not-found.exception.js';
-import { InstrumentNotTradableException } from '../common/errors/instrument-not-tradable.exception.js';
-import { InternalException } from '../common/errors/internal.exception.js';
-import type { CreateOrderBody } from './create-order-body.js';
-import { canonicalOrderPayloadHash } from './domain/canonical-order-payload.js';
-import { IdempotencyConflictError } from './domain/idempotency-conflict.error.js';
-import { IllegalOrderTransitionError } from './domain/illegal-order-transition.error.js';
-import { OrderStateMachine } from './domain/order-state-machine.js';
-import { resolveOrderSize } from './domain/resolve-order-size.js';
-import { calculateTradingAvailability } from './domain/trading-availability.js';
-import type { OrderResponse } from './order-response.types.js';
-import { OrderStrategyFactory } from './order-strategy.factory.js';
+import { getCallContext } from '@/common/correlation/call-context';
+import { ApiClientException } from '@/common/errors/api-client.exception';
+import { IdempotencyKeyMismatchException } from '@/common/errors/idempotency-key-mismatch.exception';
+import { InstrumentNotFoundException } from '@/common/errors/instrument-not-found.exception';
+import { InstrumentNotTradableException } from '@/common/errors/instrument-not-tradable.exception';
+import { InternalException } from '@/common/errors/internal.exception';
+import type { CreateOrderBody } from '@/orders/create-order-body';
+import { canonicalOrderPayloadHash } from '@/orders/domain/canonical-order-payload';
+import { IdempotencyConflictError } from '@/orders/domain/idempotency-conflict.error';
+import { IllegalOrderTransitionError } from '@/orders/domain/illegal-order-transition.error';
+import { OrderStateMachine } from '@/orders/domain/order-state-machine';
+import { resolveOrderSize } from '@/orders/domain/resolve-order-size';
+import { calculateTradingAvailability } from '@/orders/domain/trading-availability';
+import type { OrderResponse } from '@/orders/order-response.types';
+import { OrderStrategyFactory } from '@/orders/order-strategy.factory';
 import {
   ORDER_TRANSACTION,
   type LockedOrderContext,
   type OrderTransactionPort,
   type StoredIdempotency,
-} from './ports/order-transaction.port.js';
+} from '@/orders/ports/order-transaction.port';
 
 type ResolvedOrder = {
   order: OrderResponse;

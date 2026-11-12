@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { IllegalOrderTransitionError } from './illegal-order-transition.error.js';
-import { isOrderAccepted } from './order-acceptance.js';
-import type { OrderSide, OrderStatus } from './order.types.js';
+import { IllegalOrderTransitionError } from '@/orders/domain/illegal-order-transition.error';
+import { isOrderAccepted } from '@/orders/domain/order-acceptance';
+import type { OrderSide, OrderStatus } from '@/orders/domain/order.types';
 
 export type OrderDecisionInput = {
   acceptedStatus: string;

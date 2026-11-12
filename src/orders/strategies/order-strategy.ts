@@ -1,4 +1,4 @@
-import type { OrderStatus } from '../domain/order.types.js';
+import type { OrderStatus } from '@/orders/domain/order.types';
 
 export type PriceResolutionInput = {
   requestedPrice?: number;

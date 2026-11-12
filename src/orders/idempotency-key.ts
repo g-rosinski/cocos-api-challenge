@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import type { Request } from 'express';
 import { z } from 'zod';
-import { InvalidIdempotencyKeyException } from '../common/errors/invalid-idempotency-key.exception.js';
+import { InvalidIdempotencyKeyException } from '@/common/errors/invalid-idempotency-key.exception';
 
 export const idempotencyKeySchema = z
   .uuid()

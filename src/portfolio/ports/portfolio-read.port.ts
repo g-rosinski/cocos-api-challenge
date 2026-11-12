@@ -1,4 +1,4 @@
-import type { PortfolioCalculationInput } from '../domain/portfolio-input.types.js';
+import type { PortfolioCalculationInput } from '@/portfolio/domain/portfolio-input.types';
 
 export const PORTFOLIO_READ = Symbol('PORTFOLIO_READ');
 

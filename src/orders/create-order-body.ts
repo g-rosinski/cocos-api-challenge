@@ -4,10 +4,10 @@ import {
   type PipeTransform,
 } from '@nestjs/common';
 import { z } from 'zod';
-import { InvalidOrderSideException } from '../common/errors/invalid-order-side.exception.js';
-import { InvalidOrderTypeException } from '../common/errors/invalid-order-type.exception.js';
-import { ValidationException } from '../common/errors/validation.exception.js';
-import { ORDER_SIDES, ORDER_TYPES } from './domain/order.types.js';
+import { InvalidOrderSideException } from '@/common/errors/invalid-order-side.exception';
+import { InvalidOrderTypeException } from '@/common/errors/invalid-order-type.exception';
+import { ValidationException } from '@/common/errors/validation.exception';
+import { ORDER_SIDES, ORDER_TYPES } from '@/orders/domain/order.types';
 
 const MAX_MONEY = 99_999_999.99;
 const MAX_SIZE = 2_147_483_647;

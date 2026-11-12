@@ -1,9 +1,9 @@
 import type { NextFunction, Request, Response } from 'express';
-import { callContextStorage } from '../correlation/call-context.js';
-import { InvalidUserIdException } from '../errors/invalid-user-id.exception.js';
-import { UserNotFoundException } from '../errors/user-not-found.exception.js';
-import type { UserAccountLookup } from '../accounts/user-account-lookup.js';
-import { UserIdMiddleware } from './user-id.middleware.js';
+import { callContextStorage } from '@/common/correlation/call-context';
+import { InvalidUserIdException } from '@/common/errors/invalid-user-id.exception';
+import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
+import type { UserAccountLookup } from '@/common/accounts/user-account-lookup';
+import { UserIdMiddleware } from '@/common/middleware/user-id.middleware';
 
 describe('UserIdMiddleware', () => {
   const next: NextFunction = vi.fn();

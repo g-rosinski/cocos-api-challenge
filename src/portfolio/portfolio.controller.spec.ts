@@ -1,11 +1,11 @@
 import { Test } from '@nestjs/testing';
-import * as callContext from '../common/correlation/call-context.js';
-import { callContextStorage } from '../common/correlation/call-context.js';
-import { InternalException } from '../common/errors/internal.exception.js';
-import { PortfolioController } from './portfolio.controller.js';
-import type { PortfolioResponse } from './portfolio-response.types.js';
-import { PortfolioService } from './portfolio.service.js';
-import type { PortfolioService as PortfolioServiceType } from './portfolio.service.js';
+import * as callContext from '@/common/correlation/call-context';
+import { callContextStorage } from '@/common/correlation/call-context';
+import { InternalException } from '@/common/errors/internal.exception';
+import { PortfolioController } from '@/portfolio/portfolio.controller';
+import type { PortfolioResponse } from '@/portfolio/portfolio-response.types';
+import { PortfolioService } from '@/portfolio/portfolio.service';
+import type { PortfolioService as PortfolioServiceType } from '@/portfolio/portfolio.service';
 
 describe('PortfolioController', () => {
   afterEach(() => {

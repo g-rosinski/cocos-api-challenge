@@ -1,4 +1,4 @@
-import type { OrderSide } from './order.types.js';
+import type { OrderSide } from '@/orders/domain/order.types';
 
 export type OrderAcceptanceInput = {
   side: OrderSide;

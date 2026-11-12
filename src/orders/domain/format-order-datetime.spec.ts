@@ -1,4 +1,4 @@
-import { formatOrderDatetime } from './format-order-datetime.js';
+import { formatOrderDatetime } from '@/orders/domain/format-order-datetime';
 
 describe('formatOrderDatetime', () => {
   it('formats a date without milliseconds or a timezone suffix', () => {

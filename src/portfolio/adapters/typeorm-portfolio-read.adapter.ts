@@ -4,8 +4,8 @@ import type {
   PortfolioCalculationInput,
   PortfolioInstrumentInput,
   PortfolioOrderInput,
-} from '../domain/portfolio-input.types.js';
-import type { PortfolioReadPort } from '../ports/portfolio-read.port.js';
+} from '@/portfolio/domain/portfolio-input.types';
+import type { PortfolioReadPort } from '@/portfolio/ports/portfolio-read.port';
 
 type OrderRow = {
   instrumentid: number;

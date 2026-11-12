@@ -3,12 +3,12 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { Client } from 'pg';
 import { DataSource } from 'typeorm';
-import type { DatabaseConfig } from './database-options.js';
-import { createDatabaseOptions } from './database-options.js';
+import type { DatabaseConfig } from '@/database/database-options';
+import { createDatabaseOptions } from '@/database/database-options';
 import {
   maintenanceDatabaseUrl,
   readDatabaseName,
-} from './read-database-name.js';
+} from '@/database/read-database-name';
 
 const logger = new Logger('DatabaseBootstrap');
 

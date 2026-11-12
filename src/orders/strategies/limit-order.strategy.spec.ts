@@ -1,5 +1,5 @@
-import { ValidationException } from '../../common/errors/validation.exception.js';
-import { LimitOrderStrategy } from './limit-order.strategy.js';
+import { ValidationException } from '@/common/errors/validation.exception';
+import { LimitOrderStrategy } from '@/orders/strategies/limit-order.strategy';
 
 describe('LimitOrderStrategy', () => {
   const strategy = new LimitOrderStrategy();

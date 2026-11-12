@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmInstrumentSearchAdapter } from './adapters/typeorm-instrument-search.adapter.js';
-import { InstrumentsController } from './instruments.controller.js';
-import { InstrumentsService } from './instruments.service.js';
-import { INSTRUMENT_SEARCH } from './ports/instrument-search.port.js';
+import { TypeOrmInstrumentSearchAdapter } from '@/instruments/adapters/typeorm-instrument-search.adapter';
+import { InstrumentsController } from '@/instruments/instruments.controller';
+import { InstrumentsService } from '@/instruments/instruments.service';
+import { INSTRUMENT_SEARCH } from '@/instruments/ports/instrument-search.port';
 
 @Module({
   controllers: [InstrumentsController],

@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto';
 import {
   canonicalOrderPayload,
   canonicalOrderPayloadHash,
-} from './canonical-order-payload.js';
+} from '@/orders/domain/canonical-order-payload';
 
 describe('canonicalOrderPayload', () => {
   it('orders keys and keeps size without a price', () => {

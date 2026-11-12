@@ -3,11 +3,11 @@ import type { NextFunction, Request, Response } from 'express';
 import {
   USER_ACCOUNT_LOOKUP,
   type UserAccountLookup,
-} from '../accounts/user-account-lookup.js';
-import { getCallContext } from '../correlation/call-context.js';
-import { InvalidUserIdException } from '../errors/invalid-user-id.exception.js';
-import { UserNotFoundException } from '../errors/user-not-found.exception.js';
-import { parseUserId } from './parse-user-id.js';
+} from '@/common/accounts/user-account-lookup';
+import { getCallContext } from '@/common/correlation/call-context';
+import { InvalidUserIdException } from '@/common/errors/invalid-user-id.exception';
+import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
+import { parseUserId } from '@/common/middleware/parse-user-id';
 
 @Injectable()
 export class UserIdMiddleware implements NestMiddleware {

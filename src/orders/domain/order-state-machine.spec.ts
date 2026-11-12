@@ -1,6 +1,6 @@
-import { isOrderAccepted } from './order-acceptance.js';
-import { IllegalOrderTransitionError } from './illegal-order-transition.error.js';
-import { OrderStateMachine } from './order-state-machine.js';
+import { isOrderAccepted } from '@/orders/domain/order-acceptance';
+import { IllegalOrderTransitionError } from '@/orders/domain/illegal-order-transition.error';
+import { OrderStateMachine } from '@/orders/domain/order-state-machine';
 
 describe('OrderStateMachine', () => {
   const machine = new OrderStateMachine();

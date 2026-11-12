@@ -8,8 +8,8 @@ import {
   getSchemaPath,
   type SchemaObject,
 } from '@nestjs/swagger';
-import { databaseDownExample } from '../openapi/error-response.schema.js';
-import type { InstrumentsResponse } from './instruments-response.types.js';
+import { databaseDownExample } from '@/openapi/error-response.schema';
+import type { InstrumentsResponse } from '@/instruments/instruments-response.types';
 
 const instrumentItemSchema: SchemaObject = {
   type: 'object',

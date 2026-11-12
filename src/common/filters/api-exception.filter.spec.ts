@@ -6,12 +6,12 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { QueryFailedError } from 'typeorm';
-import { callContextStorage } from '../correlation/call-context.js';
-import { DependencyException } from '../errors/dependency.exception.js';
-import { InternalException } from '../errors/internal.exception.js';
-import { InvalidUserIdException } from '../errors/invalid-user-id.exception.js';
-import { UserNotFoundException } from '../errors/user-not-found.exception.js';
-import { ApiExceptionFilter } from './api-exception.filter.js';
+import { callContextStorage } from '@/common/correlation/call-context';
+import { DependencyException } from '@/common/errors/dependency.exception';
+import { InternalException } from '@/common/errors/internal.exception';
+import { InvalidUserIdException } from '@/common/errors/invalid-user-id.exception';
+import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
+import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
 
 describe('ApiExceptionFilter', () => {
   const filter = new ApiExceptionFilter();

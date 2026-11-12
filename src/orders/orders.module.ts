@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmOrderTransactionAdapter } from './adapters/typeorm-order-transaction.adapter.js';
-import { CreateOrderService } from './create-order.service.js';
-import { OrderStateMachine } from './domain/order-state-machine.js';
-import { OrdersController } from './orders.controller.js';
-import { OrderStrategyFactory } from './order-strategy.factory.js';
-import { ORDER_TRANSACTION } from './ports/order-transaction.port.js';
+import { TypeOrmOrderTransactionAdapter } from '@/orders/adapters/typeorm-order-transaction.adapter';
+import { CreateOrderService } from '@/orders/create-order.service';
+import { OrderStateMachine } from '@/orders/domain/order-state-machine';
+import { OrdersController } from '@/orders/orders.controller';
+import { OrderStrategyFactory } from '@/orders/order-strategy.factory';
+import { ORDER_TRANSACTION } from '@/orders/ports/order-transaction.port';
 
 @Module({
   controllers: [OrdersController],

@@ -1,6 +1,6 @@
 import { StandardSchemaValidationPipe } from '@nestjs/common';
 import { z } from 'zod';
-import { ValidationException } from '../common/errors/validation.exception.js';
+import { ValidationException } from '@/common/errors/validation.exception';
 
 export const searchInstrumentsQuerySchema = z.object({
   q: z.string().trim().optional().default(''),

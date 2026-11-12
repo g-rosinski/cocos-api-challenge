@@ -1,8 +1,8 @@
 import { DataSource, QueryFailedError } from 'typeorm';
-import { DependencyException } from '../../common/errors/dependency.exception.js';
-import { UserNotFoundException } from '../../common/errors/user-not-found.exception.js';
-import { IdempotencyConflictError } from '../domain/idempotency-conflict.error.js';
-import { TypeOrmOrderTransactionAdapter } from './typeorm-order-transaction.adapter.js';
+import { DependencyException } from '@/common/errors/dependency.exception';
+import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
+import { IdempotencyConflictError } from '@/orders/domain/idempotency-conflict.error';
+import { TypeOrmOrderTransactionAdapter } from '@/orders/adapters/typeorm-order-transaction.adapter';
 
 type QueryRunnerDouble = {
   connect: ReturnType<typeof vi.fn>;

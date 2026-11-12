@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource, QueryFailedError, type QueryRunner } from 'typeorm';
-import { DependencyException } from '../../common/errors/dependency.exception.js';
-import { UserNotFoundException } from '../../common/errors/user-not-found.exception.js';
-import { IdempotencyConflictError } from '../domain/idempotency-conflict.error.js';
-import { formatOrderDatetime } from '../domain/format-order-datetime.js';
+import { DependencyException } from '@/common/errors/dependency.exception';
+import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
+import { IdempotencyConflictError } from '@/orders/domain/idempotency-conflict.error';
+import { formatOrderDatetime } from '@/orders/domain/format-order-datetime';
 import type {
   OrderSide,
   OrderStatus,
   OrderType,
-} from '../domain/order.types.js';
-import type { AvailabilityOrder } from '../domain/trading-availability.js';
-import type { OrderResponse } from '../order-response.types.js';
+} from '@/orders/domain/order.types';
+import type { AvailabilityOrder } from '@/orders/domain/trading-availability';
+import type { OrderResponse } from '@/orders/order-response.types';
 import type {
   LockedOrderContext,
   NewIdempotencyRecord,
@@ -18,7 +18,7 @@ import type {
   OrderTransactionPort,
   StoredIdempotency,
   TradableInstrument,
-} from '../ports/order-transaction.port.js';
+} from '@/orders/ports/order-transaction.port';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);

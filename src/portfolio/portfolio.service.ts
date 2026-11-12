@@ -1,10 +1,10 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { calculatePortfolio } from './domain/portfolio-calculator.js';
+import { calculatePortfolio } from '@/portfolio/domain/portfolio-calculator';
 import {
   PORTFOLIO_READ,
   type PortfolioReadPort,
-} from './ports/portfolio-read.port.js';
-import type { PortfolioResponse } from './portfolio-response.types.js';
+} from '@/portfolio/ports/portfolio-read.port';
+import type { PortfolioResponse } from '@/portfolio/portfolio-response.types';
 
 @Injectable()
 export class PortfolioService {

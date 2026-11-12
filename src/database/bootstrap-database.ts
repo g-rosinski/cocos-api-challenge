@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
-import { bootstrapLocalDatabase } from './bootstrap-local-database.js';
-import { createDatabaseOptions } from './database-options.js';
+import { bootstrapLocalDatabase } from '@/database/bootstrap-local-database';
+import { createDatabaseOptions } from '@/database/database-options';
 
 const logger = new Logger('DatabaseBootstrap');
 

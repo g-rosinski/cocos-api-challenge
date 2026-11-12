@@ -11,7 +11,7 @@ La fuente de producto es `docs/prd.md`. La fuente técnica es `docs/rfc.md`. Si 
 
 - Node.js 26, la LTS activa.
 - NestJS, un solo proceso, tres módulos: cuenta, instrumentos y órdenes.
-- TypeScript estricto. Identificadores de código en inglés. Documentación en español.
+- TypeScript estricto. Identificadores de código en inglés. Documentación en español. Imports locales con alias `@/` hacia `src/`, sin extensión.
 - TypeORM con `synchronize` apagado. PostgreSQL por `DATABASE_URL`.
 - No usar `any`.
 

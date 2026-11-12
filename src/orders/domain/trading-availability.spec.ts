@@ -1,5 +1,5 @@
-import { calculateTradingAvailability } from './trading-availability.js';
-import type { AvailabilityOrder } from './trading-availability.js';
+import { calculateTradingAvailability } from '@/orders/domain/trading-availability';
+import type { AvailabilityOrder } from '@/orders/domain/trading-availability';
 
 function order(
   overrides: Partial<AvailabilityOrder> &

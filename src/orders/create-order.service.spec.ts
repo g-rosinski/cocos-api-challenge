@@ -1,22 +1,22 @@
 import { Logger } from '@nestjs/common';
-import { callContextStorage } from '../common/correlation/call-context.js';
-import { IdempotencyKeyMismatchException } from '../common/errors/idempotency-key-mismatch.exception.js';
-import { InstrumentNotFoundException } from '../common/errors/instrument-not-found.exception.js';
-import { InstrumentNotTradableException } from '../common/errors/instrument-not-tradable.exception.js';
-import { InternalException } from '../common/errors/internal.exception.js';
-import { PriceUnavailableException } from '../common/errors/price-unavailable.exception.js';
-import type { CreateOrderBody } from './create-order-body.js';
-import { CreateOrderService } from './create-order.service.js';
-import { IdempotencyConflictError } from './domain/idempotency-conflict.error.js';
-import { IllegalOrderTransitionError } from './domain/illegal-order-transition.error.js';
-import { OrderStateMachine } from './domain/order-state-machine.js';
-import type { OrderResponse } from './order-response.types.js';
-import { OrderStrategyFactory } from './order-strategy.factory.js';
+import { callContextStorage } from '@/common/correlation/call-context';
+import { IdempotencyKeyMismatchException } from '@/common/errors/idempotency-key-mismatch.exception';
+import { InstrumentNotFoundException } from '@/common/errors/instrument-not-found.exception';
+import { InstrumentNotTradableException } from '@/common/errors/instrument-not-tradable.exception';
+import { InternalException } from '@/common/errors/internal.exception';
+import { PriceUnavailableException } from '@/common/errors/price-unavailable.exception';
+import type { CreateOrderBody } from '@/orders/create-order-body';
+import { CreateOrderService } from '@/orders/create-order.service';
+import { IdempotencyConflictError } from '@/orders/domain/idempotency-conflict.error';
+import { IllegalOrderTransitionError } from '@/orders/domain/illegal-order-transition.error';
+import { OrderStateMachine } from '@/orders/domain/order-state-machine';
+import type { OrderResponse } from '@/orders/order-response.types';
+import { OrderStrategyFactory } from '@/orders/order-strategy.factory';
 import type {
   LockedOrderContext,
   OrderTransactionPort,
   StoredIdempotency,
-} from './ports/order-transaction.port.js';
+} from '@/orders/ports/order-transaction.port';
 
 const marketBuy: CreateOrderBody = {
   instrument_id: 47,
@@ -135,7 +135,7 @@ describe('CreateOrderService', () => {
     const port: OrderTransactionPort = {
       findIdempotency: vi.fn().mockImplementation(async () => {
         const { canonicalOrderPayloadHash } =
-          await import('./domain/canonical-order-payload.js');
+          await import('@/orders/domain/canonical-order-payload');
         return stored(saved, canonicalOrderPayloadHash(marketBuy));
       }),
       runInTransaction: vi.fn(),
@@ -290,7 +290,7 @@ describe('CreateOrderService', () => {
         .mockResolvedValueOnce(null)
         .mockImplementationOnce(async () => {
           const { canonicalOrderPayloadHash } =
-            await import('./domain/canonical-order-payload.js');
+            await import('@/orders/domain/canonical-order-payload');
           return stored(saved, canonicalOrderPayloadHash(marketBuy));
         }),
       runInTransaction: vi
@@ -346,7 +346,7 @@ describe('CreateOrderService', () => {
     const context = tradableContext();
     context.findIdempotency.mockImplementation(async () => {
       const { canonicalOrderPayloadHash } =
-        await import('./domain/canonical-order-payload.js');
+        await import('@/orders/domain/canonical-order-payload');
       return stored(saved, canonicalOrderPayloadHash(marketBuy));
     });
     const service = serviceWith(portThatRuns(context));
@@ -365,7 +365,7 @@ describe('CreateOrderService', () => {
     const port: OrderTransactionPort = {
       findIdempotency: vi.fn().mockImplementation(async () => {
         const { canonicalOrderPayloadHash } =
-          await import('./domain/canonical-order-payload.js');
+          await import('@/orders/domain/canonical-order-payload');
         return stored(saved, canonicalOrderPayloadHash(marketBuy));
       }),
       runInTransaction: vi.fn(),

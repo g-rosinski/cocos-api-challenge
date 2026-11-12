@@ -9,14 +9,14 @@ import type {
   ResponseObject,
   SchemaObject,
 } from '@nestjs/swagger';
-import { HealthController } from '../health/health.controller.js';
-import { InstrumentsController } from '../instruments/instruments.controller.js';
-import { InstrumentsService } from '../instruments/instruments.service.js';
-import { OrdersController } from '../orders/orders.controller.js';
-import { CreateOrderService } from '../orders/create-order.service.js';
-import { PortfolioController } from '../portfolio/portfolio.controller.js';
-import { PortfolioService } from '../portfolio/portfolio.service.js';
-import { createSwaggerDocument, setupSwagger } from './setup-swagger.js';
+import { HealthController } from '@/health/health.controller';
+import { InstrumentsController } from '@/instruments/instruments.controller';
+import { InstrumentsService } from '@/instruments/instruments.service';
+import { OrdersController } from '@/orders/orders.controller';
+import { CreateOrderService } from '@/orders/create-order.service';
+import { PortfolioController } from '@/portfolio/portfolio.controller';
+import { PortfolioService } from '@/portfolio/portfolio.service';
+import { createSwaggerDocument, setupSwagger } from '@/openapi/setup-swagger';
 
 const MAX_EXAMPLE_SUMMARY_LENGTH = 60;
 

@@ -1,12 +1,12 @@
 import { type ExecutionContext } from '@nestjs/common';
 import { ROUTE_ARGS_METADATA } from '@nestjs/common/constants.js';
-import { InvalidIdempotencyKeyException } from '../common/errors/invalid-idempotency-key.exception.js';
+import { InvalidIdempotencyKeyException } from '@/common/errors/invalid-idempotency-key.exception';
 import {
   IdempotencyKey,
   idempotencyKeySchema,
   idempotencyKeyValidationPipe,
   readIdempotencyHeader,
-} from './idempotency-key.js';
+} from '@/orders/idempotency-key';
 
 describe('idempotencyKeySchema', () => {
   it('accepts a UUID and stores it in lowercase', () => {

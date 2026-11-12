@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmUserAccountLookup } from './accounts/typeorm-user-account-lookup.js';
-import { USER_ACCOUNT_LOOKUP } from './accounts/user-account-lookup.js';
-import { CorrelationMiddleware } from './correlation/correlation.middleware.js';
-import { ApiExceptionFilter } from './filters/api-exception.filter.js';
-import { CanonicalLogContext } from './logging/canonical-log-context.js';
-import { CanonicalLogInterceptor } from './logging/canonical-log.interceptor.js';
-import { UserIdMiddleware } from './middleware/user-id.middleware.js';
-import { RequestSpanInterceptor } from '../observability/request-span.interceptor.js';
+import { TypeOrmUserAccountLookup } from '@/common/accounts/typeorm-user-account-lookup';
+import { USER_ACCOUNT_LOOKUP } from '@/common/accounts/user-account-lookup';
+import { CorrelationMiddleware } from '@/common/correlation/correlation.middleware';
+import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
+import { CanonicalLogContext } from '@/common/logging/canonical-log-context';
+import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
+import { UserIdMiddleware } from '@/common/middleware/user-id.middleware';
+import { RequestSpanInterceptor } from '@/observability/request-span.interceptor';
 
 @Module({
   providers: [

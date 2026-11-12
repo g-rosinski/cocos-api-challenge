@@ -1,4 +1,4 @@
-import type { ClientErrorCode } from './client-error-code.js';
+import type { ClientErrorCode } from '@/common/errors/client-error-code';
 
 export class ApiClientException extends Error {
   constructor(

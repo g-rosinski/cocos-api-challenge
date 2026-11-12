@@ -1,6 +1,6 @@
-import { IllegalOrderTransitionError } from './domain/illegal-order-transition.error.js';
-import type { OrderType } from './domain/order.types.js';
-import { OrderStrategyFactory } from './order-strategy.factory.js';
+import { IllegalOrderTransitionError } from '@/orders/domain/illegal-order-transition.error';
+import type { OrderType } from '@/orders/domain/order.types';
+import { OrderStrategyFactory } from '@/orders/order-strategy.factory';
 
 describe('OrderStrategyFactory', () => {
   const factory = new OrderStrategyFactory();

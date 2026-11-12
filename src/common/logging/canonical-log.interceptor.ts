@@ -7,11 +7,11 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { Observable, catchError, finalize, throwError } from 'rxjs';
-import { getCallContext } from '../correlation/call-context.js';
-import { isHealthRequest } from '../http/is-health-request.js';
-import { buildCanonicalLogPayload } from './build-canonical-log-payload.js';
-import { emitCanonicalLog } from './emit-canonical-log.js';
-import { resolveCanonicalLogLevel } from './resolve-canonical-log-level.js';
+import { getCallContext } from '@/common/correlation/call-context';
+import { isHealthRequest } from '@/common/http/is-health-request';
+import { buildCanonicalLogPayload } from '@/common/logging/build-canonical-log-payload';
+import { emitCanonicalLog } from '@/common/logging/emit-canonical-log';
+import { resolveCanonicalLogLevel } from '@/common/logging/resolve-canonical-log-level';
 
 @Injectable()
 export class CanonicalLogInterceptor implements NestInterceptor {

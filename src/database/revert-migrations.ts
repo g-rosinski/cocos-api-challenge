@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { AppDataSource } from './data-source.js';
+import { AppDataSource } from '@/database/data-source';
 
 const logger = new Logger('MigrationRevert');
 

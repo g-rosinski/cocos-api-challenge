@@ -15,8 +15,8 @@ import {
   invalidUserIdExample,
   missingUserIdExample,
   unknownAccountExample,
-} from '../openapi/error-response.schema.js';
-import type { PortfolioResponse } from './portfolio-response.types.js';
+} from '@/openapi/error-response.schema';
+import type { PortfolioResponse } from '@/portfolio/portfolio-response.types';
 
 export const portfolioResponseSchema: SchemaObject = {
   type: 'object',

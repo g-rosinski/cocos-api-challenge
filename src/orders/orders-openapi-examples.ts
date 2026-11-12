@@ -20,10 +20,10 @@ import {
   invalidOrderTypeExample,
   missingUserIdExample,
   unknownAccountExample,
-} from '../openapi/error-response.schema.js';
-import type { CreateOrderBody } from './create-order-body.js';
-import { ORDER_SIDES, ORDER_TYPES } from './domain/order.types.js';
-import type { OrderResponse } from './order-response.types.js';
+} from '@/openapi/error-response.schema';
+import type { CreateOrderBody } from '@/orders/create-order-body';
+import { ORDER_SIDES, ORDER_TYPES } from '@/orders/domain/order.types';
+import type { OrderResponse } from '@/orders/order-response.types';
 
 export const BUY_MARKET_IDEMPOTENCY_KEY =
   '6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21';

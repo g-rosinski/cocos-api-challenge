@@ -3,11 +3,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { App } from 'supertest/types.js';
 import { DataSource } from 'typeorm';
-import { AppModule } from '../src/app.module.js';
-import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter.js';
-import { CanonicalLogInterceptor } from '../src/common/logging/canonical-log.interceptor.js';
-import type { OrderResponse } from '../src/orders/order-response.types.js';
-import type { PortfolioResponse } from '../src/portfolio/portfolio-response.types.js';
+import { AppModule } from '@/app.module';
+import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
+import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
+import type { OrderResponse } from '@/orders/order-response.types';
+import type { PortfolioResponse } from '@/portfolio/portfolio-response.types';
 
 const MARKET_BUY_KEY = '6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21';
 const LIMIT_BUY_KEY = '7a2b3c4d-5e6f-4789-a012-b3c4d5e6f789';

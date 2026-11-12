@@ -1,11 +1,11 @@
-import { InvalidOrderSideException } from '../common/errors/invalid-order-side.exception.js';
-import { InvalidOrderTypeException } from '../common/errors/invalid-order-type.exception.js';
-import { ValidationException } from '../common/errors/validation.exception.js';
+import { InvalidOrderSideException } from '@/common/errors/invalid-order-side.exception';
+import { InvalidOrderTypeException } from '@/common/errors/invalid-order-type.exception';
+import { ValidationException } from '@/common/errors/validation.exception';
 import {
   createOrderBodySchema,
   createOrderValidationPipe,
   resolveCreateOrderBodyException,
-} from './create-order-body.js';
+} from '@/orders/create-order-body';
 
 describe('createOrderBodySchema', () => {
   it('accepts a market order with size and a limit order with price', () => {

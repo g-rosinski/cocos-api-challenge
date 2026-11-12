@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { TypeOrmPortfolioReadAdapter } from './typeorm-portfolio-read.adapter.js';
+import { TypeOrmPortfolioReadAdapter } from '@/portfolio/adapters/typeorm-portfolio-read.adapter';
 
 describe('TypeOrmPortfolioReadAdapter', () => {
   it('maps database rows into portfolio calculation input', async () => {

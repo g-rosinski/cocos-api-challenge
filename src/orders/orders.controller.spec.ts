@@ -1,12 +1,12 @@
 import { Test } from '@nestjs/testing';
-import * as callContext from '../common/correlation/call-context.js';
-import { callContextStorage } from '../common/correlation/call-context.js';
-import { InternalException } from '../common/errors/internal.exception.js';
-import type { CreateOrderBody } from './create-order-body.js';
-import { CreateOrderService } from './create-order.service.js';
-import type { OrderResponse } from './order-response.types.js';
-import { OrdersController } from './orders.controller.js';
-import type { CreateOrderService as CreateOrderServiceType } from './create-order.service.js';
+import * as callContext from '@/common/correlation/call-context';
+import { callContextStorage } from '@/common/correlation/call-context';
+import { InternalException } from '@/common/errors/internal.exception';
+import type { CreateOrderBody } from '@/orders/create-order-body';
+import { CreateOrderService } from '@/orders/create-order.service';
+import type { OrderResponse } from '@/orders/order-response.types';
+import { OrdersController } from '@/orders/orders.controller';
+import type { CreateOrderService as CreateOrderServiceType } from '@/orders/create-order.service';
 
 describe('OrdersController', () => {
   afterEach(() => {

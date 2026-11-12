@@ -1,7 +1,7 @@
-import type { InstrumentsResponse } from './instruments-response.types.js';
-import { InstrumentsService } from './instruments.service.js';
-import { INSTRUMENT_SEARCH } from './ports/instrument-search.port.js';
-import type { InstrumentSearchPort } from './ports/instrument-search.port.js';
+import type { InstrumentsResponse } from '@/instruments/instruments-response.types';
+import { InstrumentsService } from '@/instruments/instruments.service';
+import { INSTRUMENT_SEARCH } from '@/instruments/ports/instrument-search.port';
+import type { InstrumentSearchPort } from '@/instruments/ports/instrument-search.port';
 
 describe('InstrumentsService', () => {
   it('forwards an empty query with pagination defaults', async () => {

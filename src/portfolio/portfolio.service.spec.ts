@@ -1,7 +1,7 @@
-import type { PortfolioCalculationInput } from './domain/portfolio-input.types.js';
-import { PORTFOLIO_READ } from './ports/portfolio-read.port.js';
-import type { PortfolioReadPort } from './ports/portfolio-read.port.js';
-import { PortfolioService } from './portfolio.service.js';
+import type { PortfolioCalculationInput } from '@/portfolio/domain/portfolio-input.types';
+import { PORTFOLIO_READ } from '@/portfolio/ports/portfolio-read.port';
+import type { PortfolioReadPort } from '@/portfolio/ports/portfolio-read.port';
+import { PortfolioService } from '@/portfolio/portfolio.service';
 
 describe('PortfolioService', () => {
   it('loads calculation input and delegates to the portfolio calculator', async () => {

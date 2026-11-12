@@ -1,4 +1,4 @@
-import type { InstrumentsResponse } from '../instruments-response.types.js';
+import type { InstrumentsResponse } from '@/instruments/instruments-response.types';
 
 export const INSTRUMENT_SEARCH = Symbol('INSTRUMENT_SEARCH');
 

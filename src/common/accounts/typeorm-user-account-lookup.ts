@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import type { UserAccountLookup } from './user-account-lookup.js';
+import type { UserAccountLookup } from '@/common/accounts/user-account-lookup';
 
 type ExistsRow = {
   exists: boolean;

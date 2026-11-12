@@ -3,11 +3,11 @@ import { DataSource } from 'typeorm';
 import type {
   InstrumentItem,
   InstrumentsResponse,
-} from '../instruments-response.types.js';
+} from '@/instruments/instruments-response.types';
 import type {
   InstrumentSearchInput,
   InstrumentSearchPort,
-} from '../ports/instrument-search.port.js';
+} from '@/instruments/ports/instrument-search.port';
 
 type InstrumentSearchRow = {
   id: number;

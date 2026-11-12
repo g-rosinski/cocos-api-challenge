@@ -1,9 +1,9 @@
-import { callContextStorage } from '../common/correlation/call-context.js';
+import { callContextStorage } from '@/common/correlation/call-context';
 import {
   buildRequestSpanAttributes,
   forbiddenKeysInAttributes,
   isOrderAttributes,
-} from './request-attributes.js';
+} from '@/observability/request-attributes';
 
 describe('buildRequestSpanAttributes', () => {
   it('returns undefined when there is no call context', () => {

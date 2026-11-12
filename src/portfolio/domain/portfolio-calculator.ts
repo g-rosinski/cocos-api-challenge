@@ -1,12 +1,12 @@
 import type {
   PortfolioResponse,
   PositionResponse,
-} from '../portfolio-response.types.js';
+} from '@/portfolio/portfolio-response.types';
 import type {
   PortfolioCalculationInput,
   PortfolioOrderInput,
-} from './portfolio-input.types.js';
-import { roundMoney, roundPercentage } from './round-money.js';
+} from '@/portfolio/domain/portfolio-input.types';
+import { roundMoney, roundPercentage } from '@/portfolio/domain/round-money';
 
 type HoldingState = {
   quantity: number;

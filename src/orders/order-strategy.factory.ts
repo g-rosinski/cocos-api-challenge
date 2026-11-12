@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { IllegalOrderTransitionError } from './domain/illegal-order-transition.error.js';
-import type { OrderType } from './domain/order.types.js';
-import { LimitOrderStrategy } from './strategies/limit-order.strategy.js';
-import { MarketOrderStrategy } from './strategies/market-order.strategy.js';
-import type { OrderStrategy } from './strategies/order-strategy.js';
+import { IllegalOrderTransitionError } from '@/orders/domain/illegal-order-transition.error';
+import type { OrderType } from '@/orders/domain/order.types';
+import { LimitOrderStrategy } from '@/orders/strategies/limit-order.strategy';
+import { MarketOrderStrategy } from '@/orders/strategies/market-order.strategy';
+import type { OrderStrategy } from '@/orders/strategies/order-strategy';
 
 @Injectable()
 export class OrderStrategyFactory {

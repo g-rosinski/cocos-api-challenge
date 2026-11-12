@@ -1,19 +1,19 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { getCallContext } from '../common/correlation/call-context.js';
-import { InternalException } from '../common/errors/internal.exception.js';
+import { getCallContext } from '@/common/correlation/call-context';
+import { InternalException } from '@/common/errors/internal.exception';
 import {
   createOrderBodySchema,
   createOrderValidationPipe,
   type CreateOrderBody,
-} from './create-order-body.js';
-import { CreateOrderService } from './create-order.service.js';
-import { ApiCreateOrder } from './orders-openapi-examples.js';
+} from '@/orders/create-order-body';
+import { CreateOrderService } from '@/orders/create-order.service';
+import { ApiCreateOrder } from '@/orders/orders-openapi-examples';
 import {
   IdempotencyKey,
   idempotencyKeySchema,
   idempotencyKeyValidationPipe,
-} from './idempotency-key.js';
-import type { OrderResponse } from './order-response.types.js';
+} from '@/orders/idempotency-key';
+import type { OrderResponse } from '@/orders/order-response.types';
 
 @Controller('orders')
 export class OrdersController {

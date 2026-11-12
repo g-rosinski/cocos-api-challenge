@@ -2,7 +2,7 @@ import type {
   OrderSide,
   OrderStatus,
   OrderType,
-} from './domain/order.types.js';
+} from '@/orders/domain/order.types';
 
 export type OrderResponse = {
   order_id: number;

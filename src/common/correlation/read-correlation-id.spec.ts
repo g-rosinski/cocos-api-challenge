@@ -1,4 +1,4 @@
-import { readCorrelationId } from './read-correlation-id.js';
+import { readCorrelationId } from '@/common/correlation/read-correlation-id';
 
 describe('readCorrelationId', () => {
   it('reuses the incoming header value', () => {

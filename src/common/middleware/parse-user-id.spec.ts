@@ -1,4 +1,4 @@
-import { parseUserId } from './parse-user-id.js';
+import { parseUserId } from '@/common/middleware/parse-user-id';
 
 describe('parseUserId', () => {
   it.each([

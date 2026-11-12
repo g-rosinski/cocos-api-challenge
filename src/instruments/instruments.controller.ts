@@ -1,13 +1,13 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { getCallContext } from '../common/correlation/call-context.js';
-import type { InstrumentsResponse } from './instruments-response.types.js';
-import { ApiSearchInstruments } from './instruments-openapi-examples.js';
-import { InstrumentsService } from './instruments.service.js';
+import { getCallContext } from '@/common/correlation/call-context';
+import type { InstrumentsResponse } from '@/instruments/instruments-response.types';
+import { ApiSearchInstruments } from '@/instruments/instruments-openapi-examples';
+import { InstrumentsService } from '@/instruments/instruments.service';
 import {
   searchInstrumentsQuerySchema,
   searchInstrumentsValidationPipe,
   type SearchInstrumentsQuery,
-} from './search-instruments-query.js';
+} from '@/instruments/search-instruments-query';
 
 @Controller('instruments')
 export class InstrumentsController {

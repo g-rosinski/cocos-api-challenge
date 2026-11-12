@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { TypeOrmUserAccountLookup } from './typeorm-user-account-lookup.js';
+import { TypeOrmUserAccountLookup } from '@/common/accounts/typeorm-user-account-lookup';
 
 describe('TypeOrmUserAccountLookup', () => {
   it('returns whether the account exists', async () => {

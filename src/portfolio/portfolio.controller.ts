@@ -1,9 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
-import { getCallContext } from '../common/correlation/call-context.js';
-import { InternalException } from '../common/errors/internal.exception.js';
-import { ApiGetPortfolio } from './portfolio-openapi-examples.js';
-import type { PortfolioResponse } from './portfolio-response.types.js';
-import { PortfolioService } from './portfolio.service.js';
+import { getCallContext } from '@/common/correlation/call-context';
+import { InternalException } from '@/common/errors/internal.exception';
+import { ApiGetPortfolio } from '@/portfolio/portfolio-openapi-examples';
+import type { PortfolioResponse } from '@/portfolio/portfolio-response.types';
+import { PortfolioService } from '@/portfolio/portfolio.service';
 
 @Controller('portfolio')
 export class PortfolioController {

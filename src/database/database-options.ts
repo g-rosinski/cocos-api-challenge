@@ -1,6 +1,6 @@
 import type { DataSourceOptions } from 'typeorm';
-import { readDatabaseUrl } from '../config/read-database-url.js';
-import { AddSearchIndexesAndIdempotency1731340800000 } from './migrations/1731340800000-add-search-indexes-and-idempotency.js';
+import { readDatabaseUrl } from '@/config/read-database-url';
+import { AddSearchIndexesAndIdempotency1731340800000 } from '@/database/migrations/1731340800000-add-search-indexes-and-idempotency';
 
 export type DatabaseConfig = {
   url: string;

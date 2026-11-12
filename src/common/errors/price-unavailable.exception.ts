@@ -1,5 +1,5 @@
 import { HttpStatus } from '@nestjs/common';
-import { ApiClientException } from './api-client.exception.js';
+import { ApiClientException } from '@/common/errors/api-client.exception';
 
 export class PriceUnavailableException extends ApiClientException {
   constructor(message: string) {

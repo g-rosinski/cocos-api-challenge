@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { TypeOrmInstrumentSearchAdapter } from './typeorm-instrument-search.adapter.js';
+import { TypeOrmInstrumentSearchAdapter } from '@/instruments/adapters/typeorm-instrument-search.adapter';
 
 describe('TypeOrmInstrumentSearchAdapter', () => {
   it('maps matching rows and excludes MONEDA in SQL', async () => {

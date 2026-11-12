@@ -1,10 +1,10 @@
-import type { AvailabilityOrder } from '../domain/trading-availability.js';
+import type { AvailabilityOrder } from '@/orders/domain/trading-availability';
 import type {
   OrderSide,
   OrderStatus,
   OrderType,
-} from '../domain/order.types.js';
-import type { OrderResponse } from '../order-response.types.js';
+} from '@/orders/domain/order.types';
+import type { OrderResponse } from '@/orders/order-response.types';
 
 export const ORDER_TRANSACTION = Symbol('ORDER_TRANSACTION');
 

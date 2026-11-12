@@ -7,10 +7,10 @@ import {
 import { SpanStatusCode, trace } from '@opentelemetry/api';
 import type { Request, Response } from 'express';
 import { Observable, catchError, finalize, throwError } from 'rxjs';
-import { getCallContext } from '../common/correlation/call-context.js';
-import { isHealthRequest } from '../common/http/is-health-request.js';
-import { applyRequestSpanAttributes } from './apply-request-span-attributes.js';
-import { buildRequestSpanAttributes } from './request-attributes.js';
+import { getCallContext } from '@/common/correlation/call-context';
+import { isHealthRequest } from '@/common/http/is-health-request';
+import { applyRequestSpanAttributes } from '@/observability/apply-request-span-attributes';
+import { buildRequestSpanAttributes } from '@/observability/request-attributes';
 
 const TRACER_NAME = 'cocos-api-challenge';
 

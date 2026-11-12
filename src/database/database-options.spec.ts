@@ -1,5 +1,5 @@
-import { MissingEnvironmentVariableError } from '../config/missing-environment-variable.error.js';
-import { createDatabaseOptions } from './database-options.js';
+import { MissingEnvironmentVariableError } from '@/config/missing-environment-variable.error';
+import { createDatabaseOptions } from '@/database/database-options';
 
 describe('createDatabaseOptions', () => {
   it('keeps synchronize disabled and uses the database url', () => {

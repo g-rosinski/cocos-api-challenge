@@ -1,11 +1,11 @@
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
-import { ApiExceptionFilter } from './common/filters/api-exception.filter.js';
-import { CanonicalLogInterceptor } from './common/logging/canonical-log.interceptor.js';
-import { setupSwagger } from './openapi/setup-swagger.js';
-import { RequestSpanInterceptor } from './observability/request-span.interceptor.js';
-import { startTracing } from './observability/start-tracing.js';
+import { AppModule } from '@/app.module';
+import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
+import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
+import { setupSwagger } from '@/openapi/setup-swagger';
+import { RequestSpanInterceptor } from '@/observability/request-span.interceptor';
+import { startTracing } from '@/observability/start-tracing';
 
 async function bootstrap(): Promise<void> {
   startTracing();

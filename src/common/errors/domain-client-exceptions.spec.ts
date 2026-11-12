@@ -1,12 +1,12 @@
 import { HttpStatus } from '@nestjs/common';
-import { IdempotencyKeyMismatchException } from './idempotency-key-mismatch.exception.js';
-import { InstrumentNotFoundException } from './instrument-not-found.exception.js';
-import { InstrumentNotTradableException } from './instrument-not-tradable.exception.js';
-import { InvalidIdempotencyKeyException } from './invalid-idempotency-key.exception.js';
-import { InvalidOrderSideException } from './invalid-order-side.exception.js';
-import { InvalidOrderTypeException } from './invalid-order-type.exception.js';
-import { PriceUnavailableException } from './price-unavailable.exception.js';
-import { ValidationException } from './validation.exception.js';
+import { IdempotencyKeyMismatchException } from '@/common/errors/idempotency-key-mismatch.exception';
+import { InstrumentNotFoundException } from '@/common/errors/instrument-not-found.exception';
+import { InstrumentNotTradableException } from '@/common/errors/instrument-not-tradable.exception';
+import { InvalidIdempotencyKeyException } from '@/common/errors/invalid-idempotency-key.exception';
+import { InvalidOrderSideException } from '@/common/errors/invalid-order-side.exception';
+import { InvalidOrderTypeException } from '@/common/errors/invalid-order-type.exception';
+import { PriceUnavailableException } from '@/common/errors/price-unavailable.exception';
+import { ValidationException } from '@/common/errors/validation.exception';
 
 describe('domain client exceptions', () => {
   it.each([

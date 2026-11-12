@@ -1,5 +1,8 @@
-import { PriceUnavailableException } from '../../common/errors/price-unavailable.exception.js';
-import type { OrderStrategy, PriceResolutionInput } from './order-strategy.js';
+import { PriceUnavailableException } from '@/common/errors/price-unavailable.exception';
+import type {
+  OrderStrategy,
+  PriceResolutionInput,
+} from '@/orders/strategies/order-strategy';
 
 export class MarketOrderStrategy implements OrderStrategy {
   readonly acceptedStatus = 'FILLED' as const;

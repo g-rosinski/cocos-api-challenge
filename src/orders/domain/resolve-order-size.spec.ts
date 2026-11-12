@@ -1,4 +1,4 @@
-import { resolveOrderSize } from './resolve-order-size.js';
+import { resolveOrderSize } from '@/orders/domain/resolve-order-size';
 
 describe('resolveOrderSize', () => {
   it('keeps an explicit size', () => {

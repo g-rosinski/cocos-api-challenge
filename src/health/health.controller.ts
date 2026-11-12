@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiExcludeController } from '@nestjs/swagger';
-import type { HealthResponse } from './health-response.js';
+import type { HealthResponse } from '@/health/health-response';
 
 @ApiExcludeController()
 @Controller('health')

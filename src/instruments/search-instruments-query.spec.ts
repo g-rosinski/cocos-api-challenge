@@ -1,8 +1,8 @@
-import { ValidationException } from '../common/errors/validation.exception.js';
+import { ValidationException } from '@/common/errors/validation.exception';
 import {
   searchInstrumentsQuerySchema,
   searchInstrumentsValidationPipe,
-} from './search-instruments-query.js';
+} from '@/instruments/search-instruments-query';
 
 describe('searchInstrumentsQuerySchema', () => {
   it('defaults q to empty, limit to 10 and offset to 0', () => {

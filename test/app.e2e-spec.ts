@@ -2,9 +2,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { App } from 'supertest/types.js';
-import { AppModule } from '../src/app.module.js';
-import { ApiExceptionFilter } from '../src/common/filters/api-exception.filter.js';
-import { CanonicalLogInterceptor } from '../src/common/logging/canonical-log.interceptor.js';
+import { AppModule } from '@/app.module';
+import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
+import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
 
 describe('AppModule', () => {
   let app: INestApplication<App>;

@@ -4,13 +4,13 @@ import {
   SwaggerModule,
   type OpenAPIObject,
 } from '@nestjs/swagger';
-import { instrumentsResponseSchema } from '../instruments/instruments-openapi-examples.js';
+import { instrumentsResponseSchema } from '@/instruments/instruments-openapi-examples';
 import {
   buyMarketOrderBody,
   orderResponseSchema,
-} from '../orders/orders-openapi-examples.js';
-import { portfolioResponseSchema } from '../portfolio/portfolio-openapi-examples.js';
-import { errorResponseSchema } from './error-response.schema.js';
+} from '@/orders/orders-openapi-examples';
+import { portfolioResponseSchema } from '@/portfolio/portfolio-openapi-examples';
+import { errorResponseSchema } from '@/openapi/error-response.schema';
 
 export function createSwaggerDocument(app: INestApplication): OpenAPIObject {
   const config = new DocumentBuilder()

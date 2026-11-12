@@ -1,12 +1,12 @@
 import type { SchemaObject } from '@nestjs/swagger';
-import { IdempotencyKeyMismatchException } from '../common/errors/idempotency-key-mismatch.exception.js';
-import { InvalidIdempotencyKeyException } from '../common/errors/invalid-idempotency-key.exception.js';
-import { InvalidOrderSideException } from '../common/errors/invalid-order-side.exception.js';
-import { InvalidOrderTypeException } from '../common/errors/invalid-order-type.exception.js';
-import { InvalidUserIdException } from '../common/errors/invalid-user-id.exception.js';
-import { UserNotFoundException } from '../common/errors/user-not-found.exception.js';
-import { ValidationException } from '../common/errors/validation.exception.js';
-import type { ErrorResponse } from '../common/errors/error-response.js';
+import { IdempotencyKeyMismatchException } from '@/common/errors/idempotency-key-mismatch.exception';
+import { InvalidIdempotencyKeyException } from '@/common/errors/invalid-idempotency-key.exception';
+import { InvalidOrderSideException } from '@/common/errors/invalid-order-side.exception';
+import { InvalidOrderTypeException } from '@/common/errors/invalid-order-type.exception';
+import { InvalidUserIdException } from '@/common/errors/invalid-user-id.exception';
+import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
+import { ValidationException } from '@/common/errors/validation.exception';
+import type { ErrorResponse } from '@/common/errors/error-response';
 
 export const SAMPLE_CORRELATION_ID = '8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21';
 

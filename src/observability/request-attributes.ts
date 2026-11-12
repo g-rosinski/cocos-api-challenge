@@ -1,12 +1,12 @@
-import type { CallContext } from '../common/correlation/call-context.js';
-import type { CanonicalLogAttributes } from '../common/logging/canonical-log-attribute.js';
+import type { CallContext } from '@/common/correlation/call-context';
+import type { CanonicalLogAttributes } from '@/common/logging/canonical-log-attribute';
 import {
   ORDER_SIDES,
   ORDER_TYPES,
   type OrderSide,
   type OrderStatus,
   type OrderType,
-} from '../orders/domain/order.types.js';
+} from '@/orders/domain/order.types';
 
 const ORDER_STATUSES: readonly OrderStatus[] = ['FILLED', 'NEW', 'REJECTED'];
 

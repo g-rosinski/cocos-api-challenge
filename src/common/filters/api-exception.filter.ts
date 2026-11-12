@@ -8,12 +8,12 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { QueryFailedError } from 'typeorm';
-import { getCallContext } from '../correlation/call-context.js';
-import { ApiClientException } from '../errors/api-client.exception.js';
-import { DependencyException } from '../errors/dependency.exception.js';
-import type { ErrorResponse } from '../errors/error-response.js';
-import { InternalException } from '../errors/internal.exception.js';
-import { isHealthRequest } from '../http/is-health-request.js';
+import { getCallContext } from '@/common/correlation/call-context';
+import { ApiClientException } from '@/common/errors/api-client.exception';
+import { DependencyException } from '@/common/errors/dependency.exception';
+import type { ErrorResponse } from '@/common/errors/error-response';
+import { InternalException } from '@/common/errors/internal.exception';
+import { isHealthRequest } from '@/common/http/is-health-request';
 
 @Catch()
 export class ApiExceptionFilter implements ExceptionFilter {

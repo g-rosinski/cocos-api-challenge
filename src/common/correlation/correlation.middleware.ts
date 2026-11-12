@@ -1,7 +1,7 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
 import type { NextFunction, Request, Response } from 'express';
-import { callContextStorage } from './call-context.js';
-import { readCorrelationId } from './read-correlation-id.js';
+import { callContextStorage } from '@/common/correlation/call-context';
+import { readCorrelationId } from '@/common/correlation/read-correlation-id';
 
 @Injectable()
 export class CorrelationMiddleware implements NestMiddleware {

@@ -1,5 +1,5 @@
-import { MissingEnvironmentVariableError } from './missing-environment-variable.error.js';
-import { readDatabaseUrl } from './read-database-url.js';
+import { MissingEnvironmentVariableError } from '@/config/missing-environment-variable.error';
+import { readDatabaseUrl } from '@/config/read-database-url';
 
 describe('readDatabaseUrl', () => {
   it('returns the configured url', () => {

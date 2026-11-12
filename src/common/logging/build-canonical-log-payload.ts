@@ -1,9 +1,9 @@
-import type { CallContext } from '../correlation/call-context.js';
-import type { CanonicalLogAttributes } from './canonical-log-attribute.js';
+import type { CallContext } from '@/common/correlation/call-context';
+import type { CanonicalLogAttributes } from '@/common/logging/canonical-log-attribute';
 import {
   buildCanonicalLogMessage,
   buildDefaultCanonicalTitle,
-} from './build-canonical-log-message.js';
+} from '@/common/logging/build-canonical-log-message';
 
 export type CanonicalLogPayload = {
   message: string;

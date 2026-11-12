@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
-import * as callContext from '../common/correlation/call-context.js';
-import { callContextStorage } from '../common/correlation/call-context.js';
-import type { InstrumentsResponse } from './instruments-response.types.js';
-import { InstrumentsController } from './instruments.controller.js';
-import { InstrumentsService } from './instruments.service.js';
-import type { InstrumentsService as InstrumentsServiceType } from './instruments.service.js';
+import * as callContext from '@/common/correlation/call-context';
+import { callContextStorage } from '@/common/correlation/call-context';
+import type { InstrumentsResponse } from '@/instruments/instruments-response.types';
+import { InstrumentsController } from '@/instruments/instruments.controller';
+import { InstrumentsService } from '@/instruments/instruments.service';
+import type { InstrumentsService as InstrumentsServiceType } from '@/instruments/instruments.service';
 
 describe('InstrumentsController', () => {
   afterEach(() => {

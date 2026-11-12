@@ -1,4 +1,4 @@
-import { MissingEnvironmentVariableError } from './missing-environment-variable.error.js';
+import { MissingEnvironmentVariableError } from '@/config/missing-environment-variable.error';
 
 export function readDatabaseUrl(env: NodeJS.ProcessEnv): string {
   const databaseUrl = env.DATABASE_URL;
