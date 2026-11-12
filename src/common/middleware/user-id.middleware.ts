@@ -1,9 +1,9 @@
 import { Inject, Injectable, NestMiddleware } from '@nestjs/common';
 import type { NextFunction, Request, Response } from 'express';
 import {
-  USER_ACCOUNT_LOOKUP,
-  type UserAccountLookup,
-} from '@/common/accounts/user-account-lookup';
+  USER_LOOKUP,
+  type UserLookup,
+} from '@/modules/users/application/ports/user-lookup.port';
 import { getCallContext } from '@/common/correlation/call-context';
 import { InvalidUserIdException } from '@/common/errors/invalid-user-id.exception';
 import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
@@ -12,8 +12,8 @@ import { parseUserId } from '@/common/middleware/parse-user-id';
 @Injectable()
 export class UserIdMiddleware implements NestMiddleware {
   constructor(
-    @Inject(USER_ACCOUNT_LOOKUP)
-    private readonly userAccountLookup: UserAccountLookup,
+    @Inject(USER_LOOKUP)
+    private readonly userLookup: UserLookup,
   ) {}
 
   async use(
@@ -25,8 +25,8 @@ export class UserIdMiddleware implements NestMiddleware {
     if (userId === null) {
       throw new InvalidUserIdException();
     }
-    const accountExists = await this.userAccountLookup.exists(userId);
-    if (!accountExists) {
+    const userExists = await this.userLookup.exists(userId);
+    if (!userExists) {
       throw new UserNotFoundException();
     }
     const currentContext = getCallContext();

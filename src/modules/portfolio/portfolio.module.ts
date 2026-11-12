@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmPortfolioReadAdapter } from '@/modules/portfolio/infrastructure/repositories/typeorm-portfolio-read.adapter';
+import { PortfolioReadRepository } from '@/modules/portfolio/infrastructure/repositories/portfolio-read.repository';
 import { PORTFOLIO_READ } from '@/modules/portfolio/application/ports/portfolio-read.port';
 import { PortfolioController } from '@/modules/portfolio/portfolio.controller';
 import { PortfolioService } from '@/modules/portfolio/application/services/portfolio.service';
@@ -8,10 +8,10 @@ import { PortfolioService } from '@/modules/portfolio/application/services/portf
   controllers: [PortfolioController],
   providers: [
     PortfolioService,
-    TypeOrmPortfolioReadAdapter,
+    PortfolioReadRepository,
     {
       provide: PORTFOLIO_READ,
-      useExisting: TypeOrmPortfolioReadAdapter,
+      useExisting: PortfolioReadRepository,
     },
   ],
 })

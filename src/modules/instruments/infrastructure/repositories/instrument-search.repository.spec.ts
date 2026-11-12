@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
-import { TypeOrmInstrumentSearchAdapter } from '@/modules/instruments/infrastructure/repositories/typeorm-instrument-search.adapter';
+import { InstrumentSearchRepository } from '@/modules/instruments/infrastructure/repositories/instrument-search.repository';
 
-describe('TypeOrmInstrumentSearchAdapter', () => {
+describe('InstrumentSearchRepository', () => {
   it('maps matching rows and excludes MONEDA in SQL', async () => {
     const query = vi.fn().mockImplementation(async (sql: string) => {
       if (sql.includes('COUNT(*)')) {
@@ -16,11 +16,11 @@ describe('TypeOrmInstrumentSearchAdapter', () => {
         },
       ];
     });
-    const adapter = new TypeOrmInstrumentSearchAdapter({
+    const repository = new InstrumentSearchRepository({
       query,
     } as unknown as DataSource);
 
-    const response = await adapter.search({
+    const response = await repository.search({
       query: 'pamp',
       limit: 10,
       offset: 0,
@@ -51,11 +51,11 @@ describe('TypeOrmInstrumentSearchAdapter', () => {
       }
       return [{ id: 26, ticker: 'AGRO', name: 'Agrometal', type: 'ACCIONES' }];
     });
-    const adapter = new TypeOrmInstrumentSearchAdapter({
+    const repository = new InstrumentSearchRepository({
       query,
     } as unknown as DataSource);
 
-    const response = await adapter.search({
+    const response = await repository.search({
       query: '',
       limit: 10,
       offset: 0,
@@ -74,11 +74,11 @@ describe('TypeOrmInstrumentSearchAdapter', () => {
       }
       return [];
     });
-    const adapter = new TypeOrmInstrumentSearchAdapter({
+    const repository = new InstrumentSearchRepository({
       query,
     } as unknown as DataSource);
 
-    const response = await adapter.search({
+    const response = await repository.search({
       query: 'a%_\\b',
       limit: 10,
       offset: 100,
@@ -103,11 +103,11 @@ describe('TypeOrmInstrumentSearchAdapter', () => {
       }
       return [];
     });
-    const adapter = new TypeOrmInstrumentSearchAdapter({
+    const repository = new InstrumentSearchRepository({
       query,
     } as unknown as DataSource);
 
-    const response = await adapter.search({
+    const response = await repository.search({
       query: 'missing',
       limit: 5,
       offset: 0,

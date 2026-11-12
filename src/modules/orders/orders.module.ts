@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmOrderTransactionAdapter } from '@/modules/orders/infrastructure/repositories/typeorm-order-transaction.adapter';
+import { OrderTransactionRepository } from '@/modules/orders/infrastructure/repositories/order-transaction.repository';
 import { CreateOrderService } from '@/modules/orders/application/services/create-order.service';
 import { OrderStateMachine } from '@/modules/orders/domain/order-state-machine';
 import { OrdersController } from '@/modules/orders/orders.controller';
@@ -12,10 +12,10 @@ import { ORDER_TRANSACTION } from '@/modules/orders/application/ports/order-tran
     CreateOrderService,
     OrderStrategyFactory,
     { provide: OrderStateMachine, useValue: new OrderStateMachine() },
-    TypeOrmOrderTransactionAdapter,
+    OrderTransactionRepository,
     {
       provide: ORDER_TRANSACTION,
-      useExisting: TypeOrmOrderTransactionAdapter,
+      useExisting: OrderTransactionRepository,
     },
   ],
 })

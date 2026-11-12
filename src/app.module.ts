@@ -15,6 +15,7 @@ import { HealthModule } from '@/modules/health/health.module';
 import { InstrumentsModule } from '@/modules/instruments/instruments.module';
 import { OrdersModule } from '@/modules/orders/orders.module';
 import { PortfolioModule } from '@/modules/portfolio/portfolio.module';
+import { UsersModule } from '@/modules/users/users.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { PortfolioModule } from '@/modules/portfolio/portfolio.module';
     DatabaseModule,
     CommonModule,
     HealthModule,
+    UsersModule,
     InstrumentsModule,
     OrdersModule,
     PortfolioModule,

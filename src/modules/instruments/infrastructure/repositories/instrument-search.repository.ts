@@ -45,7 +45,7 @@ function mapInstrumentRow(row: InstrumentSearchRow): InstrumentItem {
 }
 
 @Injectable()
-export class TypeOrmInstrumentSearchAdapter implements InstrumentSearchPort {
+export class InstrumentSearchRepository implements InstrumentSearchPort {
   constructor(private readonly dataSource: DataSource) {}
 
   async search(input: InstrumentSearchInput): Promise<InstrumentsResponse> {
