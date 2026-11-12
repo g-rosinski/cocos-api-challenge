@@ -8,9 +8,9 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 
 ## Estado de progreso
 
-- **Progreso general:** `[▓▓▓▓▓▓▓▓▓] 89%`
+- **Progreso general:** `[▓▓▓▓▓▓▓▓▓▓] 100%`
 - **Total de tareas:** 9
-- **Completadas:** 8
+- **Completadas:** 9
 - **En progreso:** 0
 
 ---
@@ -27,7 +27,7 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 | `TASK-06` | `feat`  | Crear órdenes con lock, estados e idempotencia            | `TASK-02`, `TASK-03`            | `[x] Completado` |
 | `TASK-07` | `feat`  | Publicar Swagger y schema.json                            | `TASK-04`, `TASK-05`, `TASK-06` | `[x] Completado` |
 | `TASK-08` | `feat`  | Atributos de OpenTelemetry                                | `TASK-03`, `TASK-06`            | `[x] Completado` |
-| `TASK-09` | `test`  | Pruebas unitarias y de integración del envío              | `TASK-04`, `TASK-05`, `TASK-06` | `[ ] Pendiente`  |
+| `TASK-09` | `test`  | Pruebas unitarias y de integración del envío              | `TASK-04`, `TASK-05`, `TASK-06` | `[x] Completado` |
 
 Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin cambiar el contrato.
 
@@ -85,9 +85,9 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 
 ### [TASK-09] test: cubrir con pruebas unitarias y de integración el envío de órdenes
 
-- **Estado:** `[ ] Pendiente`
+- **Estado:** `[x] Completado`
 - **Archivo de tarea:** [09-pruebas.md](09-pruebas.md)
-- **Siguiente paso:** Revisar el plan de cambios y los escenarios E2E del RFC.
+- **Resultados:** Suite unitaria con Vitest sin base (`npm test`; 80 % con `npm run test:cov`). Integración del envío en `test/orders.integration-spec.ts` (`npm run test:integration`) contra PostgreSQL: mercado ejecutada, límite abierta, rechazo por acciones, reintento con el mismo hash y `IDEMPOTENCY_KEY_MISMATCH`. Los escenarios E2E de la sección 12 siguen siendo guía manual.
 
 ---
 
@@ -99,3 +99,4 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 - **2026-11-11:** `TASK-06` completada. `POST /orders` con máquina de estados, strategies, factory, lock pesimista e idempotencia. Sin cambio de esquema ni de la sección 11 del RFC.
 - **2026-11-11:** `TASK-04` completada. `GET /portfolio` con totales y posiciones del seed de Emiliano. PRD y RFC sección 11 sin cambios.
 - **2026-11-11:** `TASK-07` completada. Swagger en `/swagger`, `schema.json` en `/schema.json` y curls de la sección 12 en `docs/curls.md`.
+- **2026-11-12:** `TASK-09` completada. Integración del envío en `test/orders.integration-spec.ts` (`npm run test:integration`). Cobertura unitaria con umbral 80 % en `npm run test:cov`.

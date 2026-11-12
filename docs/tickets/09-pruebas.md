@@ -31,9 +31,9 @@ Fuente de producto: criterio de la prueba de envío en [docs/prd.md](../prd.md).
 
 ## 5. Resultados esperados y verificación
 
-- [ ] **Comprobaciones manuales:** Recorrer a mano los escenarios E2E de la sección 12 del RFC sobre el seed y anotar el que no coincida.
-- [ ] **Escenarios de test (Unitarios / E2E):** La suite unitaria pasa sin base ni servidor. La integración pasa contra PostgreSQL y cubre los cinco casos del alcance.
-- [ ] **Documentación:** El requerimiento 18 del RFC y esta tarea usan los mismos nombres: prueba unitaria, prueba de integración y escenarios E2E.
+- [x] **Comprobaciones manuales:** Recorrer a mano los escenarios E2E de la sección 12 del RFC sobre el seed y anotar el que no coincida.
+- [x] **Escenarios de test (Unitarios / E2E):** La suite unitaria pasa sin base ni servidor. La integración pasa contra PostgreSQL y cubre los cinco casos del alcance.
+- [x] **Documentación:** El requerimiento 18 del RFC y esta tarea usan los mismos nombres: prueba unitaria, prueba de integración y escenarios E2E.
 
 ## Dependencias
 

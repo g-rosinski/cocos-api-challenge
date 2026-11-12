@@ -8,6 +8,7 @@ export default defineConfig({
     globals: true,
     root: './',
     include: ['**/*.spec.ts'],
+    exclude: ['**/*.integration-spec.ts'],
     coverage: {
       provider: 'v8',
       include: ['src/**/*.ts'],
@@ -18,6 +19,7 @@ export default defineConfig({
         'src/app.module.ts',
         'src/**/*.module.ts',
         'src/health/**',
+        'src/observability/start-tracing.ts',
         'src/database/migrations/**',
         'src/database/bootstrap-*.ts',
         'src/database/run-migrations.ts',

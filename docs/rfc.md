@@ -35,7 +35,7 @@ Dos refinamientos respecto del PRD, que este RFC cierra:
 15. El acceso a datos es TypeORM, sobre el esquema de PostgreSQL ya provisto. No se renombran columnas. El cierre vive en `marketdata.date`.
 16. En desarrollo la base es local. En producción es remota. Las dos se eligen por configuración. El secreto no se versiona.
 17. Se puede levantar el proceso en local para desarrollar, y también construir y correr la API con Docker.
-18. Hay prueba unitaria de las reglas, de la máquina de estados, de cada servicio, del middleware de usuario y del mapeo de errores. La prueba de integración del envío de una orden corre contra PostgreSQL, con las mismas reglas que el servicio, y cubre el mismo comportamiento que los escenarios E2E de la sección 12.
+18. Hay prueba unitaria de las reglas, de la máquina de estados, de cada servicio, del middleware de usuario y del mapeo de errores. El runner es Vitest 4.1.2 (`npm test`; `npm run test:cov` exige 80 % sobre el código unitario). La prueba de integración del envío de una orden corre contra PostgreSQL (`npm run test:integration`), con las mismas reglas que el servicio, y cubre el mismo comportamiento que los escenarios E2E de la sección 12. Los escenarios E2E no se automatizan en su totalidad.
 19. Cada llamada deja un log canónico con `correlationId`. El envío de una orden, además, deja log al recibirla y al validarla. El log canónico de esa llamada es el resultado de la transacción.
 20. Los logs y los atributos de monitoreo no incluyen datos de contacto. La sección 6 clasifica qué es PII.
 21. La API queda preparada para monitoreo con atributos propios, para poder armar alertas después. New Relic queda descartado por costo.
