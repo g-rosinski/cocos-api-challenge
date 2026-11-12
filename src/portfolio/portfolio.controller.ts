@@ -1,6 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { getCallContext } from '../common/correlation/call-context.js';
 import { InternalException } from '../common/errors/internal.exception.js';
+import { ApiGetPortfolio } from './portfolio-openapi-examples.js';
 import type { PortfolioResponse } from './portfolio-response.types.js';
 import { PortfolioService } from './portfolio.service.js';
 
@@ -8,6 +9,7 @@ import { PortfolioService } from './portfolio.service.js';
 export class PortfolioController {
   constructor(private readonly portfolioService: PortfolioService) {}
 
+  @ApiGetPortfolio()
   @Get()
   async getPortfolio(): Promise<PortfolioResponse> {
     const userId = getCallContext()?.userId;

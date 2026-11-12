@@ -7,6 +7,7 @@ import {
   type CreateOrderBody,
 } from './create-order-body.js';
 import { CreateOrderService } from './create-order.service.js';
+import { ApiCreateOrder } from './orders-openapi-examples.js';
 import {
   IdempotencyKey,
   idempotencyKeySchema,
@@ -18,6 +19,7 @@ import type { OrderResponse } from './order-response.types.js';
 export class OrdersController {
   constructor(private readonly createOrderService: CreateOrderService) {}
 
+  @ApiCreateOrder()
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async createOrder(

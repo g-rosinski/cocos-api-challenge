@@ -3,8 +3,8 @@
 ## 1. Contexto y objetivo
 
 - **Propósito:** Quien evalúa la API descarga el `schema.json`, lo importa en Postman y ejecuta los ejemplos contra la base de ejemplo.
-- **Alcance (In-Scope):** Swagger de los tres servicios y un `schema.json` descargable, con ejemplos de la cuenta 1, de `q=pamp` y de una orden sobre PAMP.
-- **Fuera de alcance (Out-of-Scope):** Una colección versionada aparte del schema.
+- **Alcance (In-Scope):** Swagger de los tres servicios y un `schema.json` descargable, con ejemplos de la cuenta 1, de `q=pamp` y de una orden sobre PAMP. Cada operación incluye los casos de la sección 12 del RFC. Los curls de esos casos quedan en `docs/curls.md`.
+- **Fuera de alcance (Out-of-Scope):** Una colección versionada de Postman aparte del schema.
 
 ## 2. Requisitos técnicos y restricciones
 
@@ -16,7 +16,7 @@
 
 ## 3. Archivos y recursos de referencia
 
-- **Archivos a modificar/crear:** configuración de Swagger en `src/main.ts`, decoradores de los tres controladores y de sus DTOs.
+- **Archivos a modificar/crear:** configuración de Swagger en `src/main.ts`, decoradores de los tres controladores y de sus DTOs, y `docs/curls.md`.
 - **Firma / Contrato propuesto:** No hay un tipo nuevo. Se documentan `PortfolioResponse`, `InstrumentsResponse` y `OrderResponse`.
 
 Fuente técnica: requerimiento 22 y sección 11 de [docs/rfc.md](../rfc.md).
@@ -31,7 +31,7 @@ Fuente técnica: requerimiento 22 y sección 11 de [docs/rfc.md](../rfc.md).
 
 - [ ] **Comprobaciones manuales:** El schema se importa en Postman. Los ejemplos de la cuenta 1, de `pamp` y de la orden sobre PAMP se ejecutan contra el seed sin reescribir cuerpo ni headers.
 - [ ] **Escenarios de test (Unitarios / E2E):** No reemplaza los escenarios E2E del RFC. La comprobación es la importación y una ejecución de cada ejemplo.
-- [ ] **Documentación:** La sección 11 del RFC menciona la ruta del schema cuando ya exista.
+- [x] **Documentación:** La sección 11 del RFC menciona `/swagger` y `/schema.json`. Los curls están en `docs/curls.md`.
 
 ## Dependencias
 

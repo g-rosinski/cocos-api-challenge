@@ -53,9 +53,9 @@ Fuente de producto: historia "Ver la cuenta" de [docs/prd.md](../prd.md). Fuente
 
 ## 5. Resultados esperados y verificación
 
-- [ ] **Comprobaciones manuales:** `GET /portfolio` con `x-user-id: 1` y el seed intacto responde 200 con `total_value` 904784.00, `cash_balance` 627500.00, MetroGAS y Pampa. Banco Macro no aparece.
-- [ ] **Escenarios de test (Unitarios / E2E):** Prueba unitaria del cálculo con movimientos `FILLED`, `NEW`, `REJECTED` y `CANCELLED`, incluyendo una cantidad negativa que no se lista. Los 400 y 404 del middleware siguen vigentes en esta ruta.
-- [ ] **Documentación:** El ejemplo de Emiliano del PRD coincide con esta respuesta.
+- [x] **Comprobaciones manuales:** `GET /portfolio` con `x-user-id: 1` y el seed intacto responde 200 con `total_value` 904784.00, `cash_balance` 627500.00, MetroGAS y Pampa. Banco Macro no aparece. Si la cuenta 1 tiene órdenes `POST` adicionales, el `cash_balance` baja por las reservas `NEW` nuevas y el `total_value` puede seguir igual.
+- [x] **Escenarios de test (Unitarios / E2E):** `portfolio-calculator.spec.ts` cubre `FILLED`, `NEW`, `REJECTED` y `CANCELLED`, tenencia negativa omitida y el caso Emiliano. Tests del módulo portfolio, adaptador y controlador. E2E: 400 `INVALID_USER_ID`, 404 `USER_NOT_FOUND` y respuesta 200 de Emiliano con seed sin órdenes extra.
+- [x] **Documentación:** El ejemplo de Emiliano del PRD y la sección 11 del RFC coinciden con la respuesta sobre el seed del challenge. No hubo que corregir números en PRD ni RFC.
 
 ## Dependencias
 

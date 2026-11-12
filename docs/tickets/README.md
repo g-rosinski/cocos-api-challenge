@@ -8,9 +8,9 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 
 ## Estado de progreso
 
-- **Progreso general:** `[▓▓▓▓▓░░░░] 56%`
+- **Progreso general:** `[▓▓▓▓▓▓▓▓░] 78%`
 - **Total de tareas:** 9
-- **Completadas:** 5
+- **Completadas:** 7
 - **En progreso:** 0
 
 ---
@@ -22,10 +22,10 @@ El orden de implementación es el de la matriz: primero el repositorio y la base
 | `TASK-01` | `chore` | Preparar NestJS, Docker, lint, commits y reglas de Cursor | Ninguna                         | `[x] Completado` |
 | `TASK-02` | `chore` | Conectar PostgreSQL, cargar el seed y correr la migración | `TASK-01`                       | `[x] Completado` |
 | `TASK-03` | `feat`  | Correlación, logs, errores y middleware de cuenta         | `TASK-01`                       | `[x] Completado` |
-| `TASK-04` | `feat`  | Consultar el portfolio                                    | `TASK-02`, `TASK-03`            | `[ ] Pendiente`  |
+| `TASK-04` | `feat`  | Consultar el portfolio                                    | `TASK-02`, `TASK-03`            | `[x] Completado` |
 | `TASK-05` | `feat`  | Buscar instrumentos con paginado                          | `TASK-02`, `TASK-03`            | `[x] Completado` |
 | `TASK-06` | `feat`  | Crear órdenes con lock, estados e idempotencia            | `TASK-02`, `TASK-03`            | `[x] Completado` |
-| `TASK-07` | `feat`  | Publicar Swagger y schema.json                            | `TASK-04`, `TASK-05`, `TASK-06` | `[ ] Pendiente`  |
+| `TASK-07` | `feat`  | Publicar Swagger y schema.json                            | `TASK-04`, `TASK-05`, `TASK-06` | `[x] Completado` |
 | `TASK-08` | `feat`  | Atributos de OpenTelemetry                                | `TASK-03`, `TASK-06`            | `[ ] Pendiente`  |
 | `TASK-09` | `test`  | Pruebas unitarias y de integración del envío              | `TASK-04`, `TASK-05`, `TASK-06` | `[ ] Pendiente`  |
 
@@ -55,9 +55,9 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 
 ### [TASK-04] feat: consultar el portfolio calculado desde órdenes y el último cierre
 
-- **Estado:** `[ ] Pendiente`
+- **Estado:** `[x] Completado`
 - **Archivo de tarea:** [04-portfolio.md](04-portfolio.md)
-- **Siguiente paso:** Revisar el plan de cambios y el ejemplo de Emiliano en el PRD.
+- **Resultados:** `GET /portfolio` calcula la cuenta desde `orders` y el último `close` de `marketdata`. Calculadora pura, adaptador TypeORM y contratos en `*.types.ts`. Commit `446810c`.
 
 ### [TASK-05] feat: buscar instrumentos por ticker o nombre con paginado
 
@@ -73,9 +73,9 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 
 ### [TASK-07] feat: publicar Swagger y schema.json con ejemplos del seed
 
-- **Estado:** `[ ] Pendiente`
+- **Estado:** `[x] Completado`
 - **Archivo de tarea:** [07-swagger.md](07-swagger.md)
-- **Siguiente paso:** Revisar el plan de cambios cuando los tres servicios respondan.
+- **Resultados:** Swagger en `/swagger` y documento en `/schema.json`, con los casos de la sección 12. Los curls están en [docs/curls.md](../curls.md). `@nestjs/swagger` 12.1.1. Zod 4.6 convierte el cuerpo y la query sin un generador aparte.
 
 ### [TASK-08] feat: instrumentar llamadas con atributos de OpenTelemetry sin un vendor
 
@@ -97,3 +97,5 @@ Redis no tiene tarea. El RFC lo deja para después, delante de la búsqueda, sin
 - **2026-11-11:** `TASK-01` completada. Proceso NestJS, lint, hooks y `.cursor/rules/architecture.mdc`. La imagen Docker no se construyó en esta máquina porque el comando `docker` no está instalado.
 - **2026-11-11:** `TASK-05` completada. `GET /instruments` con puerto, adaptador PostgreSQL, Zod y tests unitarios. El RFC sección 11 no cambió.
 - **2026-11-11:** `TASK-06` completada. `POST /orders` con máquina de estados, strategies, factory, lock pesimista e idempotencia. Sin cambio de esquema ni de la sección 11 del RFC.
+- **2026-11-11:** `TASK-04` completada. `GET /portfolio` con totales y posiciones del seed de Emiliano. PRD y RFC sección 11 sin cambios.
+- **2026-11-11:** `TASK-07` completada. Swagger en `/swagger`, `schema.json` en `/schema.json` y curls de la sección 12 en `docs/curls.md`.

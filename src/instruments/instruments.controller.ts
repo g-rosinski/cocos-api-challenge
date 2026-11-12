@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { getCallContext } from '../common/correlation/call-context.js';
 import type { InstrumentsResponse } from './instruments-response.types.js';
+import { ApiSearchInstruments } from './instruments-openapi-examples.js';
 import { InstrumentsService } from './instruments.service.js';
 import {
   searchInstrumentsQuerySchema,
@@ -12,6 +13,7 @@ import {
 export class InstrumentsController {
   constructor(private readonly instrumentsService: InstrumentsService) {}
 
+  @ApiSearchInstruments()
   @Get()
   async searchInstruments(
     @Query({

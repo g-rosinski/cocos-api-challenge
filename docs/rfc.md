@@ -412,7 +412,7 @@ Respuesta tentativa `201`:
 }
 ```
 
-El Swagger publica estos tres servicios y el `schema.json`. Los ejemplos del documento usan la cuenta 1, PAMP (`id` 47) y la búsqueda `pamp`, que existen en la base de ejemplo, para importar el schema en Postman y ejecutarlos sin reescribirlos.
+El Swagger publica estos tres servicios. La interfaz está en `http://localhost:3000/swagger` y el documento importable en `http://localhost:3000/schema.json`. Los ejemplos que quedan seleccionados usan la cuenta 1, PAMP (`id` 47) y la búsqueda `pamp`, que existen en la base de ejemplo, para importar el schema en Postman y ejecutarlos sin reescribirlos. Cada operación incluye además los casos de la sección 12. Los curls listos para copiar están en [docs/curls.md](curls.md).
 
 ## 12. Escenarios E2E
 
@@ -609,7 +609,7 @@ El cuerpo no describe la falla. El log de ese `correlation_id` sí.
 
 ### 13. Importar el schema
 
-El `schema.json` se importa en Postman y los ejemplos de la cuenta 1, de `pamp` y de la orden sobre PAMP se ejecutan contra la base de ejemplo.
+El `schema.json` se importa en Postman desde `http://localhost:3000/schema.json` y los ejemplos de la cuenta 1, de `pamp` y de la orden sobre PAMP se ejecutan contra la base de ejemplo. El resto de los casos de esta sección está en el mismo documento y en [docs/curls.md](curls.md).
 
 ## Caché de búsqueda con Redis
 
