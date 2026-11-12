@@ -1,30 +1,28 @@
-import type { OrderSide, OrderStatus } from '@/domain/order-types';
-
-export {
-  ORDER_SIDES,
-  ORDER_STATUSES,
-  type OrderSide,
-  type OrderStatus,
+import { OrderSide, OrderStatus } from '@/domain/order-types';
+import type {
+  OrderSide as OrderSideType,
+  OrderStatus as OrderStatusType,
 } from '@/domain/order-types';
+
+export * from '@/domain/order-types';
 
 /** Sides permitidos en POST /orders. */
 export const TRADABLE_ORDER_SIDES = [
-  'BUY',
-  'SELL',
-] as const satisfies readonly OrderSide[];
+  OrderSide.BUY,
+  OrderSide.SELL,
+] as const satisfies readonly OrderSideType[];
 
 export type TradableOrderSide = (typeof TRADABLE_ORDER_SIDES)[number];
 
 /** Movimientos de caja reconocidos al armar portfolio y disponibilidad. */
 export const CASH_MOVEMENT_SIDES = [
-  'CASH_IN',
-  'CASH_OUT',
-] as const satisfies readonly OrderSide[];
+  OrderSide.CASH_IN,
+  OrderSide.CASH_OUT,
+] as const satisfies readonly OrderSideType[];
 
 export type CashMovementSide = (typeof CASH_MOVEMENT_SIDES)[number];
 
-export const ORDER_TYPES = ['MARKET', 'LIMIT'] as const;
-
-export type OrderType = (typeof ORDER_TYPES)[number];
-
-export type AcceptedOrderStatus = Extract<OrderStatus, 'FILLED' | 'NEW'>;
+export type AcceptedOrderStatus = Extract<
+  OrderStatusType,
+  typeof OrderStatus.FILLED | typeof OrderStatus.NEW
+>;

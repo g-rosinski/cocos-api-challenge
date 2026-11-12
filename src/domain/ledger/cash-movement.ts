@@ -1,12 +1,16 @@
-import type { OrderSide, OrderStatus } from '@/domain/order-types';
+import { OrderSide, OrderStatus, OrderType } from '@/domain/order-types';
+import type {
+  OrderSide as OrderSideType,
+  OrderStatus as OrderStatusType,
+} from '@/domain/order-types';
 
 export function toCents(value: number): number {
   return Math.round(value * 100);
 }
 
 type CashDeltaOrder = {
-  side: OrderSide;
-  status: OrderStatus;
+  side: OrderSideType;
+  status: OrderStatusType;
   size: number;
   price: number;
 };
@@ -16,14 +20,14 @@ type ReserveOrder = CashDeltaOrder & {
 };
 
 export function filledCashDeltaCents(order: CashDeltaOrder): number {
-  if (order.status !== 'FILLED') {
+  if (order.status !== OrderStatus.FILLED) {
     return 0;
   }
   const amount = order.size * toCents(order.price);
-  if (order.side === 'CASH_IN' || order.side === 'SELL') {
+  if (order.side === OrderSide.CASH_IN || order.side === OrderSide.SELL) {
     return amount;
   }
-  if (order.side === 'CASH_OUT' || order.side === 'BUY') {
+  if (order.side === OrderSide.CASH_OUT || order.side === OrderSide.BUY) {
     return -amount;
   }
   return 0;
@@ -31,9 +35,9 @@ export function filledCashDeltaCents(order: CashDeltaOrder): number {
 
 export function openBuyReserveCents(order: ReserveOrder): number {
   if (
-    order.status === 'NEW' &&
-    order.type === 'LIMIT' &&
-    order.side === 'BUY'
+    order.status === OrderStatus.NEW &&
+    order.type === OrderType.LIMIT &&
+    order.side === OrderSide.BUY
   ) {
     return order.size * toCents(order.price);
   }

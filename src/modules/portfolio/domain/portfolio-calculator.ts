@@ -14,10 +14,13 @@ import type {
   PortfolioCalculationInput,
   PortfolioOrderInput,
 } from '@/modules/portfolio/domain/entities/portfolio-input.types';
+import { OrderSide, OrderStatus } from '@/domain/order-types';
 import {
   roundMoney,
   roundPercentage,
 } from '@/modules/portfolio/domain/round-money';
+import { CASH_MOVEMENT_SIDES } from '@/modules/orders/domain/entities/order.types';
+import type { OrderSide as OrderSideType } from '@/domain/order-types';
 
 type HoldingState = {
   quantity: number;
@@ -25,7 +28,7 @@ type HoldingState = {
 };
 
 function isCashMovement(order: PortfolioOrderInput): boolean {
-  return order.side === 'CASH_IN' || order.side === 'CASH_OUT';
+  return (CASH_MOVEMENT_SIDES as readonly OrderSideType[]).includes(order.side);
 }
 
 function applyFilledHolding(
@@ -40,7 +43,7 @@ function applyFilledHolding(
     quantity: 0,
     averageCost: 0,
   };
-  if (order.side === 'BUY') {
+  if (order.side === OrderSide.BUY) {
     const nextQuantity = existing.quantity + order.size;
     const nextCost =
       existing.averageCost * existing.quantity + order.price * order.size;
@@ -50,7 +53,7 @@ function applyFilledHolding(
     });
     return;
   }
-  if (order.side === 'SELL') {
+  if (order.side === OrderSide.SELL) {
     const nextQuantity = existing.quantity - order.size;
     if (nextQuantity > 0) {
       holdings.set(order.instrumentId, {
@@ -77,7 +80,7 @@ export function calculatePortfolio(
 
   const orders = input.orders;
   for (const order of orders) {
-    if (order.status !== 'FILLED') {
+    if (order.status !== OrderStatus.FILLED) {
       continue;
     }
     const instrument = instrumentById.get(order.instrumentId);

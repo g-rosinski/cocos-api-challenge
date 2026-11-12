@@ -4,11 +4,16 @@ import { DependencyException } from '@/common/errors/dependency.exception';
 import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
 import { IdempotencyConflictError } from '@/modules/orders/domain/idempotency-conflict.error';
 import { formatOrderDatetime } from '@/modules/orders/domain/format-order-datetime';
-import type { OrderSide, OrderStatus } from '@/domain/order-types';
-import type {
-  OrderType,
-  TradableOrderSide,
-} from '@/modules/orders/domain/entities/order.types';
+import {
+  OrderSide,
+  isKnownOrderSide,
+  isKnownOrderStatus,
+  isKnownOrderType,
+  type OrderSide as OrderSideType,
+  type OrderStatus as OrderStatusType,
+  type OrderType as OrderTypeAlias,
+} from '@/domain/order-types';
+import type { TradableOrderSide } from '@/modules/orders/domain/entities/order.types';
 import type { AvailabilityOrder } from '@/modules/orders/domain/validators/trading-availability';
 import type { OrderResponse } from '@/modules/orders/application/dto/order-response.types';
 import type {
@@ -61,38 +66,28 @@ function readString(value: unknown): string {
 }
 
 function readTradableOrderSide(value: unknown): TradableOrderSide {
-  if (value === 'BUY' || value === 'SELL') {
+  if (value === OrderSide.BUY || value === OrderSide.SELL) {
     return value;
   }
   throw new DependencyException(value);
 }
 
-function readOrderSide(value: unknown): OrderSide {
-  if (
-    value === 'BUY' ||
-    value === 'SELL' ||
-    value === 'CASH_IN' ||
-    value === 'CASH_OUT'
-  ) {
+function readOrderSide(value: unknown): OrderSideType {
+  if (typeof value === 'string' && isKnownOrderSide(value)) {
     return value;
   }
   throw new DependencyException(value);
 }
 
-function readOrderType(value: unknown): OrderType {
-  if (value === 'MARKET' || value === 'LIMIT') {
+function readOrderType(value: unknown): OrderTypeAlias {
+  if (typeof value === 'string' && isKnownOrderType(value)) {
     return value;
   }
   throw new DependencyException(value);
 }
 
-function readOrderStatus(value: unknown): OrderStatus {
-  if (
-    value === 'FILLED' ||
-    value === 'NEW' ||
-    value === 'REJECTED' ||
-    value === 'CANCELLED'
-  ) {
+function readOrderStatus(value: unknown): OrderStatusType {
+  if (typeof value === 'string' && isKnownOrderStatus(value)) {
     return value;
   }
   throw new DependencyException(value);

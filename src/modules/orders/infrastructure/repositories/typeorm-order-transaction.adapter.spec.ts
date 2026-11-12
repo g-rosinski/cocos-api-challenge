@@ -1,4 +1,5 @@
 import { DataSource, QueryFailedError } from 'typeorm';
+import { OrderSide, OrderStatus, OrderType } from '@/domain/order-types';
 import { DependencyException } from '@/common/errors/dependency.exception';
 import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
 import { IdempotencyConflictError } from '@/modules/orders/domain/idempotency-conflict.error';
@@ -42,9 +43,9 @@ const storedRow = {
   userid: '1',
   size: 1,
   price: '925.85',
-  type: 'MARKET',
-  side: 'BUY',
-  status: 'FILLED',
+  type: OrderType.MARKET,
+  side: OrderSide.BUY,
+  status: OrderStatus.FILLED,
   datetime: '2026-11-10 13:06:00',
 };
 
@@ -59,11 +60,11 @@ describe('TypeOrmOrderTransactionAdapter', () => {
         order_id: 14,
         user_id: 1,
         instrument_id: 47,
-        side: 'BUY',
-        type: 'MARKET',
+        side: OrderSide.BUY,
+        type: OrderType.MARKET,
         size: 1,
         price: 925.85,
-        status: 'FILLED',
+        status: OrderStatus.FILLED,
         datetime: '2026-11-10T13:06:00',
       },
     });
@@ -85,7 +86,7 @@ describe('TypeOrmOrderTransactionAdapter', () => {
   it('rejects a row that is not an order this API stores', async () => {
     const adapter = adapterWith(
       queryRunnerDouble(),
-      vi.fn().mockResolvedValue([{ ...storedRow, side: 'CASH_IN' }]),
+      vi.fn().mockResolvedValue([{ ...storedRow, side: OrderSide.CASH_IN }]),
     );
 
     await expect(adapter.findIdempotency(1, 'key')).rejects.toBeInstanceOf(
@@ -209,9 +210,9 @@ describe('TypeOrmOrderTransactionAdapter', () => {
           instrumentid: 47,
           size: '40',
           price: 900,
-          side: 'BUY',
-          status: 'FILLED',
-          type: 'MARKET',
+          side: OrderSide.BUY,
+          status: OrderStatus.FILLED,
+          type: OrderType.MARKET,
         },
       ])
       .mockResolvedValueOnce([
@@ -221,9 +222,9 @@ describe('TypeOrmOrderTransactionAdapter', () => {
           userid: 1,
           size: 1,
           price: '710.00',
-          type: 'LIMIT',
-          side: 'BUY',
-          status: 'NEW',
+          type: OrderType.LIMIT,
+          side: OrderSide.BUY,
+          status: OrderStatus.NEW,
           datetime: new Date('2026-11-10T13:06:00.000Z'),
         },
       ]);
@@ -237,19 +238,19 @@ describe('TypeOrmOrderTransactionAdapter', () => {
           instrumentId: 47,
           size: 40,
           price: 900,
-          side: 'BUY',
-          status: 'FILLED',
-          type: 'MARKET',
+          side: OrderSide.BUY,
+          status: OrderStatus.FILLED,
+          type: OrderType.MARKET,
         },
       ]);
       return context.insertOrder({
         userId: 1,
         instrumentId: 45,
-        side: 'BUY',
-        type: 'LIMIT',
+        side: OrderSide.BUY,
+        type: OrderType.LIMIT,
         size: 1,
         price: 710,
-        status: 'NEW',
+        status: OrderStatus.NEW,
       });
     });
 
@@ -257,11 +258,11 @@ describe('TypeOrmOrderTransactionAdapter', () => {
       order_id: 15,
       user_id: 1,
       instrument_id: 45,
-      side: 'BUY',
-      type: 'LIMIT',
+      side: OrderSide.BUY,
+      type: OrderType.LIMIT,
       size: 1,
       price: 710,
-      status: 'NEW',
+      status: OrderStatus.NEW,
       datetime: '2026-11-10T13:06:00',
     });
     expect(runner.commitTransaction).toHaveBeenCalledOnce();
@@ -274,9 +275,9 @@ describe('TypeOrmOrderTransactionAdapter', () => {
       .mockResolvedValueOnce([
         {
           ...storedRow,
-          side: 'SELL',
-          type: 'LIMIT',
-          status: 'REJECTED',
+          side: OrderSide.SELL,
+          type: OrderType.LIMIT,
+          status: OrderStatus.REJECTED,
           price: 710,
           datetime: new Date('2026-11-10T13:06:00.000Z'),
         },
@@ -297,9 +298,9 @@ describe('TypeOrmOrderTransactionAdapter', () => {
     });
 
     expect(snapshot.stored?.order).toMatchObject({
-      side: 'SELL',
-      type: 'LIMIT',
-      status: 'REJECTED',
+      side: OrderSide.SELL,
+      type: OrderType.LIMIT,
+      status: OrderStatus.REJECTED,
       price: 710,
     });
     expect(snapshot.instrument).toEqual({ id: 45, type: 'ACCIONES' });
@@ -407,11 +408,11 @@ describe('TypeOrmOrderTransactionAdapter', () => {
         context.insertOrder({
           userId: 1,
           instrumentId: 47,
-          side: 'BUY',
-          type: 'MARKET',
+          side: OrderSide.BUY,
+          type: OrderType.MARKET,
           size: 1,
           price: 925.85,
-          status: 'FILLED',
+          status: OrderStatus.FILLED,
         }),
       ),
     ).rejects.toBeInstanceOf(DependencyException);

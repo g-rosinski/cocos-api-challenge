@@ -1,13 +1,13 @@
 import type { CallContext } from '@/common/correlation/call-context';
 import type { CanonicalLogAttributes } from '@/common/logging/canonical-log-attribute';
 import {
-  ORDER_SIDES,
-  ORDER_STATUSES,
-  ORDER_TYPES,
+  isKnownOrderSide,
+  isKnownOrderStatus,
+  isKnownOrderType,
   type OrderSide,
   type OrderStatus,
   type OrderType,
-} from '@/modules/orders/domain/entities/order.types';
+} from '@/domain/order-types';
 
 export const FORBIDDEN_SPAN_ATTRIBUTE_KEYS = new Set([
   'email',
@@ -86,27 +86,21 @@ function readOrderStatus(value: string | undefined): OrderStatus | undefined {
   if (value === undefined) {
     return undefined;
   }
-  return ORDER_STATUSES.includes(value as OrderStatus)
-    ? (value as OrderStatus)
-    : undefined;
+  return isKnownOrderStatus(value) ? value : undefined;
 }
 
 function readOrderSide(value: unknown): OrderSide | undefined {
   if (typeof value !== 'string') {
     return undefined;
   }
-  return (ORDER_SIDES as readonly string[]).includes(value)
-    ? (value as OrderSide)
-    : undefined;
+  return isKnownOrderSide(value) ? value : undefined;
 }
 
 function readOrderType(value: unknown): OrderType | undefined {
   if (typeof value !== 'string') {
     return undefined;
   }
-  return (ORDER_TYPES as readonly string[]).includes(value)
-    ? (value as OrderType)
-    : undefined;
+  return isKnownOrderType(value) ? value : undefined;
 }
 
 export function forbiddenKeysInAttributes(

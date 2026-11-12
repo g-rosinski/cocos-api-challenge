@@ -1,4 +1,5 @@
 import { calculatePortfolio } from '@/modules/portfolio/domain/portfolio-calculator';
+import { OrderSide, OrderStatus, OrderType } from '@/domain/order-types';
 import type { PortfolioOrderInput } from '@/modules/portfolio/domain/entities/portfolio-input.types';
 import { calculateTradingAvailability } from '@/modules/orders/domain/validators/trading-availability';
 import type { AvailabilityOrder } from '@/modules/orders/domain/validators/trading-availability';
@@ -11,7 +12,7 @@ function order(
     instrumentId: 47,
     size: 1,
     price: 100,
-    type: 'MARKET',
+    type: OrderType.MARKET,
     ...overrides,
   };
 }
@@ -21,24 +22,29 @@ describe('calculateTradingAvailability', () => {
     const availability = calculateTradingAvailability(
       [
         order({
-          side: 'CASH_IN',
-          status: 'FILLED',
+          side: OrderSide.CASH_IN,
+          status: OrderStatus.FILLED,
           size: 1000,
           price: 1,
           instrumentId: 66,
         }),
-        order({ side: 'BUY', status: 'FILLED', size: 1, price: 100 }),
         order({
-          side: 'BUY',
-          status: 'NEW',
-          type: 'LIMIT',
+          side: OrderSide.BUY,
+          status: OrderStatus.FILLED,
+          size: 1,
+          price: 100,
+        }),
+        order({
+          side: OrderSide.BUY,
+          status: OrderStatus.NEW,
+          type: OrderType.LIMIT,
           size: 2,
           price: 50,
           instrumentId: 45,
         }),
         order({
-          side: 'CASH_OUT',
-          status: 'FILLED',
+          side: OrderSide.CASH_OUT,
+          status: OrderStatus.FILLED,
           size: 20,
           price: 1,
           instrumentId: 66,
@@ -54,26 +60,46 @@ describe('calculateTradingAvailability', () => {
   it('reserves shares from an open limit sell and ignores rejected or cancelled orders', () => {
     const availability = calculateTradingAvailability(
       [
-        order({ side: 'BUY', status: 'FILLED', size: 40, price: 930 }),
-        order({ side: 'SELL', status: 'FILLED', size: 2, price: 900 }),
         order({
-          side: 'SELL',
-          status: 'NEW',
-          type: 'LIMIT',
+          side: OrderSide.BUY,
+          status: OrderStatus.FILLED,
+          size: 40,
+          price: 930,
+        }),
+        order({
+          side: OrderSide.SELL,
+          status: OrderStatus.FILLED,
+          size: 2,
+          price: 900,
+        }),
+        order({
+          side: OrderSide.SELL,
+          status: OrderStatus.NEW,
+          type: OrderType.LIMIT,
           size: 5,
           price: 1000,
         }),
-        order({ side: 'SELL', status: 'REJECTED', size: 1000, price: 925.85 }),
-        order({ side: 'SELL', status: 'CANCELLED', size: 10, price: 900 }),
+        order({
+          side: OrderSide.SELL,
+          status: OrderStatus.REJECTED,
+          size: 1000,
+          price: 925.85,
+        }),
+        order({
+          side: OrderSide.SELL,
+          status: OrderStatus.CANCELLED,
+          size: 10,
+          price: 900,
+        }),
         order({
           side: 'HOLD' as unknown as AvailabilityOrder['side'],
-          status: 'FILLED',
+          status: OrderStatus.FILLED,
           size: 1,
           price: 10,
         }),
         order({
-          side: 'SELL',
-          status: 'FILLED',
+          side: OrderSide.SELL,
+          status: OrderStatus.FILLED,
           size: 4,
           price: 900,
           instrumentId: 31,
@@ -92,25 +118,25 @@ describe('calculateTradingAvailability', () => {
         instrumentId: 66,
         size: 1000,
         price: 1,
-        side: 'CASH_IN',
-        status: 'FILLED',
-        type: 'MARKET',
+        side: OrderSide.CASH_IN,
+        status: OrderStatus.FILLED,
+        type: OrderType.MARKET,
       },
       {
         instrumentId: 47,
         size: 1,
         price: 10.33,
-        side: 'BUY',
-        status: 'FILLED',
-        type: 'MARKET',
+        side: OrderSide.BUY,
+        status: OrderStatus.FILLED,
+        type: OrderType.MARKET,
       },
       {
         instrumentId: 45,
         size: 1,
         price: 710.15,
-        side: 'BUY',
-        status: 'NEW',
-        type: 'LIMIT',
+        side: OrderSide.BUY,
+        status: OrderStatus.NEW,
+        type: OrderType.LIMIT,
       },
     ];
     const availability = calculateTradingAvailability(history, 47);

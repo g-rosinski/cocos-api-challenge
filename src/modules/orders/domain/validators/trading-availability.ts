@@ -1,15 +1,22 @@
-import type { OrderSide, OrderStatus } from '@/domain/order-types';
+import {
+  OrderSide,
+  OrderStatus,
+  OrderType,
+  type OrderSide as OrderSideType,
+  type OrderStatus as OrderStatusType,
+} from '@/domain/order-types';
 import {
   filledCashDeltaCents,
   openBuyReserveCents,
 } from '@/domain/ledger/cash-movement';
+import { CASH_MOVEMENT_SIDES } from '@/modules/orders/domain/entities/order.types';
 
 export type AvailabilityOrder = {
   instrumentId: number;
   size: number;
   price: number;
-  side: OrderSide;
-  status: OrderStatus;
+  side: OrderSideType;
+  status: OrderStatusType;
   type: string;
 };
 
@@ -18,8 +25,8 @@ export type TradingAvailability = {
   availableShares: number;
 };
 
-function isCashMovement(side: string): boolean {
-  return side === 'CASH_IN' || side === 'CASH_OUT';
+function isCashMovement(side: OrderSideType): boolean {
+  return (CASH_MOVEMENT_SIDES as readonly OrderSideType[]).includes(side);
 }
 
 export function calculateTradingAvailability(
@@ -34,19 +41,19 @@ export function calculateTradingAvailability(
   for (const order of orders) {
     settledCashCents += filledCashDeltaCents(order);
     reservedCashCents += openBuyReserveCents(order);
-    if (order.status === 'FILLED') {
+    if (order.status === OrderStatus.FILLED) {
       if (order.instrumentId === instrumentId && !isCashMovement(order.side)) {
-        if (order.side === 'BUY') {
+        if (order.side === OrderSide.BUY) {
           settledShares += order.size;
-        } else if (order.side === 'SELL') {
+        } else if (order.side === OrderSide.SELL) {
           settledShares -= order.size;
         }
       }
     }
     if (
-      order.status === 'NEW' &&
-      order.type === 'LIMIT' &&
-      order.side === 'SELL' &&
+      order.status === OrderStatus.NEW &&
+      order.type === OrderType.LIMIT &&
+      order.side === OrderSide.SELL &&
       order.instrumentId === instrumentId
     ) {
       reservedShares += order.size;

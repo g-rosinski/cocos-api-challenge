@@ -1,4 +1,5 @@
 import { DataSource } from 'typeorm';
+import { OrderSide, OrderStatus, OrderType } from '@/domain/order-types';
 import { TypeOrmPortfolioReadAdapter } from '@/modules/portfolio/infrastructure/repositories/typeorm-portfolio-read.adapter';
 
 describe('TypeOrmPortfolioReadAdapter', () => {
@@ -10,9 +11,9 @@ describe('TypeOrmPortfolioReadAdapter', () => {
           instrumentid: 47,
           size: '10',
           price: '930.50',
-          side: 'BUY',
-          status: 'FILLED',
-          type: 'MARKET',
+          side: OrderSide.BUY,
+          status: OrderStatus.FILLED,
+          type: OrderType.MARKET,
         },
       ])
       .mockResolvedValueOnce([
@@ -48,9 +49,9 @@ describe('TypeOrmPortfolioReadAdapter', () => {
         instrumentId: 47,
         size: 10,
         price: 930.5,
-        side: 'BUY',
-        status: 'FILLED',
-        type: 'MARKET',
+        side: OrderSide.BUY,
+        status: OrderStatus.FILLED,
+        type: OrderType.MARKET,
       },
     ]);
     expect(input.instruments).toHaveLength(2);

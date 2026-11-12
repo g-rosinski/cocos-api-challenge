@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { DependencyException } from '@/common/errors/dependency.exception';
 import {
-  ORDER_SIDES,
-  ORDER_STATUSES,
+  isKnownOrderSide,
+  isKnownOrderStatus,
   type OrderSide,
   type OrderStatus,
 } from '@/domain/order-types';
@@ -40,15 +40,15 @@ function toNumber(value: string | number): number {
 }
 
 function readOrderSide(value: string): OrderSide {
-  if ((ORDER_SIDES as readonly string[]).includes(value)) {
-    return value as OrderSide;
+  if (isKnownOrderSide(value)) {
+    return value;
   }
   throw new DependencyException(value);
 }
 
 function readOrderStatus(value: string): OrderStatus {
-  if ((ORDER_STATUSES as readonly string[]).includes(value)) {
-    return value as OrderStatus;
+  if (isKnownOrderStatus(value)) {
+    return value;
   }
   throw new DependencyException(value);
 }

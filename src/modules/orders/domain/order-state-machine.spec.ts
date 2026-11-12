@@ -1,3 +1,4 @@
+import { OrderSide, OrderStatus } from '@/domain/order-types';
 import { isOrderAccepted } from '@/modules/orders/domain/validators/order-acceptance';
 import { OrderStateMachine } from '@/modules/orders/domain/order-state-machine';
 import { FilledOrderState } from '@/modules/orders/domain/states/filled-order-state';
@@ -11,25 +12,25 @@ describe('OrderStateMachine', () => {
   it('fills a market order when cash covers the notional', () => {
     expect(
       machine.decide(filled, {
-        side: 'BUY',
+        side: OrderSide.BUY,
         size: 1,
         price: 925.85,
         availableCash: 925.85,
         availableShares: 0,
       }),
-    ).toBe('FILLED');
+    ).toBe(OrderStatus.FILLED);
   });
 
   it('leaves a limit order open when cash covers the notional', () => {
     expect(
       machine.decide(open, {
-        side: 'BUY',
+        side: OrderSide.BUY,
         size: 1,
         price: 710,
         availableCash: 710,
         availableShares: 0,
       }),
-    ).toBe('NEW');
+    ).toBe(OrderStatus.NEW);
   });
 
   it.each([
@@ -37,7 +38,7 @@ describe('OrderStateMachine', () => {
       name: 'insufficient cash',
       state: filled,
       input: {
-        side: 'BUY' as const,
+        side: OrderSide.BUY,
         size: 1,
         price: 925.85,
         availableCash: 925.84,
@@ -48,7 +49,7 @@ describe('OrderStateMachine', () => {
       name: 'insufficient shares',
       state: filled,
       input: {
-        side: 'SELL' as const,
+        side: OrderSide.SELL,
         size: 1000,
         price: 925.85,
         availableCash: 0,
@@ -59,7 +60,7 @@ describe('OrderStateMachine', () => {
       name: 'amount below one share',
       state: open,
       input: {
-        side: 'BUY' as const,
+        side: OrderSide.BUY,
         size: 0,
         price: 710,
         availableCash: 10_000,
@@ -70,7 +71,7 @@ describe('OrderStateMachine', () => {
       name: 'sell below zero',
       state: filled,
       input: {
-        side: 'SELL' as const,
+        side: OrderSide.SELL,
         size: 3,
         price: 100,
         availableCash: 0,
@@ -78,25 +79,25 @@ describe('OrderStateMachine', () => {
       },
     },
   ])('rejects $name', ({ state, input }) => {
-    expect(machine.decide(state, input)).toBe('REJECTED');
+    expect(machine.decide(state, input)).toBe(OrderStatus.REJECTED);
   });
 
   it('accepts a sell that uses the exact available shares', () => {
     expect(
       machine.decide(filled, {
-        side: 'SELL',
+        side: OrderSide.SELL,
         size: 40,
         price: 925.85,
         availableCash: 0,
         availableShares: 40,
       }),
-    ).toBe('FILLED');
+    ).toBe(OrderStatus.FILLED);
   });
 
   it('shares the acceptance rule used by both order types', () => {
     expect(
       isOrderAccepted({
-        side: 'BUY',
+        side: OrderSide.BUY,
         size: 1,
         price: 10,
         availableCash: 10,
@@ -105,7 +106,7 @@ describe('OrderStateMachine', () => {
     ).toBe(true);
     expect(
       isOrderAccepted({
-        side: 'SELL',
+        side: OrderSide.SELL,
         size: 1.5,
         price: 10,
         availableCash: 10,

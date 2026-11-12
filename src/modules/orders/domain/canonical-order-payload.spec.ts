@@ -1,4 +1,5 @@
 import { createHash } from 'node:crypto';
+import { OrderSide, OrderType } from '@/domain/order-types';
 import {
   canonicalOrderPayload,
   canonicalOrderPayloadHash,
@@ -7,8 +8,8 @@ import {
 describe('canonicalOrderPayload', () => {
   it('orders keys and keeps size without a price', () => {
     const body = {
-      type: 'MARKET' as const,
-      side: 'BUY' as const,
+      type: OrderType.MARKET as const,
+      side: OrderSide.BUY as const,
       instrument_id: 47,
       size: 1,
     };
@@ -27,8 +28,8 @@ describe('canonicalOrderPayload', () => {
     expect(
       canonicalOrderPayload({
         instrument_id: 45,
-        side: 'BUY',
-        type: 'LIMIT',
+        side: OrderSide.BUY,
+        type: OrderType.LIMIT,
         amount: 1000,
         price: 710,
       }),
@@ -40,8 +41,8 @@ describe('canonicalOrderPayload', () => {
   it('changes the hash when only the limit price changes', () => {
     const base = {
       instrument_id: 45,
-      side: 'BUY' as const,
-      type: 'LIMIT' as const,
+      side: OrderSide.BUY as const,
+      type: OrderType.LIMIT as const,
       size: 1,
     };
 

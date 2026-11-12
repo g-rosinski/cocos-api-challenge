@@ -1,3 +1,4 @@
+import { OrderSide, OrderStatus, OrderType } from '@/domain/order-types';
 import {
   filledCashDeltaCents,
   openBuyReserveCents,
@@ -7,8 +8,8 @@ import {
 describe('cash-movement', () => {
   it('matches portfolio and availability cash for decimal prices', () => {
     const order = {
-      side: 'BUY',
-      status: 'FILLED',
+      side: OrderSide.BUY,
+      status: OrderStatus.FILLED,
       size: 3,
       price: 10.33,
     };
@@ -20,9 +21,9 @@ describe('cash-movement', () => {
   it('reserves open limit buys in cents', () => {
     expect(
       openBuyReserveCents({
-        side: 'BUY',
-        status: 'NEW',
-        type: 'LIMIT',
+        side: OrderSide.BUY,
+        status: OrderStatus.NEW,
+        type: OrderType.LIMIT,
         size: 2,
         price: 710.15,
       }),
