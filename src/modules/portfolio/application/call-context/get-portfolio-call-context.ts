@@ -1,4 +1,4 @@
-import type { CallContext } from '@/common/correlation/call-context';
+import type { CallContext } from '@/common/logging/call-context/call-context';
 import type { PortfolioResponse } from '@/modules/portfolio/application/dto/portfolio-response.types';
 
 export function applyGetPortfolioSuccessCallContext(

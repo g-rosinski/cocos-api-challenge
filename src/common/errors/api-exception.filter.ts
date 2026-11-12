@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { QueryFailedError } from 'typeorm';
-import { getCallContext } from '@/common/correlation/call-context';
+import { getCallContext } from '@/common/logging/call-context/call-context';
 import { ApiClientException } from '@/common/errors/api-client.exception';
 import { DependencyException } from '@/common/errors/dependency.exception';
 import type { ErrorResponse } from '@/common/errors/error-response';

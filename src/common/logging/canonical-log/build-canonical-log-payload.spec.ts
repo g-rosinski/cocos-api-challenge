@@ -1,4 +1,4 @@
-import { buildCanonicalLogPayload } from '@/common/logging/build-canonical-log-payload';
+import { buildCanonicalLogPayload } from '@/common/logging/canonical-log/build-canonical-log-payload';
 
 describe('buildCanonicalLogPayload', () => {
   it('builds the default title and context payload', () => {

@@ -4,10 +4,27 @@ import {
   USER_LOOKUP,
   type UserLookup,
 } from '@/modules/users/application/ports/user-lookup.port';
-import { getCallContext } from '@/common/correlation/call-context';
+import { getCallContext } from '@/common/logging/call-context/call-context';
 import { InvalidUserIdException } from '@/common/errors/invalid-user-id.exception';
 import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
-import { parseUserId } from '@/common/middleware/parse-user-id';
+
+function parseUserId(headerValue: string | undefined): number | null {
+  if (headerValue === undefined) {
+    return null;
+  }
+  const trimmed = headerValue.trim();
+  if (trimmed.length === 0) {
+    return null;
+  }
+  if (!/^\d+$/.test(trimmed)) {
+    return null;
+  }
+  const parsed = Number(trimmed);
+  if (!Number.isSafeInteger(parsed) || parsed <= 0) {
+    return null;
+  }
+  return parsed;
+}
 
 @Injectable()
 export class UserIdMiddleware implements NestMiddleware {

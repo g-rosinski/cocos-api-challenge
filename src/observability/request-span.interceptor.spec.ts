@@ -3,7 +3,7 @@ import { SpanStatusCode, trace } from '@opentelemetry/api';
 import type { Request, Response } from 'express';
 import type { Span, Tracer } from '@opentelemetry/api';
 import { firstValueFrom, of, throwError } from 'rxjs';
-import { callContextStorage } from '@/common/correlation/call-context';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
 import { RequestSpanInterceptor } from '@/observability/request-span.interceptor';
 
 describe('RequestSpanInterceptor', () => {

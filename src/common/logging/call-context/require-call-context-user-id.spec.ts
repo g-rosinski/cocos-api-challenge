@@ -1,5 +1,5 @@
 import { InternalException } from '@/common/errors/internal.exception';
-import { requireCallContextUserId } from '@/common/correlation/require-call-context-user-id';
+import { requireCallContextUserId } from '@/common/logging/call-context/require-call-context-user-id';
 
 describe('requireCallContextUserId', () => {
   it('throws when context is missing', () => {

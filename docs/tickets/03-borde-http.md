@@ -19,7 +19,7 @@
 
 ## 3. Archivos y recursos de referencia
 
-- **Archivos a modificar/crear:** `src/common/correlation/`, `src/common/filters/api-exception.filter.ts`, `src/common/middleware/user-id.middleware.ts`, registro en `src/app.module.ts`.
+- **Archivos a modificar/crear:** `src/common/middleware/` (correlation, user-id), `src/common/logging/call-context/`, `src/common/logging/canonical-log/`, `src/common/errors/api-exception.filter.ts`, registro en `src/app.module.ts`.
 - **Firma / Contrato propuesto:**
 
 ```typescript

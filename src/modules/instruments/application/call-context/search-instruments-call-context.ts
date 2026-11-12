@@ -1,4 +1,4 @@
-import type { CallContext } from '@/common/correlation/call-context';
+import type { CallContext } from '@/common/logging/call-context/call-context';
 import type { InstrumentsResponse } from '@/modules/instruments/application/dto/instruments-response.types';
 import type { SearchInstrumentsQuery } from '@/modules/instruments/application/dto/search-instruments-query';
 

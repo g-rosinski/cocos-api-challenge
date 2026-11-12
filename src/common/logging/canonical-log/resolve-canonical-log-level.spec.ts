@@ -1,4 +1,4 @@
-import { resolveCanonicalLogLevel } from '@/common/logging/resolve-canonical-log-level';
+import { resolveCanonicalLogLevel } from '@/common/logging/canonical-log/resolve-canonical-log-level';
 
 describe('resolveCanonicalLogLevel', () => {
   it('returns info for successful and business client errors', () => {

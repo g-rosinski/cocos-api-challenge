@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { callContextStorage } from '@/common/correlation/call-context';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
 import { IdempotencyKeyMismatchException } from '@/common/errors/idempotency-key-mismatch.exception';
 import { InstrumentNotFoundException } from '@/common/errors/instrument-not-found.exception';
 import { InstrumentNotTradableException } from '@/common/errors/instrument-not-tradable.exception';

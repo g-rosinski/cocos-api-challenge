@@ -1,4 +1,4 @@
-import type { CallContext } from '@/common/correlation/call-context';
+import type { CallContext } from '@/common/logging/call-context/call-context';
 import { InternalException } from '@/common/errors/internal.exception';
 
 export function requireCallContextUserId(

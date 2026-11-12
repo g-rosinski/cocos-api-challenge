@@ -1,4 +1,4 @@
-import { callContextStorage } from '@/common/correlation/call-context';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
 import {
   buildRequestSpanAttributes,
   forbiddenKeysInAttributes,

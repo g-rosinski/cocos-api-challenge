@@ -1,5 +1,5 @@
 import { Controller, Get, Query } from '@nestjs/common';
-import { getCallContext } from '@/common/correlation/call-context';
+import { getCallContext } from '@/common/logging/call-context/call-context';
 import { applySearchInstrumentsSuccessCallContext } from '@/modules/instruments/application/call-context/search-instruments-call-context';
 import type { InstrumentsResponse } from '@/modules/instruments/application/dto/instruments-response.types';
 import { ApiSearchInstruments } from '@/modules/instruments/application/dto/instruments-openapi-examples';

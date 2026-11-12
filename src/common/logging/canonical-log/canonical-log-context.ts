@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { getCallContext } from '@/common/correlation/call-context';
-import type { CanonicalLogAttributes } from '@/common/logging/canonical-log-attribute';
+import { getCallContext } from '@/common/logging/call-context/call-context';
+import type { CanonicalLogAttributes } from '@/common/logging/canonical-log/canonical-log-attribute';
 
 const FORBIDDEN_ATTRIBUTE_KEYS = new Set(['email', 'accountNumber']);
 

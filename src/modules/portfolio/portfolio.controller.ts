@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
-import { getCallContext } from '@/common/correlation/call-context';
-import { requireCallContextUserId } from '@/common/correlation/require-call-context-user-id';
+import { getCallContext } from '@/common/logging/call-context/call-context';
+import { requireCallContextUserId } from '@/common/logging/call-context/require-call-context-user-id';
 import { applyGetPortfolioSuccessCallContext } from '@/modules/portfolio/application/call-context/get-portfolio-call-context';
 import { ApiGetPortfolio } from '@/modules/portfolio/application/dto/portfolio-openapi-examples';
 import type { PortfolioResponse } from '@/modules/portfolio/application/dto/portfolio-response.types';

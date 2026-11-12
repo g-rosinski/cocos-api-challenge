@@ -1,8 +1,8 @@
 import { CallHandler, ExecutionContext, Logger } from '@nestjs/common';
 import type { Request, Response } from 'express';
 import { firstValueFrom, of, throwError } from 'rxjs';
-import { callContextStorage } from '@/common/correlation/call-context';
-import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
+import { CanonicalLogInterceptor } from '@/common/logging/canonical-log/canonical-log.interceptor';
 
 describe('CanonicalLogInterceptor', () => {
   const interceptor = new CanonicalLogInterceptor();

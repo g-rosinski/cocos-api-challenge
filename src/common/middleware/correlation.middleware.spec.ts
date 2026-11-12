@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from 'express';
-import { callContextStorage } from '@/common/correlation/call-context';
-import { CorrelationMiddleware } from '@/common/correlation/correlation.middleware';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
+import { CorrelationMiddleware } from '@/common/middleware/correlation.middleware';
 
 describe('CorrelationMiddleware', () => {
   const middleware = new CorrelationMiddleware();

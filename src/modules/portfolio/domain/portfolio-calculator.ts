@@ -1,7 +1,7 @@
 import {
   CURRENCY_INSTRUMENT_TYPE,
   PORTFOLIO_CURRENCY,
-} from '@/common/domain-constants';
+} from '@/common/constants/app.constants';
 import {
   filledCashDeltaCents,
   openBuyReserveCents,

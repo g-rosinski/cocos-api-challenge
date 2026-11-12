@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from 'express';
-import { callContextStorage } from '@/common/correlation/call-context';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
 import { InvalidUserIdException } from '@/common/errors/invalid-user-id.exception';
 import { UserNotFoundException } from '@/common/errors/user-not-found.exception';
 import type { UserLookup } from '@/modules/users/application/ports/user-lookup.port';
@@ -25,13 +25,20 @@ describe('UserIdMiddleware', () => {
     expect(lookup.exists).not.toHaveBeenCalled();
   });
 
-  it('rejects a non integer header', async () => {
+  it.each([
+    { header: '', label: 'empty' },
+    { header: '   ', label: 'whitespace' },
+    { header: '0', label: 'zero' },
+    { header: '-1', label: 'negative' },
+    { header: 'abc', label: 'non integer' },
+  ])('rejects $label x-user-id', async ({ header }) => {
     const lookup: UserLookup = { exists: vi.fn() };
     const middleware = new UserIdMiddleware(lookup);
 
     await expect(
-      middleware.use(createRequest('abc'), response, next),
+      middleware.use(createRequest(header), response, next),
     ).rejects.toBeInstanceOf(InvalidUserIdException);
+    expect(lookup.exists).not.toHaveBeenCalled();
   });
 
   it('rejects a user that does not exist', async () => {
@@ -55,6 +62,18 @@ describe('UserIdMiddleware', () => {
       await middleware.use(createRequest('1'), response, next);
       expect(callContextStorage.getStore()?.userId).toBe(1);
       expect(next).toHaveBeenCalledOnce();
+    });
+  });
+
+  it('accepts a positive integer user id', async () => {
+    const lookup: UserLookup = {
+      exists: vi.fn().mockResolvedValue(true),
+    };
+    const middleware = new UserIdMiddleware(lookup);
+
+    await callContextStorage.run({ correlationId: 'corr-5' }, async () => {
+      await middleware.use(createRequest('999'), response, next);
+      expect(callContextStorage.getStore()?.userId).toBe(999);
     });
   });
 });

@@ -1,5 +1,5 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
-import type { CanonicalLogAttributes } from '@/common/logging/canonical-log-attribute';
+import type { CanonicalLogAttributes } from '@/common/logging/canonical-log/canonical-log-attribute';
 
 export type CallContext = {
   correlationId: string;

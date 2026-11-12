@@ -3,8 +3,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
 import { App } from 'supertest/types.js';
 import { AppModule } from '@/app.module';
-import { ApiExceptionFilter } from '@/common/filters/api-exception.filter';
-import { CanonicalLogInterceptor } from '@/common/logging/canonical-log.interceptor';
+import { ApiExceptionFilter } from '@/common/errors/api-exception.filter';
+import { CanonicalLogInterceptor } from '@/common/logging/canonical-log/canonical-log.interceptor';
 
 describe('AppModule', () => {
   let app: INestApplication<App>;

@@ -20,7 +20,7 @@ La fuente de producto es `docs/prd.md`. La fuente técnica es `docs/rfc.md`. Si 
 | Ruta | Rol |
 | --- | --- |
 | `src/modules/` | Módulos Nest (users, portfolio, instruments, orders, health). Arquitectura en capas por módulo. |
-| `src/common/` | Borde HTTP compartido: correlación, middleware `x-user-id`, filtro de errores, log canónico (sin repositorios). |
+| `src/common/` | Borde HTTP: `middleware/` (solo middlewares), `logging/call-context/`, `logging/canonical-log/`, `errors/` (excepciones + filtro), `constants/`, `http/`. |
 | `src/config/` | Lectura y validación de variables de entorno. |
 | `src/database/` | TypeORM, migraciones y bootstrap local. |
 | `src/domain/` | Dominio compartido entre módulos (sin Nest): vocabulario de órdenes y reglas de caja en `ledger/`. |

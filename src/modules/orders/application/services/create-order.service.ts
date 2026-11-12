@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { getCallContext } from '@/common/correlation/call-context';
+import { getCallContext } from '@/common/logging/call-context/call-context';
 import { ApiClientException } from '@/common/errors/api-client.exception';
 import { IdempotencyKeyMismatchException } from '@/common/errors/idempotency-key-mismatch.exception';
 import { InstrumentNotFoundException } from '@/common/errors/instrument-not-found.exception';
 import { InstrumentNotTradableException } from '@/common/errors/instrument-not-tradable.exception';
-import { CURRENCY_INSTRUMENT_TYPE } from '@/common/domain-constants';
+import { CURRENCY_INSTRUMENT_TYPE } from '@/common/constants/app.constants';
 import { InternalException } from '@/common/errors/internal.exception';
 import type { CreateOrderBody } from '@/modules/orders/application/dto/create-order-body';
 import { canonicalOrderPayloadHash } from '@/modules/orders/domain/canonical-order-payload';

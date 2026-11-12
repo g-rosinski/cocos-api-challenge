@@ -1,4 +1,4 @@
-import type { CallContext } from '@/common/correlation/call-context';
+import type { CallContext } from '@/common/logging/call-context/call-context';
 import type { CreateOrderBody } from '@/modules/orders/application/dto/create-order-body';
 import type { OrderResponse } from '@/modules/orders/application/dto/order-response.types';
 

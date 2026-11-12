@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { emitCanonicalLog } from '@/common/logging/emit-canonical-log';
+import { emitCanonicalLog } from '@/common/logging/canonical-log/emit-canonical-log';
 
 describe('emitCanonicalLog', () => {
   const logger = new Logger('test');

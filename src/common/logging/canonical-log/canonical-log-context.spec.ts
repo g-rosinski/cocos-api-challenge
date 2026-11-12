@@ -1,6 +1,6 @@
 import { Logger } from '@nestjs/common';
-import { callContextStorage } from '@/common/correlation/call-context';
-import { CanonicalLogContext } from '@/common/logging/canonical-log-context';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
+import { CanonicalLogContext } from '@/common/logging/canonical-log/canonical-log-context';
 
 describe('CanonicalLogContext', () => {
   const service = new CanonicalLogContext();

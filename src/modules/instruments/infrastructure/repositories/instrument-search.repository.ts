@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CURRENCY_INSTRUMENT_TYPE } from '@/common/domain-constants';
+import { CURRENCY_INSTRUMENT_TYPE } from '@/common/constants/app.constants';
 import { DataSource } from 'typeorm';
 import type {
   InstrumentItem,

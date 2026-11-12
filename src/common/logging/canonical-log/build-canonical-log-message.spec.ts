@@ -1,4 +1,4 @@
-import { buildCanonicalLogMessage } from '@/common/logging/build-canonical-log-message';
+import { buildCanonicalLogMessage } from '@/common/logging/canonical-log/build-canonical-log-message';
 
 describe('buildCanonicalLogMessage', () => {
   it('includes business status when provided', () => {

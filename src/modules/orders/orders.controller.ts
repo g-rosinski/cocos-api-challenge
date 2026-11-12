@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { getCallContext } from '@/common/correlation/call-context';
-import { requireCallContextUserId } from '@/common/correlation/require-call-context-user-id';
+import { getCallContext } from '@/common/logging/call-context/call-context';
+import { requireCallContextUserId } from '@/common/logging/call-context/require-call-context-user-id';
 import {
   applyCreateOrderRequestCallContext,
   applyCreateOrderSuccessCallContext,

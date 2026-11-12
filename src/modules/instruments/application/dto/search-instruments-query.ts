@@ -1,6 +1,6 @@
 import { StandardSchemaValidationPipe } from '@nestjs/common';
 import { z } from 'zod';
-import { INSTRUMENTS_DEFAULT_PAGE_SIZE } from '@/common/domain-constants';
+import { INSTRUMENTS_DEFAULT_PAGE_SIZE } from '@/common/constants/app.constants';
 import { ValidationException } from '@/common/errors/validation.exception';
 
 export const searchInstrumentsQuerySchema = z.object({

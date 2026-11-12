@@ -10,7 +10,7 @@ import { ValidationException } from '@/common/errors/validation.exception';
 import {
   ORDER_MAX_AMOUNT_ARS,
   ORDER_MAX_SIZE,
-} from '@/common/domain-constants';
+} from '@/common/constants/app.constants';
 import {
   TRADABLE_ORDER_SIDES,
   ORDER_TYPES,

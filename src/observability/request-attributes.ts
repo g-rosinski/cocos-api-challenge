@@ -1,5 +1,5 @@
-import type { CallContext } from '@/common/correlation/call-context';
-import type { CanonicalLogAttributes } from '@/common/logging/canonical-log-attribute';
+import type { CallContext } from '@/common/logging/call-context/call-context';
+import type { CanonicalLogAttributes } from '@/common/logging/canonical-log/canonical-log-attribute';
 import {
   isKnownOrderSide,
   isKnownOrderStatus,

@@ -1,6 +1,6 @@
 import { Test } from '@nestjs/testing';
-import * as callContext from '@/common/correlation/call-context';
-import { callContextStorage } from '@/common/correlation/call-context';
+import * as callContext from '@/common/logging/call-context/call-context';
+import { callContextStorage } from '@/common/logging/call-context/call-context';
 import type { InstrumentsResponse } from '@/modules/instruments/application/dto/instruments-response.types';
 import { InstrumentsController } from '@/modules/instruments/instruments.controller';
 import { InstrumentsService } from '@/modules/instruments/application/services/instruments.service';
