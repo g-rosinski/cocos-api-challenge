@@ -20,7 +20,7 @@
 
 ## 3. Archivos y recursos de referencia
 
-- **Archivos a modificar/crear:** `src/portfolio/portfolio.module.ts`, `src/portfolio/portfolio.controller.ts`, `src/portfolio/portfolio.service.ts`, DTOs de respuesta.
+- **Archivos a modificar/crear:** `src/portfolio/portfolio.module.ts`, `src/portfolio/portfolio.controller.ts`, `src/portfolio/portfolio.service.ts`, `portfolio-response.types.ts`.
 - **Firma / Contrato propuesto:**
 
 ```typescript

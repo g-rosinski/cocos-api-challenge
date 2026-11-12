@@ -61,6 +61,23 @@ describe('AppModule', () => {
     expect(typeof response.body.error.correlation_id).toBe('string');
   });
 
+  it('GET /portfolio with x-user-id 1 returns Emiliano portfolio', async () => {
+    const response = await request(app.getHttpServer())
+      .get('/portfolio')
+      .set('x-user-id', '1')
+      .expect(200);
+
+    expect(response.body.summary).toEqual({
+      total_value: 904784,
+      cash_balance: 627500,
+      currency: 'ARS',
+    });
+    expect(response.body.positions).toHaveLength(2);
+    expect(response.body.positions[0].ticker).toBe('METR');
+    expect(response.body.positions[1].ticker).toBe('PAMP');
+    expect(response.headers['x-correlation-id']).toBeDefined();
+  });
+
   afterEach(async () => {
     await app.close();
   });
