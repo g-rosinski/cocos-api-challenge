@@ -1,26 +1,9 @@
 services:
-  postgres:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: '123456'
-      POSTGRES_DB: neondb
-    ports:
-      - '5432:5432'
-    volumes:
-      - ./database/seed.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
-    healthcheck:
-      test: ['CMD-SHELL', 'pg_isready -U postgres -d neondb']
-      interval: 2s
-      timeout: 5s
-      retries: 20
   api:
     build: .
     ports:
-      - '3000:3000'
+      - '${PORT:-3000}:3000'
+    env_file:
+      - .env
     environment:
-      DATABASE_URL: postgres://postgres:123456@postgres:5432/neondb
-      PORT: 3000
-    depends_on:
-      postgres:
-        condition: service_healthy
+      PORT: ${PORT:-3000}

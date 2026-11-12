@@ -175,7 +175,7 @@ DROP INDEX IF EXISTS instruments_ticker_trgm;
 
 `down` no borra la extensión `pg_trgm`. Puede estar en uso fuera de esta API.
 
-Se ejecuta una vez, antes de servir tráfico con el código nuevo: `migration:run` con la URL de esa base. En el contenedor, el arranque corre la migración y después levanta la API. Hace falta permiso para crear la extensión `pg_trgm`. Si el rol de producción no lo tiene, la extensión se habilita antes en el proveedor y la migración sigue con los índices y la tabla.
+Se ejecuta una vez, antes de servir tráfico con el código nuevo: `migration:run` con la URL de esa base. En el contenedor, con `RUN_MIGRATIONS=true` (default), el entrypoint aplica migraciones pendientes y después levanta la API. Hace falta permiso para crear la extensión `pg_trgm`. Si el rol de producción no lo tiene, la extensión se habilita antes en el proveedor y la migración sigue con los índices y la tabla.
 
 ## 6. Logs, correlación y PII
 
@@ -306,8 +306,8 @@ Si dos envíos nuevos con la misma clave pasan el primer `SELECT`, el bloqueo lo
 
 ## 10. Ejecución
 
-- Local: proceso de Node, con `DATABASE_URL` apuntando al Postgres local cargado con la base de ejemplo.
-- Docker: imagen de la API construida en el repositorio, y un compose que levanta la API con Postgres. Redis no entra en ese compose hasta que la caché sea parte de la entrega.
+- Local (recomendado): proceso de Node, con `DATABASE_URL` apuntando a Postgres local (`db:bootstrap` o `seed.sql` + `migration:run`) o a la base remota del challenge (Neon) en producción.
+- Docker: imagen de la API y un compose que solo levanta ese servicio. `DATABASE_URL` viene de `.env` (localhost, `host.docker.internal` o remoto con SSL). Al arrancar, con `RUN_MIGRATIONS=true` por defecto, aplica migraciones pendientes; no hay Postgres en el compose. Redis no entra hasta que la caché sea parte de la entrega.
 
 ### Setup del repositorio
 

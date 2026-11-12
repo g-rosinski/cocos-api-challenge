@@ -13,4 +13,6 @@ ENV HUSKY=0
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --ignore-scripts
 COPY --from=build /app/dist ./dist
-CMD ["sh", "-c", "node dist/database/cli/run-migrations.js && node dist/main.js"]
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]

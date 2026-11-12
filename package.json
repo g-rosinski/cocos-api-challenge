@@ -20,6 +20,8 @@
     "db:bootstrap": "node --env-file=.env dist/database/bootstrap/bootstrap-database.js",
     "migration:run": "node --env-file=.env dist/database/cli/run-migrations.js",
     "migration:revert": "node --env-file=.env dist/database/cli/revert-migrations.js",
+    "docker:build": "docker build -t cocos-api .",
+    "docker:up": "docker compose up --build",
     "lint": "eslint \"src/**/*.ts\" \"test/**/*.ts\"",
     "prepare": "husky",
     "test": "vitest run",

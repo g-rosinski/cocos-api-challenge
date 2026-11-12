@@ -9,44 +9,87 @@ Esta entrega interpreta ese texto en [docs/prd.md](docs/prd.md) y lo implementa 
 ## Requisitos
 
 - Node.js **26** (ver `engines` en [package.json](package.json))
-- PostgreSQL **16**, o Docker Compose
+- PostgreSQL accesible vía `DATABASE_URL` (local, Neon u otro remoto con red saliente)
 
-## Levantar el proyecto
-
-### Opción A — Docker (recomendada)
-
-```bash
-docker compose up --build
-```
-
-- Postgres monta [database/seed.sql](database/seed.sql) en el primer arranque.
-- La imagen de la API ejecuta las migraciones y después inicia Nest ([Dockerfile](Dockerfile)).
-
-### Opción B — API en el host
+## Levantar el proyecto (recomendado — npm)
 
 ```bash
 cp .env.example .env
-# Ajustar DATABASE_URL si hace falta (por defecto localhost:5432/neondb)
-docker compose up postgres -d   # u otro Postgres con el seed
+# Ajustar DATABASE_URL (local, host.docker.internal si la API va en Docker, o Neon)
 npm ci
 npm run build
-npm run db:bootstrap            # solo si la base está vacía
-npm run migration:run           # obligatorio en host
+npm run db:bootstrap   # base vacía: seed del challenge + migraciones
 npm run start:dev
 ```
 
-Sin `migration:run`, faltan los índices de búsqueda (`pg_trgm`) y la tabla `order_idempotency_keys`: la búsqueda y la idempotencia de órdenes no funcionan como en el RFC.
+Si la base **ya tiene** el esquema y datos del challenge pero **falta** la migración aditiva:
+
+```bash
+npm run build
+npm run migration:run
+npm run start:dev
+```
+
+`db:bootstrap` no recarga el seed si existe `public.users`; siempre aplica migraciones pendientes. Sin la migración, faltan `pg_trgm`, índices y `order_idempotency_keys`.
 
 Nest carga variables desde `.env` en la raíz (`@nestjs/config`).
+
+### Reset local rápido (schema vacío)
+
+En psql/pgAdmin: `DROP SCHEMA public CASCADE; CREATE SCHEMA public;` (y grants según tu rol). Luego:
+
+```bash
+npm run build && npm run db:bootstrap
+```
+
+### Producción (Neon u otro remoto)
+
+La base la provee el challenge; **no** uses `db:bootstrap` contra prod (no vuelve a insertar el seed). Primera vez o deploy nuevo:
+
+```bash
+npm run build && npm run migration:run
+```
+
+`DATABASE_URL` con `sslmode=require` (y parámetros que pida el proveedor) va en `.env` o en secretos de CI — **nunca** en el repositorio.
+
+## Docker (alternativa — CI/CD o imagen)
+
+El compose **solo** construye y corre la API. Postgres **no** va en el repo: la URL sale de `.env` (`env_file`). El contenedor necesita **salida a Internet** si la base es remota (Neon).
+
+```bash
+cp .env.example .env
+# Editar DATABASE_URL antes de levantar
+docker compose up --build
+```
+
+O manual:
+
+```bash
+docker build -t cocos-api .
+docker run --rm --env-file .env -p 3000:3000 cocos-api
+```
+
+| Variable | Uso |
+| --- | --- |
+| `DATABASE_URL` | Obligatoria. Local, `host.docker.internal` (Postgres en el host) o Neon. |
+| `RUN_MIGRATIONS` | Default `true`: al arrancar el contenedor corre migraciones **pendientes** (idempotente). `false` si migrás en un job aparte. |
+
+Migrar sin levantar HTTP:
+
+```bash
+docker run --rm --env-file .env cocos-api node dist/database/cli/run-migrations.js
+```
+
+Flujo CI/CD típico: job de migración con el mismo imagen, luego deploy con `RUN_MIGRATIONS=false`.
 
 ## Migraciones
 
 | Comando | Uso |
 | --- | --- |
-| `npm run migration:run` | Aplica migraciones (índices + idempotencia). Correr después de `build`. |
+| `npm run migration:run` | Aplica migraciones pendientes. Correr después de `build`. |
 | `npm run migration:revert` | Revierte la última migración. |
 
-En Docker, el arranque ya ejecuta `migration:run`. Detalle del DDL: [docs/rfc.md](docs/rfc.md) §5.
+En el contenedor, con `RUN_MIGRATIONS=true` (default), el arranque hace lo mismo que `migration:run`. Detalle del DDL: [docs/rfc.md](docs/rfc.md) §5.
 
 ## Documentación HTTP
 
@@ -84,7 +127,7 @@ flowchart LR
 | [src/domain/](src/domain/) | Dominio compartido: ledger, money, tipos de orden |
 | [src/observability/](src/observability/) | OpenTelemetry |
 | [src/openapi/](src/openapi/) | Swagger |
-| [database/seed.sql](database/seed.sql) | Datos del challenge |
+| [database/seed.sql](database/seed.sql) | Datos del challenge (bootstrap / psql) |
 | [docs/](docs/) | Enunciado, PRD, RFC, guías y Postman |
 
 Plantilla de un módulo con negocio (`portfolio`, `instruments`, `orders`):
@@ -113,6 +156,6 @@ Diseño por feature (diagramas): [docs/portfolio.md](docs/portfolio.md), [docs/i
 
 ```bash
 npm test
-npm run test:integration   # envío de órdenes contra PostgreSQL
+npm run test:integration   # envío de órdenes contra PostgreSQL (DATABASE_URL en .env)
 npm run test:cov
 ```
