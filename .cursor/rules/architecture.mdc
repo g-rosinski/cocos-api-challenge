@@ -1,0 +1,91 @@
+---
+description: Convenciones del monolito modular NestJS de la API Cocos
+alwaysApply: true
+---
+
+# API Cocos
+
+La fuente de producto es `docs/prd.md`. La fuente técnica es `docs/rfc.md`. Si este archivo contradice al RFC, manda el RFC.
+
+## Stack
+
+- Node.js 26, la LTS activa.
+- NestJS, un solo proceso. Módulos de negocio bajo `src/modules/`.
+- TypeScript estricto. Identificadores de código en inglés. Documentación en español. Imports locales con alias `@/` hacia `src/`, sin extensión.
+- TypeORM con `synchronize` apagado. PostgreSQL por `DATABASE_URL`.
+- No usar `any`.
+
+## Carpetas del proceso
+
+| Ruta | Rol |
+| --- | --- |
+| `src/modules/` | Módulos Nest (users, portfolio, instruments, orders, health). Arquitectura en capas por módulo. |
+| `src/common/` | Borde HTTP: `middleware/` (solo middlewares), `logging/call-context/`, `logging/canonical-log/`, `errors/` (excepciones + filtro), `constants/`, `http/`. |
+| `src/config/` | Lectura de entorno (`DATABASE_URL`, `PORT`, errores de config). |
+| `src/database/typeorm/` | Nest `DatabaseModule`, `createDatabaseOptions`, `AppDataSource`. |
+| `src/database/migrations/` | Migraciones versionadas TypeORM. |
+| `src/database/bootstrap/` | Bootstrap local de Postgres (`db:bootstrap`) y parseo de URL. |
+| `src/database/cli/` | Scripts `migration:run` / `migration:revert`. |
+| `src/domain/` | Dominio compartido (sin Nest): `order-types`, `ledger/`, `money/` (precisión monetaria). |
+| `src/observability/` | OpenTelemetry y atributos de span. |
+| `src/openapi/` | Swagger y esquemas compartidos. |
+| `src/app.module.ts`, `src/main.ts` | Composición y arranque. |
+
+## Módulos en `src/modules/`
+
+### Capas (módulos con lógica de negocio)
+
+Users, portfolio, instruments y orders siguen la misma forma (users puede omitir `controller` si no hay HTTP):
+
+```
+src/modules/<nombre>/
+├── application/
+│   ├── dto/           # Entrada, salida, query pipes, ejemplos OpenAPI
+│   ├── ports/         # Contratos que el servicio consume (no TypeORM)
+│   └── services/      # Casos de uso / orquestación
+├── domain/
+│   ├── entities/      # Tipos de dominio, constantes y clases TypeORM (@Entity)
+│   ├── validators/    # Reglas puras reutilizables
+│   └── ...            # Algoritmos, máquina de estados, strategies, errores de dominio
+├── infrastructure/
+│   ├── mappers/         # Entity → tipos del port (sin reglas de negocio)
+│   └── repositories/  # Implementaciones TypeORM de los ports (*.repository.ts)
+├── <nombre>.controller.ts
+└── <nombre>.module.ts
+```
+
+- `src/modules/users`: fila `users` (`UserEntity`), lookup `USER_LOOKUP` / `exists`; sin endpoints. Orders usa la misma entidad para el lock pessimista.
+- `src/modules/portfolio`: **cuenta** como resultado de consulta (agregado de órdenes y precios). No confundir con el módulo `users`.
+- `src/modules/instruments`: búsqueda paginada. El servicio depende del port `INSTRUMENT_SEARCH`, no de TypeORM directo.
+- `src/modules/orders`: alta de órdenes. Máquina de estados (State pattern en `domain/states/`), strategies y factory en `domain/`.
+
+El controlador traduce HTTP. El servicio orquesta. El repositorio persiste y cumple el port.
+
+### Health (módulo mínimo)
+
+`src/modules/health` no tiene dominio, servicios ni infraestructura:
+
+```
+src/modules/health/
+├── application/dto/health-response.ts
+├── health.controller.ts
+└── health.module.ts
+```
+
+`GET /health` responde `{ status: 'ok' }`, queda fuera de Swagger, correlación, log canónico y spans (ver RFC).
+
+## Errores y nombres
+
+- Los errores de dominio son clases propias. No usar `throw new Error()` para una regla de negocio.
+- Los errores HTTP compartidos viven en `src/common/errors/`; no duplicar por módulo salvo errores estrictamente internos en `domain/`.
+- JSON público en snake_case. Headers HTTP como `x-user-id` e `Idempotency-Key`.
+- Archivos en kebab-case. Clases en PascalCase. Una clase por archivo.
+- DTOs de entrada y salida en `application/dto/`, con el sufijo que corresponda: `CreateOrderBody`, `PortfolioResponse`.
+- Entidades de TypeORM mapean las columnas reales en minúsculas (`instrumentid`, `userid`). No renombrar columnas del esquema del challenge.
+- `domain/validators/` y reglas puras de dominio no importan `*.entity.ts` (solo tipos en `*.types.ts` o constantes).
+
+## Fuera de este repositorio
+
+- No agregar New Relic ni NestJS Observe.
+- No agregar Redis hasta el ticket que lo habilite.
+- No crear un endpoint para cancelar órdenes.

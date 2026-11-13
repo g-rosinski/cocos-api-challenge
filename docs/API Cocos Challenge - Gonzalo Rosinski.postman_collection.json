@@ -1,0 +1,1488 @@
+{
+  "info": {
+    "_postman_id": "c7b52caf-ee4e-42bc-99e8-da8a055f786d",
+    "name": "API Cocos Challenge - Gonzalo Rosinski",
+    "description": "Consulta de la cuenta, búsqueda de instrumentos y alta de órdenes. Los ejemplos usan la base de ejemplo: cuenta 1, PAMP (id 47) y la búsqueda pamp.\n\n[📄 schema.json — importar en Postman](/schema.json)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "4593397"
+  },
+  "item": [
+    {
+      "name": "instruments",
+      "item": [
+        {
+          "name": "Buscar un instrumento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/instruments?q=pamp&limit=10&offset=0",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "instruments"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "pamp",
+                  "description": "Parte del ticker o del nombre. Vacío devuelve el catálogo paginado, sin la moneda."
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Tamaño de página. Por defecto 10."
+                },
+                {
+                  "key": "offset",
+                  "value": "0",
+                  "description": "Cantidad de activos que se saltean. Por defecto 0."
+                }
+              ]
+            },
+            "description": "Busca por ticker o por nombre, sin distinguir mayúsculas. La moneda no aparece. Sin q, la primera página trae 10 activos ordenados por ticker."
+          },
+          "response": [
+            {
+              "name": "Buscar por ticker existente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?q=pamp&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "pamp",
+                      "description": "Parte del ticker o del nombre. Vacío devuelve el catálogo paginado, sin la moneda."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Tamaño de página. Por defecto 10."
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0",
+                      "description": "Cantidad de activos que se saltean. Por defecto 0."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"instrument_id\": 47,\n      \"ticker\": \"PAMP\",\n      \"name\": \"Pampa Holding S.A.\",\n      \"type\": \"ACCIONES\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"limit\": 10,\n    \"offset\": 0\n  }\n}"
+            },
+            {
+              "name": "Buscar por nombre existente",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?q=Pampa&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "Pampa",
+                      "description": "Parte del ticker o del nombre. Vacío devuelve el catálogo paginado, sin la moneda."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Tamaño de página. Por defecto 10."
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0",
+                      "description": "Cantidad de activos que se saltean. Por defecto 0."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"instrument_id\": 47,\n      \"ticker\": \"PAMP\",\n      \"name\": \"Pampa Holding S.A.\",\n      \"type\": \"ACCIONES\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 1,\n    \"limit\": 10,\n    \"offset\": 0\n  }\n}"
+            },
+            {
+              "name": "Listar catálogo sin búsqueda",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?limit=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Tamaño de página. Por defecto 10."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"instrument_id\": 26,\n      \"ticker\": \"AGRO\",\n      \"name\": \"Agrometal\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 61,\n      \"ticker\": \"ALUA\",\n      \"name\": \"Aluar Aluminio Argentino S.A.I.C.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 27,\n      \"ticker\": \"AUSO\",\n      \"name\": \"Autopistas del Sol\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 22,\n      \"ticker\": \"BBAR\",\n      \"name\": \"Banco Frances\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 28,\n      \"ticker\": \"BHIP\",\n      \"name\": \"Banco Hipotecario S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 31,\n      \"ticker\": \"BMA\",\n      \"name\": \"Banco Macro S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 29,\n      \"ticker\": \"BOLT\",\n      \"name\": \"Boldt S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 19,\n      \"ticker\": \"BPAT\",\n      \"name\": \"Banco Patagonia\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 65,\n      \"ticker\": \"BYMA\",\n      \"name\": \"Bolsas y Mercados Argentinos S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 38,\n      \"ticker\": \"CADO\",\n      \"name\": \"Carlos Casado\",\n      \"type\": \"ACCIONES\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 65,\n    \"limit\": 10,\n    \"offset\": 0\n  }\n}"
+            },
+            {
+              "name": "Listar con página de 50",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?q=pamp&limit=50&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "pamp",
+                      "description": "Parte del ticker o del nombre. Vacío devuelve el catálogo paginado, sin la moneda."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50",
+                      "description": "Tamaño de página. Por defecto 10."
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0",
+                      "description": "Cantidad de activos que se saltean. Por defecto 0."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"instrument_id\": 26,\n      \"ticker\": \"AGRO\",\n      \"name\": \"Agrometal\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 61,\n      \"ticker\": \"ALUA\",\n      \"name\": \"Aluar Aluminio Argentino S.A.I.C.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 27,\n      \"ticker\": \"AUSO\",\n      \"name\": \"Autopistas del Sol\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 22,\n      \"ticker\": \"BBAR\",\n      \"name\": \"Banco Frances\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 28,\n      \"ticker\": \"BHIP\",\n      \"name\": \"Banco Hipotecario S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 31,\n      \"ticker\": \"BMA\",\n      \"name\": \"Banco Macro S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 29,\n      \"ticker\": \"BOLT\",\n      \"name\": \"Boldt S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 19,\n      \"ticker\": \"BPAT\",\n      \"name\": \"Banco Patagonia\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 65,\n      \"ticker\": \"BYMA\",\n      \"name\": \"Bolsas y Mercados Argentinos S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 38,\n      \"ticker\": \"CADO\",\n      \"name\": \"Carlos Casado\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 2,\n      \"ticker\": \"CAPX\",\n      \"name\": \"Capex S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 30,\n      \"ticker\": \"CARC\",\n      \"name\": \"Carboclor S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 25,\n      \"ticker\": \"CECO2\",\n      \"name\": \"Central Costanera\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 24,\n      \"ticker\": \"CELU\",\n      \"name\": \"Celulosa Argentina S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 60,\n      \"ticker\": \"CEPU\",\n      \"name\": \"Central Puerto\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 37,\n      \"ticker\": \"CGPA2\",\n      \"name\": \"Camuzzi Gas del Sur\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 59,\n      \"ticker\": \"COME\",\n      \"name\": \"Sociedad Comercial Del Plata\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 32,\n      \"ticker\": \"CRES\",\n      \"name\": \"Cresud S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 62,\n      \"ticker\": \"CTIO\",\n      \"name\": \"Consultatio S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 21,\n      \"ticker\": \"CVH\",\n      \"name\": \"Cablevision Holding\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 35,\n      \"ticker\": \"DGCU2\",\n      \"name\": \"Distribuidora De Gas Cuyano S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 12,\n      \"ticker\": \"DOME\",\n      \"name\": \"Domec\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 1,\n      \"ticker\": \"DYCA\",\n      \"name\": \"Dycasa S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 33,\n      \"ticker\": \"EDN\",\n      \"name\": \"Edenor S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 8,\n      \"ticker\": \"FERR\",\n      \"name\": \"Ferrum S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 15,\n      \"ticker\": \"FIPL\",\n      \"name\": \"Fiplasto\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 11,\n      \"ticker\": \"GAMI\",\n      \"name\": \"Boldt Gaming S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 16,\n      \"ticker\": \"GARO\",\n      \"name\": \"Garovaglio Y Zorraquín\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 36,\n      \"ticker\": \"GBAN\",\n      \"name\": \"Gas Natural Ban S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 39,\n      \"ticker\": \"GCLA\",\n      \"name\": \"Grupo Clarin S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 34,\n      \"ticker\": \"GGAL\",\n      \"name\": \"Grupo Financiero Galicia\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 40,\n      \"ticker\": \"GRIM\",\n      \"name\": \"Grimoldi\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 18,\n      \"ticker\": \"HARG\",\n      \"name\": \"Holcim (Argentina) S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 64,\n      \"ticker\": \"HAVA\",\n      \"name\": \"Havanna Holding\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 13,\n      \"ticker\": \"INTR\",\n      \"name\": \"Compañía Introductora de Buenos Aires S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 52,\n      \"ticker\": \"INVJ\",\n      \"name\": \"Inversora Juramento S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 10,\n      \"ticker\": \"IRCP\",\n      \"name\": \"IRSA Propiedades Comerciales S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 46,\n      \"ticker\": \"IRSA\",\n      \"name\": \"IRSA Inversiones y Representaciones S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 23,\n      \"ticker\": \"LEDE\",\n      \"name\": \"Ledesma\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 45,\n      \"ticker\": \"LOMA\",\n      \"name\": \"Loma Negra S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 55,\n      \"ticker\": \"LONG\",\n      \"name\": \"Longvie\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 54,\n      \"ticker\": \"METR\",\n      \"name\": \"MetroGAS S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 5,\n      \"ticker\": \"MIRG\",\n      \"name\": \"Mirgor\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 4,\n      \"ticker\": \"MOLA\",\n      \"name\": \"Molinos Agro S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 42,\n      \"ticker\": \"MOLI\",\n      \"name\": \"Molinos Río de la Plata\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 51,\n      \"ticker\": \"MORI\",\n      \"name\": \"Morixe Hermanos S.A.C.I.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 14,\n      \"ticker\": \"MTR\",\n      \"name\": \"Matba Rofex S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 58,\n      \"ticker\": \"OEST\",\n      \"name\": \"Oeste Grupo Concesionario\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 47,\n      \"ticker\": \"PAMP\",\n      \"name\": \"Pampa Holding S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 6,\n      \"ticker\": \"PATA\",\n      \"name\": \"Importadora y Exportadora de la Patagonia\",\n      \"type\": \"ACCIONES\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 65,\n    \"limit\": 50,\n    \"offset\": 0\n  }\n}"
+            },
+            {
+              "name": "Buscar texto que solo coincide con moneda",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?q=pesos&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "pesos",
+                      "description": "Parte del ticker o del nombre. Vacío devuelve el catálogo paginado, sin la moneda."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Tamaño de página. Por defecto 10."
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0",
+                      "description": "Cantidad de activos que se saltean. Por defecto 0."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"total\": 0,\n    \"limit\": 10,\n    \"offset\": 0\n  }\n}"
+            },
+            {
+              "name": "Buscar por ticker no válido (ARS)",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?q=ARS&limit=10&offset=0",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "ARS",
+                      "description": "Parte del ticker o del nombre. Vacío devuelve el catálogo paginado, sin la moneda."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Tamaño de página. Por defecto 10."
+                    },
+                    {
+                      "key": "offset",
+                      "value": "0",
+                      "description": "Cantidad de activos que se saltean. Por defecto 0."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [],\n  \"meta\": {\n    \"total\": 0,\n    \"limit\": 10,\n    \"offset\": 0\n  }\n}"
+            },
+            {
+              "name": "Segunda página del catálogo",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/instruments?q=pamp&limit=10&offset=10",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "instruments"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "pamp",
+                      "description": "Parte del ticker o del nombre. Vacío devuelve el catálogo paginado, sin la moneda."
+                    },
+                    {
+                      "key": "limit",
+                      "value": "10",
+                      "description": "Tamaño de página. Por defecto 10."
+                    },
+                    {
+                      "key": "offset",
+                      "value": "10",
+                      "description": "Cantidad de activos que se saltean. Por defecto 0."
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"data\": [\n    {\n      \"instrument_id\": 2,\n      \"ticker\": \"CAPX\",\n      \"name\": \"Capex S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 30,\n      \"ticker\": \"CARC\",\n      \"name\": \"Carboclor S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 25,\n      \"ticker\": \"CECO2\",\n      \"name\": \"Central Costanera\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 24,\n      \"ticker\": \"CELU\",\n      \"name\": \"Celulosa Argentina S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 60,\n      \"ticker\": \"CEPU\",\n      \"name\": \"Central Puerto\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 37,\n      \"ticker\": \"CGPA2\",\n      \"name\": \"Camuzzi Gas del Sur\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 59,\n      \"ticker\": \"COME\",\n      \"name\": \"Sociedad Comercial Del Plata\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 32,\n      \"ticker\": \"CRES\",\n      \"name\": \"Cresud S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 62,\n      \"ticker\": \"CTIO\",\n      \"name\": \"Consultatio S.A.\",\n      \"type\": \"ACCIONES\"\n    },\n    {\n      \"instrument_id\": 21,\n      \"ticker\": \"CVH\",\n      \"name\": \"Cablevision Holding\",\n      \"type\": \"ACCIONES\"\n    }\n  ],\n  \"meta\": {\n    \"total\": 65,\n    \"limit\": 10,\n    \"offset\": 10\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "orders",
+      "item": [
+        {
+          "name": "Enviar una orden",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400.",
+                "key": "x-user-id",
+                "value": "1"
+              },
+              {
+                "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400.",
+                "key": "Idempotency-Key",
+                "value": "6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"BUY\",\n  \"type\": \"MARKET\",\n  \"size\": 1\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/orders",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            },
+            "description": "Crea una orden para la cuenta de x-user-id. Mercado se ejecuta al último cierre. Límite queda abierta al precio enviado. Si no alcanzan los pesos o las acciones, la orden se guarda rechazada. Repetir la misma clave y el mismo cuerpo devuelve la misma respuesta. La misma clave con otro cuerpo responde 400. order_id y datetime del ejemplo son ilustrativos."
+          },
+          "response": [
+            {
+              "name": "Compra a mercado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "82652837-713a-4c73-b4dd-71ead5f3aded",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"BUY\",\n  \"type\": \"MARKET\",\n  \"size\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"order_id\": 14,\n  \"user_id\": 1,\n  \"instrument_id\": 47,\n  \"side\": \"BUY\",\n  \"type\": \"MARKET\",\n  \"size\": 1,\n  \"price\": 925.85,\n  \"status\": \"FILLED\",\n  \"datetime\": \"2026-11-10T13:06:00\"\n}"
+            },
+            {
+              "name": "Compra a mercado sin balance",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "8d0cd039-193a-4b91-b234-9d288ead2d83",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"BUY\",\n  \"type\": \"MARKET\",\n  \"size\": 1000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"order_id\": 16,\n    \"user_id\": 1,\n    \"instrument_id\": 47,\n    \"side\": \"BUY\",\n    \"type\": \"MARKET\",\n    \"size\": 1000,\n    \"price\": 925.85,\n    \"status\": \"REJECTED\",\n    \"datetime\": \"2026-11-12T05:22:22\"\n}"
+            },
+            {
+              "name": "Compra tipo Limit",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "e204eb81-99e1-42b1-992b-e60c8086fd31",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 45,\n  \"side\": \"BUY\",\n  \"type\": \"LIMIT\",\n  \"size\": 1,\n  \"price\": 710\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"order_id\": 15,\n  \"user_id\": 1,\n  \"instrument_id\": 45,\n  \"side\": \"BUY\",\n  \"type\": \"LIMIT\",\n  \"size\": 1,\n  \"price\": 710,\n  \"status\": \"NEW\",\n  \"datetime\": \"2026-11-10T13:06:00\"\n}"
+            },
+            {
+              "name": "Compra tipo Limit sin balance",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "fa0e4987-7362-466b-9765-75004688dad9",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 45,\n  \"side\": \"BUY\",\n  \"type\": \"LIMIT\",\n  \"size\": 1000,\n  \"price\": 710\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"order_id\": 17,\n    \"user_id\": 1,\n    \"instrument_id\": 45,\n    \"side\": \"BUY\",\n    \"type\": \"LIMIT\",\n    \"size\": 1000,\n    \"price\": 710,\n    \"status\": \"REJECTED\",\n    \"datetime\": \"2026-11-12T05:23:37\"\n}"
+            },
+            {
+              "name": "Venta a mercado",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"MARKET\",\n  \"size\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"order_id\": 16,\n  \"user_id\": 1,\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"MARKET\",\n  \"size\": 1000,\n  \"price\": 925.85,\n  \"status\": \"REJECTED\",\n  \"datetime\": \"2026-11-10T13:06:00\"\n}"
+            },
+            {
+              "name": "Venta a mercado sin tenencia",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "16eef40e-8286-45bf-8fc8-86fff81ca506",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"MARKET\",\n  \"size\": 1000\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"order_id\": 16,\n  \"user_id\": 1,\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"MARKET\",\n  \"size\": 1000,\n  \"price\": 925.85,\n  \"status\": \"REJECTED\",\n  \"datetime\": \"2026-11-10T13:06:00\"\n}"
+            },
+            {
+              "name": "Venta tipo Limit",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "f787264f-6558-4818-93c8-9404abbdea0e",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"LIMIT\",\n  \"size\": 1,\n  \"price\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"order_id\": 17,\n  \"user_id\": 1,\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"LIMIT\",\n  \"size\": 1,\n  \"price\": 1200,\n  \"status\": \"NEW\",\n  \"datetime\": \"2026-11-10T13:06:00\"\n}"
+            },
+            {
+              "name": "Venta tipo Limit  sin tenencia",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "73de0945-0a09-4494-a137-b7ab4188c6f2",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"LIMIT\",\n  \"size\": 1,\n  \"price\": 1200\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"order_id\": 17,\n  \"user_id\": 1,\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"LIMIT\",\n  \"size\": 1,\n  \"price\": 1200,\n  \"status\": \"NEW\",\n  \"datetime\": \"2026-11-10T13:06:00\"\n}"
+            },
+            {
+              "name": "Orden de instrumento inexistente",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "9aeeedcf-85f8-4ee3-b116-5e1a339adaa4",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 999,\n  \"side\": \"BUY\",\n  \"type\": \"MARKET\",\n  \"size\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": \"INSTRUMENT_NOT_FOUND\",\n        \"message\": \"El instrumento no existe.\",\n        \"correlation_id\": \"7ef870e9-5bf4-4978-b839-6b176de13ca2\"\n    }\n}"
+            },
+            {
+              "name": "Orden con side invalido",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "963e8aa0-a9c6-49e4-a11f-b550144b1a1a",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"SWAP\",\n  \"type\": \"MARKET\",\n  \"size\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": \"INVALID_ORDER_SIDE\",\n        \"message\": \"El campo side solo admite BUY o SELL.\",\n        \"correlation_id\": \"3a4c0adf-70f6-4b44-aef0-9d8bb4316074\"\n    }\n}"
+            },
+            {
+              "name": "Orden con type invalido",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "c81e75b8-4aaa-4068-aaa0-cd66fdb6b6f6",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"STOP\",\n  \"size\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": \"INVALID_ORDER_TYPE\",\n        \"message\": \"El campo type solo admite MARKET o LIMIT.\",\n        \"correlation_id\": \"bf40f58e-e82e-41b4-9fc7-cad23481fef5\"\n    }\n}"
+            },
+            {
+              "name": "Orden con clave reutilizada de otra orden",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"SELL\",\n  \"type\": \"MARKET\",\n  \"size\": 3\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"code\": \"IDEMPOTENCY_KEY_MISMATCH\",\n    \"message\": \"La clave de idempotencia ya fue utilizada con otros parámetros.\",\n    \"correlation_id\": \"8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21\"\n  }\n}"
+            },
+            {
+              "name": "Orden con body inválido",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"code\": \"VALIDATION_ERROR\",\n    \"message\": \"El cuerpo de la orden es inválido.\",\n    \"correlation_id\": \"8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21\"\n  }\n}"
+            },
+            {
+              "name": "Orden con cuenta inexistente.",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "999",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"BUY\",\n  \"type\": \"MARKET\",\n  \"size\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"code\": \"USER_NOT_FOUND\",\n    \"message\": \"La cuenta no existe.\",\n    \"correlation_id\": \"8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21\"\n  }\n}"
+            },
+            {
+              "name": "Orden con clave de idempotencia inválida",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta que envía la orden. Entero existente en users. Si falta o no es un entero, la respuesta es 400."
+                  },
+                  {
+                    "key": "Idempotency-Key",
+                    "value": "1",
+                    "description": "UUID de la orden. La misma clave y el mismo cuerpo repiten la respuesta. Un valor que no es UUID responde 400."
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"instrument_id\": 47,\n  \"side\": \"BUY\",\n  \"type\": \"MARKET\",\n  \"size\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/orders",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "orders"
+                  ]
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n    \"error\": {\n        \"code\": \"INVALID_IDEMPOTENCY_KEY\",\n        \"message\": \"El header Idempotency-Key es obligatorio y tiene que ser un UUID.\",\n        \"correlation_id\": \"a895c5c7-551b-4bb7-9480-ed84f297b44c\"\n    }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "portfolio",
+      "item": [
+        {
+          "name": "Consultar portfolio",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "x-user-id",
+                "value": "1",
+                "description": "Cuenta a consultar. Entero existente en users. Si falta, no es un entero o es inválido, la respuesta es 400."
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/portfolio",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "portfolio"
+              ]
+            },
+            "description": "Devuelve el valor total, los pesos disponibles y las posiciones de la cuenta indicada en x-user-id. Banco Macro no aparece. La cuenta 1 tiene movimientos; la 2 no tiene órdenes en el seed."
+          },
+          "response": [
+            {
+              "name": "Portfolio de cuenta con movimientos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "1",
+                    "description": "Cuenta a consultar. Entero existente en users. Si falta, no es un entero o es inválido, la respuesta es 400."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/portfolio",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "portfolio"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"summary\": {\n    \"total_value\": 904784,\n    \"cash_balance\": 627500,\n    \"currency\": \"ARS\"\n  },\n  \"positions\": [\n    {\n      \"instrument_id\": 54,\n      \"ticker\": \"METR\",\n      \"name\": \"MetroGAS S.A.\",\n      \"quantity\": 500,\n      \"market_value\": 114750,\n      \"total_return_percentage\": -8.2\n    },\n    {\n      \"instrument_id\": 47,\n      \"ticker\": \"PAMP\",\n      \"name\": \"Pampa Holding S.A.\",\n      \"quantity\": 40,\n      \"market_value\": 37034,\n      \"total_return_percentage\": -0.45\n    }\n  ]\n}"
+            },
+            {
+              "name": "Portfolio de cuenta sin movimientos",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "2",
+                    "description": "Cuenta a consultar. Entero existente en users. Si falta, no es un entero o es inválido, la respuesta es 400."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/portfolio",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "portfolio"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"summary\": {\n    \"total_value\": 0,\n    \"cash_balance\": 0,\n    \"currency\": \"ARS\"\n  },\n  \"positions\": []\n}"
+            },
+            {
+              "name": "Consultar con cuenta invalida",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-user-id",
+                    "value": "ABC",
+                    "description": "Cuenta a consultar. Entero existente en users. Si falta, no es un entero o es inválido, la respuesta es 400."
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/portfolio",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "portfolio"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_USER_ID\",\n    \"message\": \"El header x-user-id es obligatorio y tiene que ser un entero.\",\n    \"correlation_id\": \"8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21\"\n  }\n}"
+            },
+            {
+              "name": "Consultar sin especificar cuenta",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/portfolio",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "portfolio"
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"code\": \"INVALID_USER_ID\",\n    \"message\": \"El header x-user-id es obligatorio y tiene que ser un entero.\",\n    \"correlation_id\": \"8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21\"\n  }\n}"
+            },
+            {
+              "name": "La cuenta no existe.",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "description": "Cuenta a consultar. Entero existente en users. Si falta, no es un entero o es inválido, la respuesta es 400.",
+                    "key": "x-user-id",
+                    "value": "999"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/portfolio",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "portfolio"
+                  ]
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "body": "{\n  \"error\": {\n    \"code\": \"USER_NOT_FOUND\",\n    \"message\": \"La cuenta no existe.\",\n    \"correlation_id\": \"8f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21\"\n  }\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    }
+  ]
+}
