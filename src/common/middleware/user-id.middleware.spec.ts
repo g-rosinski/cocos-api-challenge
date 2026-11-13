@@ -9,6 +9,10 @@ describe('UserIdMiddleware', () => {
   const next: NextFunction = vi.fn();
   const response = {} as Response;
 
+  beforeEach(() => {
+    vi.mocked(next).mockClear();
+  });
+
   function createRequest(header: string | undefined): Request {
     return {
       header: (name: string) => (name === 'x-user-id' ? header : undefined),
@@ -63,6 +67,18 @@ describe('UserIdMiddleware', () => {
       expect(callContextStorage.getStore()?.userId).toBe(1);
       expect(next).toHaveBeenCalledOnce();
     });
+  });
+
+  it('continues without enriching context when the store is missing', async () => {
+    const lookup: UserLookup = {
+      exists: vi.fn().mockResolvedValue(true),
+    };
+    const middleware = new UserIdMiddleware(lookup);
+
+    await middleware.use(createRequest('1'), response, next);
+
+    expect(lookup.exists).toHaveBeenCalledWith(1);
+    expect(next).toHaveBeenCalledOnce();
   });
 
   it('accepts a positive integer user id', async () => {

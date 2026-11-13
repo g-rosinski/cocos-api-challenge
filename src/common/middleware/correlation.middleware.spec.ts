@@ -33,6 +33,23 @@ describe('CorrelationMiddleware', () => {
     expect(next).toHaveBeenCalledOnce();
   });
 
+  it('generates a correlation id when the header is blank', () => {
+    const request = {
+      header: (name: string) =>
+        name === 'x-correlation-id' ? '   ' : undefined,
+    } as Request;
+    const next: NextFunction = vi.fn();
+
+    middleware.use(request, response, () => {
+      expect(callContextStorage.getStore()?.correlationId).toMatch(
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
+      );
+      next();
+    });
+
+    expect(next).toHaveBeenCalledOnce();
+  });
+
   it('generates a correlation id when the header is missing', () => {
     const request = {
       header: () => undefined,

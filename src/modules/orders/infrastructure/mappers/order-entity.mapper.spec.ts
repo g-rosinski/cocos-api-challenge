@@ -61,4 +61,42 @@ describe('order-entity.mapper', () => {
       ),
     ).toThrow(DependencyException);
   });
+
+  it('rejects a non-finite price on the HTTP response', () => {
+    expect(() =>
+      mapOrderEntityToOrderResponse(sampleOrder({ price: Number.NaN })),
+    ).toThrow(DependencyException);
+  });
+
+  it('rejects an unknown order side on availability mapping', () => {
+    expect(() =>
+      mapOrderEntityToAvailabilityOrder(
+        sampleOrder({ side: 'HOLD' as OrderSide }),
+      ),
+    ).toThrow(DependencyException);
+  });
+
+  it('rejects an unknown order type on availability mapping', () => {
+    expect(() =>
+      mapOrderEntityToAvailabilityOrder(
+        sampleOrder({ type: 'STOP' as OrderType }),
+      ),
+    ).toThrow(DependencyException);
+  });
+
+  it('rejects an unknown tradable side on the HTTP response', () => {
+    expect(() =>
+      mapOrderEntityToOrderResponse(
+        sampleOrder({ side: OrderSide.CASH_OUT as OrderSide }),
+      ),
+    ).toThrow(DependencyException);
+  });
+
+  it('rejects an order datetime that cannot be formatted', () => {
+    expect(() =>
+      mapOrderEntityToOrderResponse(
+        sampleOrder({ datetime: new Date('invalid') }),
+      ),
+    ).toThrow(DependencyException);
+  });
 });

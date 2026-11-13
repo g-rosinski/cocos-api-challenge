@@ -130,6 +130,26 @@ describe('ApiExceptionFilter', () => {
     });
   });
 
+  it('logs dependency failures without an Error cause stack', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-4b' }, () => {
+      filter.catch(new DependencyException('offline'), host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-4b',
+      },
+    });
+  });
+
   it('maps internal failures behind INTERNAL_ERROR', () => {
     const { host, response } = createHost('/portfolio', 'GET');
     const logSpy = vi
@@ -146,6 +166,26 @@ describe('ApiExceptionFilter', () => {
         code: 'INTERNAL_ERROR',
         message: 'Error interno.',
         correlation_id: 'corr-5',
+      },
+    });
+  });
+
+  it('logs internal failures without an Error cause stack', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-5b' }, () => {
+      filter.catch(new InternalException('opaque'), host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-5b',
       },
     });
   });
@@ -177,6 +217,26 @@ describe('ApiExceptionFilter', () => {
         code: 'INTERNAL_ERROR',
         message: 'Error interno.',
         correlation_id: 'corr-6',
+      },
+    });
+  });
+
+  it('maps unhandled non-Error throwables behind INTERNAL_ERROR', () => {
+    const { host, response } = createHost('/portfolio', 'GET');
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'error')
+      .mockImplementation(() => undefined);
+    callContextStorage.run({ correlationId: 'corr-6b' }, () => {
+      filter.catch('unexpected string', host);
+    });
+    logSpy.mockRestore();
+
+    expect(response.statusCode).toBe(HttpStatus.INTERNAL_SERVER_ERROR);
+    expect(response.body).toEqual({
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno.',
+        correlation_id: 'corr-6b',
       },
     });
   });

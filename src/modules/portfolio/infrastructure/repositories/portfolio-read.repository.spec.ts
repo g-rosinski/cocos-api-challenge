@@ -67,6 +67,28 @@ describe('PortfolioReadRepository', () => {
     expect(input.latestCloses.get(66)).toBe(1);
   });
 
+  it('parses string closes from raw SQL rows', async () => {
+    const orderRepo = { find: vi.fn().mockResolvedValue([]) };
+    const instrumentRepo = { find: vi.fn().mockResolvedValue([]) };
+    const query = vi
+      .fn()
+      .mockResolvedValue([{ instrumentid: 47, close: '925.85' }]);
+    const dataSource = {
+      getRepository: vi.fn((target: unknown) => {
+        if (target === OrderEntity) {
+          return orderRepo;
+        }
+        return instrumentRepo;
+      }),
+      query,
+    } as unknown as DataSource;
+    const repository = new PortfolioReadRepository(dataSource);
+
+    const input = await repository.loadCalculationInput(1);
+
+    expect(input.latestCloses.get(47)).toBe(925.85);
+  });
+
   it('keeps numeric row values when the driver already returns numbers', async () => {
     const orderRepo = { find: vi.fn().mockResolvedValue([]) };
     const instrumentRepo = { find: vi.fn().mockResolvedValue([]) };

@@ -61,6 +61,27 @@ describe('CanonicalLogInterceptor', () => {
     logSpy.mockRestore();
   });
 
+  it('uses request.path when route metadata is missing', async () => {
+    const logSpy = vi
+      .spyOn(Logger.prototype, 'log')
+      .mockImplementation(() => undefined);
+    const context = createContext(
+      { method: 'GET', path: '/instruments' },
+      { statusCode: 200 },
+    );
+    const handler: CallHandler = { handle: () => of([]) };
+
+    await callContextStorage.run({ correlationId: 'corr-path' }, async () => {
+      await firstValueFrom(interceptor.intercept(context, handler));
+    });
+
+    const payload = JSON.parse(String(logSpy.mock.calls[0]?.[0])) as {
+      path: string;
+    };
+    expect(payload.path).toBe('/instruments');
+    logSpy.mockRestore();
+  });
+
   it('skips logging when there is no call context', async () => {
     const logSpy = vi
       .spyOn(Logger.prototype, 'log')

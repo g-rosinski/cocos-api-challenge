@@ -6,6 +6,7 @@ import { IdempotencyConflictError } from '@/modules/orders/domain/idempotency-co
 import { InstrumentEntity } from '@/modules/instruments/domain/entities/instrument.entity';
 import { MarketDataEntity } from '@/modules/instruments/domain/entities/market-data.entity';
 import { OrderEntity } from '@/modules/orders/domain/entities/order.entity';
+import { OrderIdempotencyKeyEntity } from '@/modules/orders/domain/entities/order-idempotency-key.entity';
 import { UserEntity } from '@/modules/users/domain/entities/user.entity';
 import { OrderTransactionRepository } from '@/modules/orders/infrastructure/repositories/order-transaction.repository';
 
@@ -108,6 +109,17 @@ describe('OrderTransactionRepository', () => {
     await expect(repository.findIdempotency(1, 'key')).resolves.toBeNull();
   });
 
+  it('returns null when the idempotency row has no related order', async () => {
+    const manager = managerMock();
+    manager.findOne.mockResolvedValue({
+      payloadHash: 'abc',
+      order: undefined,
+    });
+    const repository = repositoryWith(queryRunnerDouble(), manager);
+
+    await expect(repository.findIdempotency(1, 'key')).resolves.toBeNull();
+  });
+
   it('rejects a row that is not an order this API stores', async () => {
     const manager = managerMock();
     manager.findOne.mockResolvedValue({
@@ -172,6 +184,50 @@ describe('OrderTransactionRepository', () => {
     expect(runner.commitTransaction).not.toHaveBeenCalled();
   });
 
+  it('rethrows a postgres error that is not a unique violation', async () => {
+    const manager = managerMock();
+    const other = new QueryFailedError(
+      'INSERT',
+      [],
+      Object.assign(new Error('check failed'), { code: '23514' }),
+    );
+    manager.findOne.mockResolvedValue({ id: 1 });
+    manager.save.mockRejectedValueOnce(other);
+    const runner = queryRunnerDouble(manager);
+    const repository = repositoryWith(runner);
+
+    await expect(
+      repository.runInTransaction(1, (context) =>
+        context.insertIdempotency({
+          userId: 1,
+          idempotencyKey: '6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21',
+          orderId: 14,
+          payloadHash: 'abc',
+        }),
+      ),
+    ).rejects.toBe(other);
+  });
+
+  it('rethrows a non-unique save failure from idempotency insert', async () => {
+    const manager = managerMock();
+    manager.findOne.mockResolvedValue({ id: 1 });
+    manager.save.mockRejectedValueOnce(new Error('db down'));
+    const runner = queryRunnerDouble(manager);
+    const repository = repositoryWith(runner);
+
+    await expect(
+      repository.runInTransaction(1, (context) =>
+        context.insertIdempotency({
+          userId: 1,
+          idempotencyKey: '6f1c0d4e-2a1b-4c77-9d2a-1b6e0a9c4f21',
+          orderId: 14,
+          payloadHash: 'abc',
+        }),
+      ),
+    ).rejects.toThrow('db down');
+    expect(runner.rollbackTransaction).toHaveBeenCalledOnce();
+  });
+
   it('turns a unique idempotency violation into a conflict and rolls back', async () => {
     const manager = managerMock();
     const duplicate = new QueryFailedError(
@@ -196,6 +252,40 @@ describe('OrderTransactionRepository', () => {
     ).rejects.toBeInstanceOf(IdempotencyConflictError);
     expect(runner.rollbackTransaction).toHaveBeenCalledOnce();
     expect(runner.commitTransaction).not.toHaveBeenCalled();
+  });
+
+  it('loads an instrument, a close and idempotency via the transaction context', async () => {
+    const manager = managerMock();
+    manager.findOne.mockImplementation(async (target: unknown) => {
+      if (target === UserEntity) {
+        return { id: 1 };
+      }
+      if (target === InstrumentEntity) {
+        return { id: 45, type: 'ACCIONES' };
+      }
+      if (target === MarketDataEntity) {
+        return { close: 710.12, instrumentId: 45, id: 1, date: '2026-11-10' };
+      }
+      if (target === OrderIdempotencyKeyEntity) {
+        return { payloadHash: 'stored', order: storedOrder };
+      }
+      return null;
+    });
+    const runner = queryRunnerDouble(manager);
+    const repository = repositoryWith(runner);
+
+    await repository.runInTransaction(1, async (context) => {
+      expect(await context.findIdempotency(1, 'stored-key')).toEqual({
+        payloadHash: 'stored',
+        order: expect.objectContaining({ order_id: 14 }),
+      });
+      expect(await context.loadInstrument(45)).toEqual({
+        id: 45,
+        type: 'ACCIONES',
+      });
+      expect(await context.loadLatestClose(45)).toBe(710.12);
+    });
+    expect(runner.commitTransaction).toHaveBeenCalledOnce();
   });
 
   it('maps the inserted order and an empty close', async () => {

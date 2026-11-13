@@ -106,6 +106,54 @@ describe('resolveCreateOrderBodyException', () => {
     const exception = resolveCreateOrderBodyException(error!.issues, {});
     expect(exception).toBeInstanceOf(ValidationException);
   });
+
+  it('keeps ValidationException when raw is not an object', () => {
+    const { error } = createOrderBodySchema.safeParse({
+      instrument_id: 47,
+      side: 'HOLD',
+      type: 'MARKET',
+      size: 1,
+    });
+    expect(error).toBeDefined();
+    const exception = resolveCreateOrderBodyException(error!.issues, null);
+    expect(exception).toBeInstanceOf(ValidationException);
+  });
+
+  it('ignores invalid_value issues on fields other than side or type', () => {
+    const exception = resolveCreateOrderBodyException(
+      [
+        {
+          code: 'invalid_value',
+          path: ['instrument_id'],
+          message: 'invalid',
+        },
+      ],
+      {
+        instrument_id: 'x',
+        side: 'BUY',
+        type: 'MARKET',
+        size: 1,
+      },
+    );
+    expect(exception).toBeInstanceOf(ValidationException);
+  });
+
+  it('keeps ValidationException for enum issues without a string field', () => {
+    const { error } = createOrderBodySchema.safeParse({
+      instrument_id: 'x',
+      side: 'BUY',
+      type: 'MARKET',
+      size: 1,
+    });
+    expect(error).toBeDefined();
+    const exception = resolveCreateOrderBodyException(error!.issues, {
+      instrument_id: 47,
+      side: 42,
+      type: 'MARKET',
+      size: 1,
+    });
+    expect(exception).toBeInstanceOf(ValidationException);
+  });
 });
 
 describe('createOrderValidationPipe', () => {
@@ -152,6 +200,25 @@ describe('createOrderValidationPipe', () => {
         metadata,
       ),
     ).toThrow(InvalidOrderTypeException);
+  });
+
+  it('returns a parsed body for a valid market order', () => {
+    expect(
+      createOrderValidationPipe.transform(
+        {
+          instrument_id: 47,
+          side: 'BUY',
+          type: 'MARKET',
+          size: 1,
+        },
+        metadata,
+      ),
+    ).toEqual({
+      instrument_id: 47,
+      side: 'BUY',
+      type: 'MARKET',
+      size: 1,
+    });
   });
 
   it('throws InvalidOrderSideException for a lowercase side', () => {

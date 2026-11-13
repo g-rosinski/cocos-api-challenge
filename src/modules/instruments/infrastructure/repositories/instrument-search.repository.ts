@@ -9,6 +9,7 @@ import type {
   InstrumentSearchInput,
   InstrumentSearchPort,
 } from '@/modules/instruments/application/ports/instrument-search.port';
+import { mapInstrumentEntityToSearchItem } from '@/modules/instruments/infrastructure/mappers/instrument-entity.mapper';
 
 type InstrumentSearchRow = {
   id: number;
@@ -36,12 +37,12 @@ function escapeLikePattern(value: string): string {
 }
 
 function mapInstrumentRow(row: InstrumentSearchRow): InstrumentItem {
-  return {
-    instrument_id: row.id,
+  return mapInstrumentEntityToSearchItem({
+    id: row.id,
     ticker: row.ticker,
     name: row.name,
     type: row.type,
-  };
+  });
 }
 
 @Injectable()

@@ -96,6 +96,26 @@ describe('InstrumentSearchRepository', () => {
     });
   });
 
+  it('accepts numeric totals from the count query', async () => {
+    const query = vi.fn().mockImplementation(async (sql: string) => {
+      if (sql.includes('COUNT(*)')) {
+        return [{ total: 42 }];
+      }
+      return [];
+    });
+    const repository = new InstrumentSearchRepository({
+      query,
+    } as unknown as DataSource);
+
+    const response = await repository.search({
+      query: 'x',
+      limit: 10,
+      offset: 0,
+    });
+
+    expect(response.meta.total).toBe(42);
+  });
+
   it('returns total 0 when count has no row', async () => {
     const query = vi.fn().mockImplementation(async (sql: string) => {
       if (sql.includes('COUNT(*)')) {

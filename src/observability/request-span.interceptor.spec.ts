@@ -49,6 +49,28 @@ describe('RequestSpanInterceptor', () => {
     tracerSpy.mockRestore();
   });
 
+  it('ends the span without attributes when call context is missing', async () => {
+    const setAttribute = vi.fn();
+    const end = vi.fn();
+    const span = {
+      setAttribute,
+      setStatus: vi.fn(),
+      end,
+      recordException: vi.fn(),
+    } as unknown as Span;
+    vi.spyOn(trace, 'getTracer').mockReturnValue(mockTracer(span));
+    const context = createContext(
+      { method: 'GET', path: '/instruments' },
+      { statusCode: 200 },
+    );
+    const handler: CallHandler = { handle: () => of([]) };
+
+    await firstValueFrom(interceptor.intercept(context, handler));
+
+    expect(setAttribute).not.toHaveBeenCalled();
+    expect(end).toHaveBeenCalledOnce();
+  });
+
   it('sets request attributes without userId on search', async () => {
     const setAttribute = vi.fn();
     const end = vi.fn();
@@ -107,6 +129,34 @@ describe('RequestSpanInterceptor', () => {
     expect(setAttribute).toHaveBeenCalledWith('orderType', 'LIMIT');
     expect(setAttribute).toHaveBeenCalledWith('orderStatus', 'NEW');
     expect(setAttribute).toHaveBeenCalledWith('userId', 4);
+  });
+
+  it('records non-Error throwables on the span', async () => {
+    const recordException = vi.fn();
+    const span = {
+      setAttribute: vi.fn(),
+      setStatus: vi.fn(),
+      end: vi.fn(),
+      recordException,
+    } as unknown as Span;
+    vi.spyOn(trace, 'getTracer').mockReturnValue(mockTracer(span));
+    const context = createContext(
+      { method: 'GET', path: '/portfolio', route: { path: '/portfolio' } },
+      { statusCode: 500 },
+    );
+    const handler: CallHandler = {
+      handle: () => throwError(() => 'plain failure'),
+    };
+
+    await callContextStorage.run({ correlationId: 'corr-otel-4' }, async () => {
+      await expect(
+        firstValueFrom(interceptor.intercept(context, handler)),
+      ).rejects.toBe('plain failure');
+    });
+
+    expect(recordException).toHaveBeenCalledWith(
+      expect.objectContaining({ message: 'plain failure' }),
+    );
   });
 
   it('marks server failures on the span', async () => {
