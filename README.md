@@ -34,13 +34,23 @@ npm run start:dev
 
 Nest carga variables desde `.env` en la raíz (`@nestjs/config`).
 
-### Reset local rápido (schema vacío)
+### Reset de la base (local)
 
-En psql/pgAdmin: `DROP SCHEMA public CASCADE; CREATE SCHEMA public;` (y grants según tu rol). Luego:
+Con `DATABASE_URL` apuntando a Postgres **local** (`localhost`, `127.0.0.1` o `host.docker.internal`):
 
 ```bash
-npm run build && npm run db:bootstrap
+npm run reset-database
 ```
+
+Hace `DROP SCHEMA public`, `build`, seed y migraciones en un solo paso.
+
+Si `.env` apunta a una base **remota** (Neon), el comando **aborta** sin tocar datos. Para forzar un reset remoto (solo entornos de prueba):
+
+```bash
+DB_RESET_ALLOW_REMOTE=true npm run reset-database
+```
+
+O en `.env`: `DB_RESET_ALLOW_REMOTE=true` (ver [.env.example](.env.example)).
 
 ### Producción (Neon u otro remoto)
 

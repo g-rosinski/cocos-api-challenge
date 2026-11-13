@@ -6,7 +6,6 @@ import { CanonicalLogInterceptor } from '@/common/logging/canonical-log/canonica
 import { UserIdMiddleware } from '@/common/middleware/user-id.middleware';
 import { RequestSpanInterceptor } from '@/observability/request-span.interceptor';
 import { UsersModule } from '@/modules/users/users.module';
-import { USER_LOOKUP } from '@/modules/users/application/ports/user-lookup.port';
 
 @Module({
   imports: [UsersModule],
@@ -26,7 +25,6 @@ import { USER_LOOKUP } from '@/modules/users/application/ports/user-lookup.port'
     CanonicalLogContext,
     CanonicalLogInterceptor,
     RequestSpanInterceptor,
-    USER_LOOKUP,
   ],
 })
 export class CommonModule {}
